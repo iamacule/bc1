@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgResult1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/img_result_margin" />
+
+            <ImageView
+                android:id="@+id/imgResult2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/img_result_margin" />
+
+            <ImageView
+                android:id="@+id/imgResult3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/img_result_margin" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frCenter"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6">
+
+            <ImageView
+                android:id="@+id/imgPlate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <vn.mran.bc1.draw.DrawLid
+                android:id="@+id/drawLid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <ImageView
+                android:id="@+id/imgAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <vn.mran.bc1.widget.CustomTextView
+                android:id="@+id/txtAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:shadowColor="@color/black"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:text="@string/open"
+                android:textColor="@color/yellow_text"
+                android:textSize="@dimen/button_text_size_large" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!--<vn.mran.bc1.draw.DrawParallaxStar-->
+    <!--android:id="@+id/drawParallaxStar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
+
+</FrameLayout>

@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">BC1</string>
+    <string name="com_name">ProArmy2018</string>
+    <string name="app_name">Bầu cua 3D 2018</string>
+    <string name="play_now">CHƠI NGAY</string>
+    <string name="play">ĐẤU</string>
+    <string name="setting">CÀI ĐẶT</string>
+    <string name="exit">THOÁT</string>
+    <string name="sound">ÂM THANH</string>
+    <string name="open">MỞ</string>
+    <string name="shake">XỐC</string>
 </resources>

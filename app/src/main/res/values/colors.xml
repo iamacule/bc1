@@ -3,4 +3,29 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="black">#000000</color>
+    <color name="green_primary">#00B71E</color>
+    <color name="green_primary_bold">#01A71C</color>
+    <color name="green_primary_bold2">#019A1A</color>
+    <color name="red_700">#d32f2f</color>
+    <color name="pink_700">#c2185b</color>
+    <color name="purple_700">#7b1fa2</color>
+    <color name="blue_700">#1976d2</color>
+    <color name="green_700">#388e3c</color>
+    <color name="yellow_600">#c0ca33</color>
+    <color name="orange_700">#f57c00</color>
+    <color name="brown_700">#5d4037</color>
+    <color name="grey_700">#616161</color>
+    <color name="yellow_text">#C7D900</color>
+    <color name="white">#fafafa</color>
+    <color name="grey_400">#bdbdbd</color>
+
+    <!-- SeekBar-->
+    <color name="default_screen_bg">#f9f9f9</color>
+    <color name="rounded_container_bg">#222222</color>
+    <color name="rounded_container_border">#3b3f44</color>
+    <color name="light_gray_header_color">#646663</color>
+    <color name="light_blue_200">#81d4fa</color>
+    <color name="light_blue_300">#4fc3f7</color>
 </resources>

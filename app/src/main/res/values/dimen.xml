@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="large_text_size">48sp</dimen>
+    <dimen name="text_size_44sp">44sp</dimen>
+    <dimen name="button_text_size_large">40sp</dimen>
+    <dimen name="button_text_size">30sp</dimen>
+    <dimen name="text_size">24sp</dimen>
+
+    <dimen name="setting_element_margin">5dp</dimen>
+    <dimen name="setting_first_element_top_margin">20dp</dimen>
+    <dimen name="icon_button_margin">10dp</dimen>
+    <dimen name="v_margin">5dp</dimen>
+    <dimen name="img_result_margin">15dp</dimen>
+</resources>
