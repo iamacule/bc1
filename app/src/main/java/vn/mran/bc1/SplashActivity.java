@@ -11,6 +11,7 @@ import vn.mran.bc1.activity.ChooserActivity;
 import vn.mran.bc1.base.BaseActivity;
 import vn.mran.bc1.constant.PrefValue;
 import vn.mran.bc1.instance.Media;
+import vn.mran.bc1.instance.Rule;
 import vn.mran.bc1.util.MyAnimation;
 import vn.mran.bc1.widget.CustomTextView;
 
@@ -28,7 +29,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void initValue() {
-
+        Rule.init(getApplicationContext());
     }
 
     @Override
