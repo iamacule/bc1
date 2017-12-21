@@ -19,4 +19,22 @@ public class RuleOffline {
         this.quantum = quantum;
         this.status = status;
     }
+
+    public int getAdditionalNumber() {
+        return (int) additionalNumber;
+    }
+
+    public int getQuantum() {
+        return (int) quantum;
+    }
+
+    public int[] getAssignNumberArray() {
+        String[] assignNumberArray = assignNumber.split(" ");
+        return new int[]{Integer.parseInt(assignNumberArray[0]),
+                Integer.parseInt(assignNumberArray[1]),
+                Integer.parseInt(assignNumberArray[2]),
+                Integer.parseInt(assignNumberArray[3]),
+                Integer.parseInt(assignNumberArray[4]),
+                Integer.parseInt(assignNumberArray[5])};
+    }
 }
