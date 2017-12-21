@@ -1,13 +1,18 @@
 apply plugin: 'com.android.application'
 
+String APK_NAME = "BC1-"
+int VERSION_CODE = 1
+String VERSION_NAME = "1.0.0.0"
+String DATE = new Date().format('yyyyMMdd')
+
 android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "vn.mran.bc1"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -26,6 +31,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 }
 
 

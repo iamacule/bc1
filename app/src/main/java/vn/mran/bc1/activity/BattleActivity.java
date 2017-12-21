@@ -10,6 +10,7 @@ import vn.mran.bc1.base.BaseActivity;
 import vn.mran.bc1.draw.DrawLid;
 import vn.mran.bc1.draw.DrawParallaxStar;
 import vn.mran.bc1.helper.Log;
+import vn.mran.bc1.instance.Rule;
 import vn.mran.bc1.util.MyAnimation;
 import vn.mran.bc1.util.ResizeBitmap;
 import vn.mran.bc1.util.Task;
@@ -35,6 +36,9 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
     private DrawParallaxStar drawParallaxStar;
     private DrawLid drawLid;
 
+    private Bitmap[] bpTopArray = new Bitmap[6];
+    private int[] resultArrays;
+
     @Override
     public void initLayout() {
         imgResult1 = findViewById(R.id.imgResult1);
@@ -58,12 +62,12 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
 //        drawParallaxStar.setStarSize((int)screenWidth/10);
         drawLid.setLidSize((int) screenWidth * 8 / 10);
 
-        Bitmap bpRersult1 = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom), screenWidth / 5);
-        Bitmap bpRersult2 = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai), screenWidth / 5);
-        Bitmap bpRersult3 = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga), screenWidth / 5);
-        imgResult1.setImageBitmap(bpRersult1);
-        imgResult2.setImageBitmap(bpRersult2);
-        imgResult3.setImageBitmap(bpRersult3);
+        bpTopArray[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau), screenWidth / 5);
+        bpTopArray[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua), screenWidth / 5);
+        bpTopArray[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom), screenWidth / 5);
+        bpTopArray[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca), screenWidth / 5);
+        bpTopArray[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga), screenWidth / 5);
+        bpTopArray[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai), screenWidth / 5);
     }
 
     @Override
@@ -71,6 +75,10 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
         drawLid.setOnDrawLidUpdate(this);
 
         imgAction.setOnClickListener(this);
+
+        //Set result at first time
+        setResult();
+        findViewById(R.id.frCenter).startAnimation(MyAnimation.shake(this));
     }
 
     @Override
@@ -87,10 +95,28 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
     public void onLidChanged(boolean isOpened) {
         Log.d(TAG, "isLidOpened : " + isOpened);
         if (isOpened) {
+            setTopImage();
             txtAction.setText(getString(R.string.shake));
         } else {
+            setResult();
             findViewById(R.id.frCenter).startAnimation(MyAnimation.shake(this));
             txtAction.setText(getString(R.string.open));
+        }
+    }
+
+    private void setTopImage() {
+        imgResult1.setImageBitmap(bpTopArray[resultArrays[0]]);
+        imgResult2.setImageBitmap(bpTopArray[resultArrays[1]]);
+        imgResult3.setImageBitmap(bpTopArray[resultArrays[2]]);
+    }
+
+    /**
+     * Set result from rule
+     */
+    private void setResult() {
+        resultArrays = Rule.getInstance().getResult();
+        for (int result : resultArrays) {
+            Log.d(TAG, "Result : " + result);
         }
     }
 

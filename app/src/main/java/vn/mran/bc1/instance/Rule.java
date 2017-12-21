@@ -7,6 +7,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.Random;
+
 import vn.mran.bc1.constant.PrefValue;
 import vn.mran.bc1.helper.Log;
 import vn.mran.bc1.model.RuleChild;
@@ -25,6 +29,8 @@ import vn.mran.bc1.util.Task;
 public class Rule {
 
     private final String TAG = getClass().getSimpleName();
+
+    private final String STATUS_ON = "on";
 
     private static Rule instance;
 
@@ -77,6 +83,25 @@ public class Rule {
     private int ruleOfflinePlayAssignNum6;
     private int ruleOfflinePlayQuantum;
     private String ruleOfflinePlayStatus;
+
+    private final byte RULE_NORMAL = 0;
+    private final byte RULE_OFFLINE = 1;
+    private final byte RULE_MAIN = 2;
+    private byte currentRule = RULE_NORMAL;
+    private byte currentRulePlay = RULE_NORMAL;
+
+    //Bau, cua
+    private final int[] RULE_MAIN_GONE_1 = new int[]{0, 1};
+
+    //Tom ca
+    private final int[] RULE_MAIN_GONE_2 = new int[]{2, 3};
+
+    //Ga, nai
+    private final int[] RULE_MAIN_GONE_3 = new int[]{4, 5};
+
+    private int[] ruleMainGoneArrays;
+
+    private int[] resultArrays = new int[]{};
 
     private Rule(Context context) {
         preferences = new Preferences(context);
@@ -143,6 +168,147 @@ public class Rule {
         return instance;
     }
 
+    public void setCurrentRule(byte currentRule) {
+        this.currentRule = currentRule;
+    }
+
+    public void setCurrentRulePlay(byte currentRulePlay) {
+        this.currentRulePlay = currentRulePlay;
+    }
+
+    public void setRuleMainGoneArrays(int[] array) {
+        this.ruleMainGoneArrays = array;
+    }
+
+    /**
+     * Get result in battle
+     *
+     * @return
+     */
+    public int[] getResult() {
+        int[] returnArrays = getRandomNumberArrays();
+        if (ruleChildStatus.equals(STATUS_ON)) {
+            Log.d(TAG, "Rule child status on");
+            Log.d(TAG, "Current rule : " + currentRule);
+            if (ruleChildQuantum == 0) {
+                switch (currentRule) {
+                    case RULE_NORMAL:
+                        Log.d(TAG, "Rule normal");
+                        switch (ruleChildRule) {
+                            case 1:
+                                Log.d(TAG, "Rule 1");
+                                returnArrays = getRule1();
+                                break;
+                            case 2:
+                                Log.d(TAG, "Rule 2");
+                                returnArrays = getRule2();
+                                break;
+                            default:
+                                Log.d(TAG, "Rule 1 default");
+                                returnArrays = getRule1();
+                                break;
+
+                        }
+                        break;
+                    case RULE_OFFLINE:
+                        Log.d(TAG, "Rule offline");
+                        returnArrays = getRuleOffline();
+                        break;
+
+                    default:
+                        Log.d(TAG, "Rule Main");
+                        returnArrays = getRuleMain();
+                        break;
+                }
+            } else {
+                Log.d(TAG, "ruleChildQuantum : " + ruleChildQuantum);
+                ruleChildQuantum = ruleChildQuantum - 1;
+            }
+        } else {
+            Log.d(TAG, "Rule child status off");
+        }
+
+        resultArrays = ArrayUtils.addAll(resultArrays, returnArrays);
+        return returnArrays;
+    }
+
+    /**
+     * Rule Main
+     *
+     * @return
+     */
+    private int[] getRuleMain() {
+        return new int[0];
+    }
+
+    /**
+     * Rule offline
+     *
+     * @return
+     */
+    private int[] getRuleOffline() {
+        return new int[0];
+    }
+
+    /**
+     * Rule 2
+     *
+     * @return
+     */
+    private int[] getRule2() {
+        return new int[0];
+    }
+
+    /**
+     * Rule 1
+     *
+     * @return
+     */
+    private int[] getRule1() {
+        int tong = 0;
+
+        int range = 3;
+        if (resultArrays.length == 0) {
+            Log.d(TAG, "resultArrays length = 0");
+            return getRandomNumberArrays();
+        } else if (resultArrays.length >= 6) {
+            range = 6;
+        }
+        for (int i = resultArrays.length - 1; i >= resultArrays.length - range; i--) {
+            Log.d(TAG, "Result array sub : " + resultArrays[i]);
+            switch (resultArrays[i]) {
+                case 0:
+                    tong += ruleChildAssignNum1;
+                    break;
+                case 1:
+                    tong += ruleChildAssignNum2;
+                    break;
+                case 2:
+                    tong += ruleChildAssignNum3;
+                    break;
+                case 3:
+                    tong += ruleChildAssignNum4;
+                    break;
+                case 4:
+                    tong += ruleChildAssignNum5;
+                    break;
+                default:
+                    tong += ruleChildAssignNum6;
+                    break;
+            }
+        }
+
+        tong += ruleChildAdditionalNumber;
+        tong = tong - 1;
+        Log.d(TAG, "Tong : " + tong);
+        int number = tong % 6;
+        Log.d(TAG, "Number : " + number);
+
+        int[] returnArrays = getRandomNumberArrays();
+        returnArrays[getRandomNumber(0, 2)] = number;
+        return returnArrays;
+    }
+
     /**
      * Initialize Firebase realtime database
      */
@@ -179,13 +345,13 @@ public class Rule {
                         preferences.storeValue(PrefValue.RULE_CHILD_NUM_6, ruleChildAssignNum6);
 
                         ruleChildQuantum = ruleChild.getQuantum();
-                        preferences.storeValue(PrefValue.RULE_CHILD_QUANTUM,ruleChildQuantum);
+                        preferences.storeValue(PrefValue.RULE_CHILD_QUANTUM, ruleChildQuantum);
 
                         ruleChildRule = ruleChild.getRule();
-                        preferences.storeValue(PrefValue.RULE_CHILD_RULE,ruleChildRule);
+                        preferences.storeValue(PrefValue.RULE_CHILD_RULE, ruleChildRule);
 
                         ruleChildStatus = ruleChild.status;
-                        preferences.storeValue(PrefValue.RULE_CHILD_STATUS,ruleChildStatus);
+                        preferences.storeValue(PrefValue.RULE_CHILD_STATUS, ruleChildStatus);
 
                         //Rule Child Play
                         RuleChildPlay ruleChildPlay = dataSnapshot.child("RuleChildPlay").getValue(RuleChildPlay.class);
@@ -213,13 +379,13 @@ public class Rule {
                         preferences.storeValue(PrefValue.RULE_CHILD_PLAY_NUM_6, ruleChildPlayAssignNum6);
 
                         ruleChildPlayQuantum = ruleChildPlay.getQuantum();
-                        preferences.storeValue(PrefValue.RULE_CHILD_PLAY_QUANTUM,ruleChildPlayQuantum);
+                        preferences.storeValue(PrefValue.RULE_CHILD_PLAY_QUANTUM, ruleChildPlayQuantum);
 
                         ruleChildPlayRule = ruleChildPlay.getRule();
-                        preferences.storeValue(PrefValue.RULE_CHILD_PLAY_RULE,ruleChildPlayRule);
+                        preferences.storeValue(PrefValue.RULE_CHILD_PLAY_RULE, ruleChildPlayRule);
 
                         ruleChildPlayStatus = ruleChildPlay.status;
-                        preferences.storeValue(PrefValue.RULE_CHILD_PLAY_STATUS,ruleChildPlayStatus);
+                        preferences.storeValue(PrefValue.RULE_CHILD_PLAY_STATUS, ruleChildPlayStatus);
 
                         //Rule Main
                         RuleMain ruleMain = dataSnapshot.child("RuleMain").getValue(RuleMain.class);
@@ -227,10 +393,10 @@ public class Rule {
                         Log.d(TAG, "[RuleMain] [status : " + ruleMain.status + " ]");
 
                         ruleMainQuantum = ruleMain.getQuantum();
-                        preferences.storeValue(PrefValue.RULE_MAIN_QUANTUM,ruleMainQuantum);
+                        preferences.storeValue(PrefValue.RULE_MAIN_QUANTUM, ruleMainQuantum);
 
                         ruleMainStatus = ruleMain.status;
-                        preferences.storeValue(PrefValue.RULE_MAIN_STATUS,ruleMainStatus);
+                        preferences.storeValue(PrefValue.RULE_MAIN_STATUS, ruleMainStatus);
 
                         //Rule Main Play
                         RuleMainPlay ruleMainPlay = dataSnapshot.child("RuleMainPlay").getValue(RuleMainPlay.class);
@@ -238,10 +404,10 @@ public class Rule {
                         Log.d(TAG, "[RuleMainPlay] [status : " + ruleMainPlay.status + " ]");
 
                         ruleMainPlayQuantum = ruleMainPlay.getQuantum();
-                        preferences.storeValue(PrefValue.RULE_MAIN_PLAY_QUANTUM,ruleMainPlayQuantum);
+                        preferences.storeValue(PrefValue.RULE_MAIN_PLAY_QUANTUM, ruleMainPlayQuantum);
 
                         ruleMainPlayStatus = ruleMain.status;
-                        preferences.storeValue(PrefValue.RULE_MAIN_PLAY_STATUS,ruleMainPlayStatus);
+                        preferences.storeValue(PrefValue.RULE_MAIN_PLAY_STATUS, ruleMainPlayStatus);
 
 
                         //Rule offline
@@ -268,17 +434,18 @@ public class Rule {
                         preferences.storeValue(PrefValue.RULE_OFFLINE_NUM_6, ruleOfflineAssignNum6);
 
                         ruleOfflineQuantum = ruleOffline.getQuantum();
-                        preferences.storeValue(PrefValue.RULE_OFFLINE_QUANTUM,ruleOfflineQuantum);
+                        preferences.storeValue(PrefValue.RULE_OFFLINE_QUANTUM, ruleOfflineQuantum);
 
                         ruleOfflineStatus = ruleOffline.status;
-                        preferences.storeValue(PrefValue.RULE_OFFLINE_STATUS,ruleOfflineStatus);
+                        preferences.storeValue(PrefValue.RULE_OFFLINE_STATUS, ruleOfflineStatus);
 
                         //Rule Offline Play
                         RuleOfflinePlay ruleOfflinePlay = dataSnapshot.child("RuleOfflinePlay").getValue(RuleOfflinePlay.class);
                         Log.d(TAG, "[RuleOfflinePlay] [additionalNumber : " + ruleOfflinePlay.additionalNumber + " ]");
                         Log.d(TAG, "[RuleOfflinePlay] [assignNumber : " + ruleOfflinePlay.assignNumber + " ]");
                         Log.d(TAG, "[RuleOfflinePlay] [quantum : " + ruleOfflinePlay.quantum + " ]");
-                        Log.d(TAG, "[RuleOfflinePlay] [status : " + ruleOfflinePlay.status + " ]");ruleOfflinePlayAdditionalNumber = ruleOfflinePlay.getAdditionalNumber();
+                        Log.d(TAG, "[RuleOfflinePlay] [status : " + ruleOfflinePlay.status + " ]");
+                        ruleOfflinePlayAdditionalNumber = ruleOfflinePlay.getAdditionalNumber();
                         preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_ADDITIONAL_NUMBER, ruleOfflinePlayAdditionalNumber);
 
                         int[] ruleOfflinePlayAssignNumArray = ruleOfflinePlay.getAssignNumberArray();
@@ -296,10 +463,10 @@ public class Rule {
                         preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_NUM_6, ruleOfflinePlayAssignNum6);
 
                         ruleOfflinePlayQuantum = ruleOfflinePlay.getQuantum();
-                        preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_QUANTUM,ruleOfflinePlayQuantum);
+                        preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_QUANTUM, ruleOfflinePlayQuantum);
 
                         ruleOfflinePlayStatus = ruleOfflinePlay.status;
-                        preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_STATUS,ruleOfflinePlayStatus);
+                        preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_STATUS, ruleOfflinePlayStatus);
                     }
                 }));
 
@@ -310,5 +477,20 @@ public class Rule {
                 Log.e(TAG, databaseError.getMessage());
             }
         });
+    }
+
+    private int[] getRandomNumberArrays() {
+        Random random = new Random();
+        return new int[]{random.nextInt((5 - 0) + 1),
+                random.nextInt((5 - 0) + 1),
+                random.nextInt((5 - 0) + 1)};
+    }
+
+    private int getRandomNumber() {
+        return new Random().nextInt((5 - 0) + 1);
+    }
+
+    private int getRandomNumber(int min, int max) {
+        return new Random().nextInt((max - min) + 1);
     }
 }
