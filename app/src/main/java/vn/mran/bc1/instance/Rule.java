@@ -32,7 +32,7 @@ public class Rule {
 
     private final String TAG = getClass().getSimpleName();
 
-    private final String STATUS_ON = "on";
+    public final String STATUS_ON = "on";
 
     private static Rule instance;
 
@@ -86,20 +86,20 @@ public class Rule {
     private int ruleOfflinePlayQuantum;
     private String ruleOfflinePlayStatus;
 
-    private final byte RULE_NORMAL = 0;
-    private final byte RULE_OFFLINE = 1;
-    private final byte RULE_MAIN = 2;
+    public final byte RULE_NORMAL = 0;
+    public final byte RULE_OFFLINE = 1;
+    public final byte RULE_MAIN = 2;
     private byte currentRule = RULE_NORMAL;
     private byte currentRulePlay = RULE_NORMAL;
 
     //Bau, cua
-    private final int[] RULE_MAIN_GONE_1 = new int[]{0, 1};
+    public final int[] RULE_MAIN_GONE_1 = new int[]{0, 1};
 
     //Tom ca
-    private final int[] RULE_MAIN_GONE_2 = new int[]{2, 3};
+    public final int[] RULE_MAIN_GONE_2 = new int[]{2, 3};
 
     //Ga, nai
-    private final int[] RULE_MAIN_GONE_3 = new int[]{4, 5};
+    public final int[] RULE_MAIN_GONE_3 = new int[]{4, 5};
 
     private int[] ruleMainGoneArrays;
 
@@ -174,12 +174,20 @@ public class Rule {
         this.currentRule = currentRule;
     }
 
+    public byte getCurrentRule() {
+        return currentRule;
+    }
+
     public void setCurrentRulePlay(byte currentRulePlay) {
         this.currentRulePlay = currentRulePlay;
     }
 
     public void setRuleMainGoneArrays(int[] array) {
         this.ruleMainGoneArrays = array;
+    }
+
+    public String getRuleMainStatus() {
+        return ruleMainStatus;
     }
 
     /**
@@ -189,13 +197,13 @@ public class Rule {
      */
     public int[] getResult() {
         int[] returnArrays = getRandomNumberArrays();
-        if (ruleChildStatus.equals(STATUS_ON)) {
-            Log.d(TAG, "Rule child status on");
-            Log.d(TAG, "Current rule : " + currentRule);
-            if (ruleChildQuantum == 0) {
-                switch (currentRule) {
-                    case RULE_NORMAL:
-                        Log.d(TAG, "Rule normal");
+        Log.d(TAG, "Rule child status on");
+        Log.d(TAG, "Current rule : " + currentRule);
+        switch (currentRule) {
+            case RULE_NORMAL:
+                Log.d(TAG, "Rule normal");
+                if (ruleChildStatus.equals(STATUS_ON)) {
+                    if (ruleChildQuantum == 0) {
                         switch (ruleChildRule) {
                             case 1:
                                 Log.d(TAG, "Rule 1");
@@ -211,24 +219,32 @@ public class Rule {
                                 break;
 
                         }
-                        break;
-                    case RULE_OFFLINE:
-                        Log.d(TAG, "Rule offline");
-                        returnArrays = getRuleOffline();
-                        break;
+                    } else {
+                        Log.d(TAG, "ruleChildQuantum : " + ruleChildQuantum);
+                        ruleChildQuantum = ruleChildQuantum - 1;
+                    }
 
-                    default:
-                        Log.d(TAG, "Rule Main");
-                        returnArrays = getRuleMain();
-                        break;
+                } else {
+                    Log.d(TAG, "Rule child status off");
                 }
-            } else {
-                Log.d(TAG, "ruleChildQuantum : " + ruleChildQuantum);
-                ruleChildQuantum = ruleChildQuantum - 1;
-            }
-        } else {
-            Log.d(TAG, "Rule child status off");
+
+                break;
+            case RULE_OFFLINE:
+                Log.d(TAG, "Rule offline");
+                returnArrays = getRuleOffline();
+                break;
+
+            default:
+                Log.d(TAG, "Rule Main");
+                if (ruleMainQuantum == 0) {
+                    returnArrays = getRuleMain();
+                }else {
+                    Log.d(TAG, "ruleMainQuantum : " + ruleMainQuantum);
+                    ruleMainQuantum = ruleMainQuantum - 1;
+                }
+                break;
         }
+
 
         resultArrays = ArrayUtils.addAll(resultArrays, returnArrays);
         return returnArrays;
