@@ -9,6 +9,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import vn.mran.bc1.constant.PrefValue;
@@ -238,7 +240,17 @@ public class Rule {
      * @return
      */
     private int[] getRuleMain() {
-        return new int[0];
+        int[] resultArray = new int[3];
+        for (int i = 0; i < resultArray.length; i++) {
+            while (true) {
+                int value = getRandomAnimalPosition();
+                if (value != ruleMainGoneArrays[0] && value != ruleMainGoneArrays[1]) {
+                    resultArray[i] = value;
+                    break;
+                }
+            }
+        }
+        return resultArray;
     }
 
     /**
@@ -247,7 +259,64 @@ public class Rule {
      * @return
      */
     private int[] getRuleOffline() {
-        return new int[0];
+        int tong = 0;
+
+        int range = 3;
+        if (resultArrays.length == 0) {
+            Log.d(TAG, "resultArrays length = 0");
+            return getRandomNumberArrays();
+        } else if (resultArrays.length >= 6) {
+            range = 6;
+        }
+        for (int i = resultArrays.length - 1; i >= resultArrays.length - range; i--) {
+            Log.d(TAG, "Result array sub : " + resultArrays[i]);
+            switch (resultArrays[i]) {
+                case 0:
+                    tong += ruleChildAssignNum1;
+                    break;
+                case 1:
+                    tong += ruleChildAssignNum2;
+                    break;
+                case 2:
+                    tong += ruleChildAssignNum3;
+                    break;
+                case 3:
+                    tong += ruleChildAssignNum4;
+                    break;
+                case 4:
+                    tong += ruleChildAssignNum5;
+                    break;
+                default:
+                    tong += ruleChildAssignNum6;
+                    break;
+            }
+        }
+
+        tong += ruleChildAdditionalNumber;
+
+        int min = Integer.parseInt((new SimpleDateFormat("mm").format(new Date())).toString());
+
+        if (min < 10)
+            tong -= 1;
+        if (min >= 10 && min < 20)
+            tong -= 2;
+        if (min >= 20 && min < 30)
+            tong -= 3;
+        if (min >= 30 && min < 40)
+            tong -= 4;
+        if (min >= 40 && min < 50)
+            tong -= 5;
+        if (min >= 50 && min < 60)
+            tong -= 6;
+
+        tong = tong - 1;
+        Log.d(TAG, "Tong : " + tong);
+        int number = tong % 6;
+        Log.d(TAG, "Number : " + number);
+
+        int[] returnArrays = getRandomNumberArrays();
+        returnArrays[getRandomNumber(0, 2)] = number;
+        return returnArrays;
     }
 
     /**
@@ -256,7 +325,64 @@ public class Rule {
      * @return
      */
     private int[] getRule2() {
-        return new int[0];
+        int tong = 0;
+
+        int range = 3;
+        if (resultArrays.length == 0) {
+            Log.d(TAG, "resultArrays length = 0");
+            return getRandomNumberArrays();
+        } else if (resultArrays.length >= 6) {
+            range = 6;
+        }
+        for (int i = resultArrays.length - 1; i >= resultArrays.length - range; i--) {
+            Log.d(TAG, "Result array sub : " + resultArrays[i]);
+            switch (resultArrays[i]) {
+                case 0:
+                    tong += ruleChildAssignNum1;
+                    break;
+                case 1:
+                    tong += ruleChildAssignNum2;
+                    break;
+                case 2:
+                    tong += ruleChildAssignNum3;
+                    break;
+                case 3:
+                    tong += ruleChildAssignNum4;
+                    break;
+                case 4:
+                    tong += ruleChildAssignNum5;
+                    break;
+                default:
+                    tong += ruleChildAssignNum6;
+                    break;
+            }
+        }
+
+        tong += ruleChildAdditionalNumber;
+
+        int min = Integer.parseInt((new SimpleDateFormat("mm").format(new Date())).toString());
+
+        if (min < 10)
+            tong += 1;
+        if (min >= 10 && min < 20)
+            tong += 2;
+        if (min >= 20 && min < 30)
+            tong += 3;
+        if (min >= 30 && min < 40)
+            tong += 4;
+        if (min >= 40 && min < 50)
+            tong += 5;
+        if (min >= 50 && min < 60)
+            tong += 6;
+
+        tong = tong - 1;
+        Log.d(TAG, "Tong : " + tong);
+        int number = tong % 6;
+        Log.d(TAG, "Number : " + number);
+
+        int[] returnArrays = getRandomNumberArrays();
+        returnArrays[getRandomNumber(0, 2)] = number;
+        return returnArrays;
     }
 
     /**
@@ -486,7 +612,7 @@ public class Rule {
                 random.nextInt((5 - 0) + 1)};
     }
 
-    private int getRandomNumber() {
+    private int getRandomAnimalPosition() {
         return new Random().nextInt((5 - 0) + 1);
     }
 
