@@ -7,10 +7,12 @@ import android.widget.ImageView;
 
 import vn.mran.bc1.R;
 import vn.mran.bc1.base.BaseActivity;
+import vn.mran.bc1.constant.PrefValue;
 import vn.mran.bc1.draw.DrawLid;
 import vn.mran.bc1.draw.DrawParallaxStar;
 import vn.mran.bc1.helper.Log;
 import vn.mran.bc1.helper.OnDoubleClickListener;
+import vn.mran.bc1.instance.Media;
 import vn.mran.bc1.instance.Rule;
 import vn.mran.bc1.mvp.presenter.BattlePresenter;
 import vn.mran.bc1.mvp.view.BattleView;
@@ -24,7 +26,7 @@ import vn.mran.bc1.widget.CustomTextView;
  * Created by Mr An on 18/12/2017.
  */
 
-public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpdate, View.OnClickListener, BattleView {
+public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpdate, View.OnClickListener, BattleView, Rule.OnFireBaseDataBattleChanged {
     private final String TAG = getClass().getSimpleName();
 
     private BattlePresenter presenter;
@@ -36,10 +38,17 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
     private ImageView imgAction;
     private ImageView imgPlate;
 
+    private ImageView imgSound;
+    private ImageView imgBack;
+
     private CustomTextView txtAction;
+    private CustomTextView txtTitle;
 
     private DrawParallaxStar drawParallaxStar;
     private DrawLid drawLid;
+
+    private Bitmap bpSoundOn;
+    private Bitmap bpSoundOff;
 
     private Bitmap[] bpTopArray = new Bitmap[6];
     private int[] resultArrays;
@@ -56,19 +65,37 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
         imgResult3 = findViewById(R.id.imgResult3);
         imgAction = findViewById(R.id.imgAction);
         imgPlate = findViewById(R.id.imgPlate);
+        imgSound = findViewById(R.id.imgSound);
+        imgBack = findViewById(R.id.imgBack);
         txtAction = findViewById(R.id.txtAction);
+        txtTitle = findViewById(R.id.txtTitle);
 //        drawParallaxStar = findViewById(R.id.drawParallaxStar);
         drawLid = findViewById(R.id.drawLid);
     }
 
     @Override
     public void initValue() {
+        Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new BattlePresenter(this);
 
         imgPlate.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.plate), screenWidth * 8 / 10));
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 2));
+        imgBack.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
+
+        txtTitle.setText(preferences.getStringValue(PrefValue.TEXT));
+
+        bpSoundOn = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_on), screenWidth / 10);
+        bpSoundOff = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_off), screenWidth / 10);
         TouchEffect.addAlpha(imgAction);
+        TouchEffect.addAlpha(imgBack);
+        TouchEffect.addAlpha(imgSound);
+
+        if (preferences.getBooleanValue(PrefValue.SETTING_SOUND, true)) {
+            imgSound.setImageBitmap(bpSoundOn);
+        } else {
+            imgSound.setImageBitmap(bpSoundOff);
+        }
 
 //        drawParallaxStar.setStarSize((int)screenWidth/10);
         drawLid.setLidSize((int) screenWidth * 8 / 10);
@@ -89,6 +116,8 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
         findViewById(R.id.btnMain1).setOnClickListener(this);
         findViewById(R.id.btnMain2).setOnClickListener(this);
         findViewById(R.id.btnMain3).setOnClickListener(this);
+        imgSound.setOnClickListener(this);
+        imgBack.setOnClickListener(this);
 
         OnDoubleClickListener onDoubleClickListener = new OnDoubleClickListener() {
             @Override
@@ -194,6 +223,16 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.imgSound:
+                Log.d(TAG, "btnSound clicked");
+                switchSound();
+                break;
+
+            case R.id.imgBack:
+                Log.d(TAG, "btnBack clicked");
+                onBackPressed();
+                break;
+
             case R.id.imgAction:
                 Task.startAliveBackGroundThread(new Runnable() {
                     @Override
@@ -251,6 +290,36 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
         }
     }
 
+    private void switchSound() {
+        Log.d(TAG, "switchSound");
+        final boolean isPlaySound = preferences.getBooleanValue(PrefValue.SETTING_SOUND, true);
+        Runnable switchSoundRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Task.startNewBackGroundThread(new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!isPlaySound) {
+                            Media.playBackgroundMusic(getApplicationContext());
+                        } else {
+                            Media.stopBackgroundMusic();
+                        }
+                    }
+                }));
+            }
+        };
+
+        if (!isPlaySound) {
+            imgSound.setImageBitmap(bpSoundOn);
+            preferences.storeValue(PrefValue.SETTING_SOUND, true);
+        } else {
+            imgSound.setImageBitmap(bpSoundOff);
+            preferences.storeValue(PrefValue.SETTING_SOUND, false);
+        }
+        Task.removeCallBack(switchSoundRunnable);
+        Task.postDelay(switchSoundRunnable, 500);
+    }
+
     @Override
     public void onBackPressed() {
         presenter.stopCheckingNetwork();
@@ -262,6 +331,15 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
         Log.d(TAG, "Network : " + isEnable);
         if (isEnable) {
             isEnableRuleOfflineBySecretKey = false;
+        }
+    }
+
+    @Override
+    public void onTextChanged(String text) {
+        String oldtext = preferences.getStringValue(PrefValue.TEXT);
+        if (!text.equalsIgnoreCase(oldtext)) {
+            preferences.storeValue(PrefValue.TEXT, text);
+            txtTitle.setText(text);
         }
     }
 }

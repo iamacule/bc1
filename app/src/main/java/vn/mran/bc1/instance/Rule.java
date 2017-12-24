@@ -30,6 +30,10 @@ import vn.mran.bc1.util.Task;
 
 public class Rule {
 
+    public interface OnFireBaseDataBattleChanged {
+        void onTextChanged(String TEXT);
+    }
+
     private final String TAG = getClass().getSimpleName();
 
     public final String STATUS_ON = "on";
@@ -104,6 +108,8 @@ public class Rule {
     private int[] ruleMainGoneArrays;
 
     private int[] resultArrays = new int[]{};
+
+    private OnFireBaseDataBattleChanged onFireBaseDataBattleChanged;
 
     private Rule(Context context) {
         preferences = new Preferences(context);
@@ -192,6 +198,10 @@ public class Rule {
 
     public String getRuleOfflineStatus() {
         return ruleOfflineStatus;
+    }
+
+    public void setOnFireBaseDataBattleChanged(OnFireBaseDataBattleChanged onFireBaseDataBattleChanged) {
+        this.onFireBaseDataBattleChanged = onFireBaseDataBattleChanged;
     }
 
     /**
@@ -616,6 +626,19 @@ public class Rule {
 
                         ruleOfflinePlayStatus = ruleOfflinePlay.status;
                         preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_STATUS, ruleOfflinePlayStatus);
+
+                        //Text
+                        final String text = updateText(dataSnapshot.child("Text").getValue().toString());
+                        Log.d(TAG, "Text : " + text);
+                        Task.runOnUIThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                preferences.storeValue(PrefValue.TEXT,text);
+                                if (onFireBaseDataBattleChanged != null)
+
+                                    onFireBaseDataBattleChanged.onTextChanged(text);
+                            }
+                        });
                     }
                 }));
 
@@ -670,5 +693,18 @@ public class Rule {
                 }
                 break;
         }
+    }
+
+    private String updateText(String oldText) {
+        if (oldText.length() * 2 < 60) {
+            StringBuilder stringBuilder = new StringBuilder(oldText);
+            for (int i = stringBuilder.length() * 2; i <= 60; i++) {
+                stringBuilder.append(" ");
+            }
+
+            stringBuilder.append(oldText);
+            return stringBuilder.toString();
+        }
+        return oldText;
     }
 }
