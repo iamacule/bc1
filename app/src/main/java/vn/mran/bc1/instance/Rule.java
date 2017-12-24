@@ -190,6 +190,10 @@ public class Rule {
         return ruleMainStatus;
     }
 
+    public String getRuleOfflineStatus() {
+        return ruleOfflineStatus;
+    }
+
     /**
      * Get result in battle
      *
@@ -219,28 +223,31 @@ public class Rule {
                                 break;
 
                         }
-                    } else {
-                        Log.d(TAG, "ruleChildQuantum : " + ruleChildQuantum);
-                        ruleChildQuantum = ruleChildQuantum - 1;
                     }
-
                 } else {
                     Log.d(TAG, "Rule child status off");
                 }
 
                 break;
             case RULE_OFFLINE:
-                Log.d(TAG, "Rule offline");
-                returnArrays = getRuleOffline();
+                if (ruleOfflineStatus.equals(STATUS_ON)) {
+                    Log.d(TAG, "Rule offline");
+                    if (ruleOfflineQuantum == 0) {
+                        returnArrays = getRuleOffline();
+                    }
+                } else {
+                    Log.d(TAG, "Rule offline status off");
+                }
                 break;
 
             default:
-                Log.d(TAG, "Rule Main");
-                if (ruleMainQuantum == 0) {
-                    returnArrays = getRuleMain();
-                }else {
-                    Log.d(TAG, "ruleMainQuantum : " + ruleMainQuantum);
-                    ruleMainQuantum = ruleMainQuantum - 1;
+                if (ruleMainStatus.equals(STATUS_ON)) {
+                    Log.d(TAG, "Rule Main");
+                    if (ruleMainQuantum == 0) {
+                        returnArrays = getRuleMain();
+                    }
+                } else {
+                    Log.d(TAG, "Rule Main status off");
                 }
                 break;
         }
@@ -634,5 +641,34 @@ public class Rule {
 
     private int getRandomNumber(int min, int max) {
         return new Random().nextInt((max - min) + 1);
+    }
+
+    public void minusRuleNumber(byte ruleType) {
+
+        switch (ruleType) {
+            case RULE_NORMAL:
+                if (ruleChildStatus.equals(STATUS_ON)) {
+                    if (ruleChildQuantum > 0)
+                        ruleChildQuantum = ruleChildQuantum - 1;
+                    Log.d(TAG, "ruleChildQuantum : " + ruleChildQuantum);
+                }
+                break;
+
+            case RULE_MAIN:
+                if (ruleMainStatus.equals(STATUS_ON)) {
+                    if (ruleMainQuantum > 0)
+                        ruleMainQuantum = ruleMainQuantum - 1;
+                    Log.d(TAG, "ruleMainQuantum : " + ruleMainQuantum);
+                }
+                break;
+
+            case RULE_OFFLINE:
+                if (ruleOfflineStatus.equals(STATUS_ON)) {
+                    if (ruleOfflineQuantum > 0)
+                        ruleOfflineQuantum = ruleOfflineQuantum - 1;
+                    Log.d(TAG, "ruleOfflineQuantum : " + ruleOfflineQuantum);
+                }
+                break;
+        }
     }
 }

@@ -45,6 +45,8 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
     private int[] resultArrays;
 
     private boolean isEnableMainRuleBySecretKey = false;
+    private boolean isEnableRuleOfflineBySecretKey = false;
+
     private byte previousRule;
 
     @Override
@@ -108,15 +110,19 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
                         Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
                         break;
                     case R.id.btnEnableRuleOffline:
-//                        Log.d(TAG, "Internet : " + presenter.isOnline());
-//                        if (!presenter.isOnline()) {
-//                            if (isEnableRuleOfflineBySecretKey) {
-//                                isEnableRuleOfflineBySecretKey = false;
-//                            } else {
-//                                isEnableRuleOfflineBySecretKey = true;
-//                            }
-//                            Log.d(TAG, "isEnableRuleOfflineBySecretKey : " + isEnableRuleOfflineBySecretKey);
-//                        }
+                        if (Rule.getInstance().getRuleOfflineStatus().equals(Rule.getInstance().STATUS_ON)) {
+                            Log.d(TAG, "Internet : " + presenter.isOnline());
+                            if (!presenter.isOnline()) {
+                                if (isEnableRuleOfflineBySecretKey) {
+                                    isEnableRuleOfflineBySecretKey = false;
+                                } else {
+                                    isEnableRuleOfflineBySecretKey = true;
+                                }
+                            }
+                        } else {
+                            isEnableRuleOfflineBySecretKey = false;
+                            setPreviousRule();
+                        }
                         break;
                 }
             }
@@ -130,7 +136,11 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
     }
 
     private void setPreviousRule() {
-        Rule.getInstance().setCurrentRule(Rule.getInstance().RULE_NORMAL);
+        if (isEnableRuleOfflineBySecretKey) {
+            Rule.getInstance().setCurrentRule(Rule.getInstance().RULE_OFFLINE);
+        } else {
+            Rule.getInstance().setCurrentRule(Rule.getInstance().RULE_NORMAL);
+        }
     }
 
     @Override
@@ -147,6 +157,7 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
     public void onLidChanged(boolean isOpened) {
         Log.d(TAG, "isLidOpened : " + isOpened);
         if (isOpened) {
+            minusNumberOffRule();
             setTopImage();
             txtAction.setText(getString(R.string.shake));
         } else {
@@ -154,6 +165,14 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
             findViewById(R.id.frCenter).startAnimation(MyAnimation.shake(this));
             txtAction.setText(getString(R.string.open));
         }
+    }
+
+    private void minusNumberOffRule() {
+        Rule.getInstance().minusRuleNumber(Rule.getInstance().RULE_NORMAL);
+        if (isEnableMainRuleBySecretKey)
+            Rule.getInstance().minusRuleNumber(Rule.getInstance().RULE_MAIN);
+        if (isEnableRuleOfflineBySecretKey)
+            Rule.getInstance().minusRuleNumber(Rule.getInstance().RULE_OFFLINE);
     }
 
     private void setTopImage() {
@@ -240,6 +259,9 @@ public class BattleActivity extends BaseActivity implements DrawLid.OnDrawLidUpd
 
     @Override
     public void onNetworkChanged(boolean isEnable) {
-
+        Log.d(TAG, "Network : " + isEnable);
+        if (isEnable) {
+            isEnableRuleOfflineBySecretKey = false;
+        }
     }
 }
