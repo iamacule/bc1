@@ -20,7 +20,7 @@ import vn.mran.bc1.util.Task;
  * Created by Mr An on 28/11/2017.
  */
 
-public class DrawLid extends View {
+public class DrawPlateLid extends View {
 
     public interface OnDrawLidUpdate {
         void onTouch();
@@ -32,21 +32,23 @@ public class DrawLid extends View {
 
     private OnDrawLidUpdate onDrawLidUpdate;
 
-    private Bitmap lid;
+    private Bitmap bpLid;
+    private Bitmap bpPlate;
 
     private Rect rectLid;
+    private Rect rectPlate;
     private int width;
     private int height;
 
     private Point midPoint;
     private boolean isLidOpened = false;
 
-    public DrawLid(Context context) {
+    public DrawPlateLid(Context context) {
         super(context);
         init(context);
     }
 
-    public DrawLid(Context context, @Nullable AttributeSet attrs) {
+    public DrawPlateLid(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
@@ -56,7 +58,8 @@ public class DrawLid extends View {
     }
 
     private void init(Context context) {
-        lid = BitmapFactory.decodeResource(context.getResources(), R.drawable.lid);
+        bpLid = BitmapFactory.decodeResource(context.getResources(), R.drawable.lid);
+        bpPlate = BitmapFactory.decodeResource(context.getResources(), R.drawable.plate);
         setFocusable(false);
         setFocusableInTouchMode(false);
     }
@@ -67,19 +70,23 @@ public class DrawLid extends View {
 
         width = w;
         height = h;
-        midPoint = new Point(width / 2, height / 2);
+        midPoint = new Point(width / 2, height * 57 / 100);
         invalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         //Draw
-        rectLid = new Rect(midPoint.x - lid.getWidth() / 2, midPoint.y - lid.getHeight() / 2, midPoint.x + lid.getWidth() / 2, midPoint.y + lid.getHeight() / 2);
-        canvas.drawBitmap(lid, null, rectLid, null);
+        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height * 57 / 100 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height * 57 / 100 + bpPlate.getHeight() / 2);
+        canvas.drawBitmap(bpPlate, null, rectPlate, null);
+
+        rectLid = new Rect(midPoint.x - bpLid.getWidth() / 2, midPoint.y - bpLid.getHeight() / 2, midPoint.x + bpLid.getWidth() / 2, midPoint.y + bpLid.getHeight() / 2);
+        canvas.drawBitmap(bpLid, null, rectLid, null);
     }
 
-    public void setLidSize(int w) {
-        lid = ResizeBitmap.resize(lid, w);
+    public void setWidth(int w) {
+        bpLid = ResizeBitmap.resize(bpLid, w * 9 / 10);
+        bpPlate = ResizeBitmap.resize(bpPlate, w * 9 / 10);
         invalidate();
     }
 
@@ -101,7 +108,7 @@ public class DrawLid extends View {
     }
 
     private void closeLid() {
-        for (int i = 0 - lid.getHeight() / 2; i <= height / 2; i += 3) {
+        for (int i = 0 - bpLid.getHeight() / 2; i <= height * 57 / 100; i += 3) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -110,7 +117,7 @@ public class DrawLid extends View {
             midPoint.y = i;
             postInvalidate();
             if (isLidOpened) {
-                if (i >= (height / 2) - 3) {
+                if (i >= (height * 57 / 100) - 3) {
                     isLidOpened = false;
                     Task.runOnUIThread(new Runnable() {
                         @Override
@@ -133,7 +140,7 @@ public class DrawLid extends View {
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });
-        for (int i = height / 2; i >= 0 - lid.getHeight() / 2; i -= 3) {
+        for (int i = height * 57 / 100; i >= 0 - bpLid.getHeight() / 2; i -= 3) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
