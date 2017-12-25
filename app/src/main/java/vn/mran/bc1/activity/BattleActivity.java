@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import vn.mran.bc1.R;
 import vn.mran.bc1.base.BaseActivity;
 import vn.mran.bc1.constant.PrefValue;
-import vn.mran.bc1.draw.DrawPlateLid;
+import vn.mran.bc1.draw.DrawGame;
 import vn.mran.bc1.draw.DrawParallaxStar;
 import vn.mran.bc1.helper.Log;
 import vn.mran.bc1.helper.OnDoubleClickListener;
@@ -26,7 +26,7 @@ import vn.mran.bc1.widget.CustomTextView;
  * Created by Mr An on 18/12/2017.
  */
 
-public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawLidUpdate, View.OnClickListener, BattleView, Rule.OnFireBaseDataBattleChanged {
+public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUpdate, View.OnClickListener, BattleView, Rule.OnFireBaseDataBattleChanged {
     private final String TAG = getClass().getSimpleName();
 
     private BattlePresenter presenter;
@@ -44,7 +44,7 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
     private CustomTextView txtTitle;
 
     private DrawParallaxStar drawParallaxStar;
-    private DrawPlateLid drawPlateLid;
+    private DrawGame drawGame;
 
     private Bitmap bpSoundOn;
     private Bitmap bpSoundOff;
@@ -60,6 +60,7 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
 
     @Override
     public void initLayout() {
+        hideStatusBar();
         imgResult1 = findViewById(R.id.imgResult1);
         imgResult2 = findViewById(R.id.imgResult2);
         imgResult3 = findViewById(R.id.imgResult3);
@@ -68,14 +69,15 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
         imgBack = findViewById(R.id.imgBack);
         txtAction = findViewById(R.id.txtAction);
         txtTitle = findViewById(R.id.txtTitle);
-//        drawParallaxStar = findViewById(R.id.drawParallaxStar);
-        drawPlateLid = findViewById(R.id.drawLid);
+        drawParallaxStar = findViewById(R.id.drawParallaxStar);
+        drawGame = findViewById(R.id.drawLid);
     }
 
     @Override
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new BattlePresenter(this);
+        drawParallaxStar.setStarSize((int)screenWidth/15);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 2));
         imgBack.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
@@ -94,9 +96,6 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
             imgSound.setImageBitmap(bpSoundOff);
         }
 
-//        drawParallaxStar.setStarSize((int)screenWidth/10);
-        drawPlateLid.setWidth((int) screenWidth * 8 / 10);
-
         bpTopArray[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau), screenWidth / 5);
         bpTopArray[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua), screenWidth / 5);
         bpTopArray[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom), screenWidth / 5);
@@ -111,7 +110,7 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
 
     @Override
     public void initAction() {
-        drawPlateLid.setOnDrawLidUpdate(this);
+        drawGame.setOnDrawLidUpdate(this);
 
         imgAction.setOnClickListener(this);
         findViewById(R.id.btnMain1).setOnClickListener(this);
@@ -226,6 +225,7 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
         for (int result : resultArrays) {
             Log.d(TAG, "Result : " + result);
         }
+        drawGame.setResultArrays(resultArrays);
     }
 
     @Override
@@ -246,7 +246,7 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
                     @Override
                     public void run() {
                         setPreviousRule();
-                        drawPlateLid.action();
+                        drawGame.action();
                     }
                 });
                 break;
@@ -262,7 +262,7 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
-                        drawPlateLid.action();
+                        drawGame.action();
                     }
                 });
                 break;
@@ -277,7 +277,7 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
-                        drawPlateLid.action();
+                        drawGame.action();
                     }
                 });
                 break;
@@ -291,7 +291,7 @@ public class BattleActivity extends BaseActivity implements DrawPlateLid.OnDrawL
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
-                        drawPlateLid.action();
+                        drawGame.action();
                     }
                 });
                 break;

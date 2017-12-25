@@ -255,7 +255,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <vn.mran.bc1.draw.DrawPlateLid
+        <vn.mran.bc1.draw.DrawGame
             android:id="@+id/drawLid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -263,9 +263,9 @@
 
     </FrameLayout>
 
-    <!--<vn.mran.bc1.draw.DrawParallaxStar-->
-    <!--android:id="@+id/drawParallaxStar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" />-->
+    <vn.mran.bc1.draw.DrawParallaxStar
+        android:id="@+id/drawParallaxStar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>
