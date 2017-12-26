@@ -69,15 +69,15 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
         imgBack = findViewById(R.id.imgBack);
         txtAction = findViewById(R.id.txtAction);
         txtTitle = findViewById(R.id.txtTitle);
-        drawParallaxStar = findViewById(R.id.drawParallaxStar);
-        drawGame = findViewById(R.id.drawLid);
+//        drawParallaxStar = findViewById(R.id.drawParallaxStar);
+        drawGame = findViewById(R.id.drawGame);
     }
 
     @Override
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new BattlePresenter(this);
-        drawParallaxStar.setStarSize((int)screenWidth/15);
+//        drawParallaxStar.setStarSize((int)screenWidth/15);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 2));
         imgBack.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
@@ -96,14 +96,14 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
             imgSound.setImageBitmap(bpSoundOff);
         }
 
-        bpTopArray[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau), screenWidth / 5);
-        bpTopArray[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua), screenWidth / 5);
-        bpTopArray[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom), screenWidth / 5);
-        bpTopArray[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca), screenWidth / 5);
-        bpTopArray[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga), screenWidth / 5);
-        bpTopArray[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai), screenWidth / 5);
+        bpTopArray[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau), screenWidth / 4);
+        bpTopArray[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua), screenWidth / 4);
+        bpTopArray[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom), screenWidth / 4);
+        bpTopArray[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca), screenWidth / 4);
+        bpTopArray[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga), screenWidth / 4);
+        bpTopArray[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai), screenWidth / 4);
 
-        bpQuestion = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.question), screenWidth / 5);
+        bpQuestion = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.question), screenWidth / 4);
 
         resetTopImage();
     }
@@ -161,7 +161,7 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
 
         //Set result at first time
         setResult();
-        findViewById(R.id.frCenter).startAnimation(MyAnimation.shake(this));
+        drawGame.startAnimation(MyAnimation.shake(this));
     }
 
     private void setPreviousRule() {
@@ -192,7 +192,7 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
         } else {
             resetTopImage();
             setResult();
-            findViewById(R.id.frCenter).startAnimation(MyAnimation.shake(this));
+            drawGame.startAnimation(MyAnimation.shake(this));
             txtAction.setText(getString(R.string.open));
         }
     }

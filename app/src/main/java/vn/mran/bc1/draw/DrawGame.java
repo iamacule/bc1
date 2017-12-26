@@ -79,7 +79,7 @@ public class DrawGame extends View {
         width = w;
         height = h;
 
-        midPoint = new Point(width / 2, height * 57 / 100);
+        midPoint = new Point(width / 2, height /2);
         bpLid = ResizeBitmap.resize(bpLid, w * 9 / 10);
         bpPlate = ResizeBitmap.resize(bpPlate, w * 9 / 10);
 
@@ -87,19 +87,19 @@ public class DrawGame extends View {
             @Override
             public void run() {
 
-                animalArrays1[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_1), width * 35 / 100);
-                animalArrays1[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_1), width * 35 / 100);
-                animalArrays1[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_1), width * 35 / 100);
-                animalArrays1[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_1), width * 35 / 100);
-                animalArrays1[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_1), width * 35 / 100);
-                animalArrays1[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_1), width * 35 / 100);
+                animalArrays1[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_1), width * 3 / 10);
+                animalArrays1[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_1), width * 3 / 10);
+                animalArrays1[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_1), width * 3 / 10);
+                animalArrays1[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_1), width * 3 / 10);
+                animalArrays1[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_1), width * 3 / 10);
+                animalArrays1[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_1), width * 3 / 10);
 
-                animalArrays2[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_2), width * 35 / 100);
-                animalArrays2[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_2), width * 35 / 100);
-                animalArrays2[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_2), width * 35 / 100);
-                animalArrays2[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_2), width * 35 / 100);
-                animalArrays2[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_2), width * 35 / 100);
-                animalArrays2[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_2), width * 35 / 100);
+                animalArrays2[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_2), width * 3 / 10);
+                animalArrays2[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_2), width * 3 / 10);
+                animalArrays2[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_2), width * 3 / 10);
+                animalArrays2[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_2), width * 3 / 10);
+                animalArrays2[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_2), width * 3 / 10);
+                animalArrays2[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_2), width * 3 / 10);
 
                 updateRandomMidPointArrays();
             }
@@ -112,7 +112,7 @@ public class DrawGame extends View {
     protected void onDraw(Canvas canvas) {
 
         //Draw
-        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height * 57 / 100 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height * 57 / 100 + bpPlate.getHeight() / 2);
+        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height /2 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height /2 + bpPlate.getHeight() / 2);
         canvas.drawBitmap(bpPlate, null, rectPlate, null);
 
         if (resultArrays.length > 0) {
@@ -138,30 +138,61 @@ public class DrawGame extends View {
     }
 
     private void updateRandomMidPointArrays() {
-        for (int i = 0; i < randomMidPointArrays.length; i++) {
-            switch (i) {
-                case 0:
-                    randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
-                    randomMidPointArrays[i].y = getRandomNumber(height * 47 / 100, height / 2);
-                    Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
-                    Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
-                    break;
+        switch (getRandomNumber(0, 1)) {
+            case 0:
+                for (int i = 0; i < randomMidPointArrays.length; i++) {
+                    switch (i) {
+                        case 0:
+                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 4 / 10, height *43/ 100);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
+                            break;
 
-                case 1:
-                    randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 69 / 100);
-                    randomMidPointArrays[i].y = getRandomNumber(height * 47 / 100, height / 2);
-                    Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
-                    Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
-                    break;
+                        case 1:
+                            randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 69 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 4 / 10, height *43 / 100);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
+                            break;
 
-                case 2:
-                    randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
-                    randomMidPointArrays[i].y = getRandomNumber(height * 67 / 100, height * 69 / 100);
-                    Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
-                    Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
-                    break;
-            }
+                        case 2:
+                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 57 / 100, height * 62 / 100);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
+                            break;
+                    }
+                }
+                break;
+            case 1:
+                for (int i = 0; i < randomMidPointArrays.length; i++) {
+                    switch (i) {
+                        case 0:
+                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 4 / 10, height *43/ 100);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
+                            break;
+
+                        case 1:
+                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 57 / 100, height * 59 / 100);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
+                            break;
+
+                        case 2:
+                            randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 69 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 57 / 100, height * 59 / 100);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
+                            Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
+                            break;
+                    }
+                }
+                break;
         }
+
         postInvalidate();
     }
 
@@ -183,7 +214,7 @@ public class DrawGame extends View {
     }
 
     private void closeLid() {
-        for (int i = 0 - bpLid.getHeight() / 2; i <= height * 57 / 100; i += height / 170) {
+        for (int i = 0 - bpLid.getHeight() / 2; i <= height /2; i += height / 170) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -192,7 +223,7 @@ public class DrawGame extends View {
             midPoint.y = i;
             postInvalidate();
             if (isLidOpened) {
-                if (i >= (height * 57 / 100) - height / 170) {
+                if (i >= (height /2) - height / 170) {
                     isLidOpened = false;
                     Task.runOnUIThread(new Runnable() {
                         @Override
@@ -215,7 +246,7 @@ public class DrawGame extends View {
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });
-        for (int i = height * 57 / 100; i >= 0 - bpLid.getHeight() / 2; i -= height / 170) {
+        for (int i = height /2; i >= 0 - bpLid.getHeight() / 2; i -= height / 170) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {

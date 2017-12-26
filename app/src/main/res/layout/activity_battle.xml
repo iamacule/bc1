@@ -41,7 +41,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.1"
+            android:layout_weight="0.15"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -58,31 +58,10 @@
                     android:padding="@dimen/sound_back_button_padding" />
             </LinearLayout>
 
-            <LinearLayout
+            <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65"
-                android:gravity="center">
-
-                <vn.mran.bc1.widget.CustomTextView
-                    android:id="@+id/txtTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:freezesText="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="4"
-                    android:shadowDy="4"
-                    android:shadowRadius="4"
-                    android:singleLine="true"
-                    android:textColor="@color/yellow_text"
-                    android:textSize="@dimen/button_text_size" />
-            </LinearLayout>
+                android:layout_weight="0.65" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -102,12 +81,12 @@
         <android.support.v4.widget.Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.45" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.2">
+            android:layout_weight="0.3">
 
             <ImageView
                 android:id="@+id/imgAction"
@@ -130,142 +109,168 @@
                 android:textColor="@color/yellow_text"
                 android:textSize="@dimen/button_text_size_large" />
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <android.support.v4.widget.Space
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.28" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.44"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.32" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.36"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="0.37"
-                            android:orientation="horizontal">
-
-                            <android.support.v4.widget.Space
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.48" />
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:id="@+id/btnMain2"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.04"
-                                android:background="@color/colorAccent"></LinearLayout>
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.4"
+                                android:orientation="horizontal">
+
+                                <android.support.v4.widget.Space
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.48" />
+
+                                <LinearLayout
+                                    android:id="@+id/btnMain2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.04"
+                                    android:background="@color/colorAccent"></LinearLayout>
+
+                                <android.support.v4.widget.Space
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.48" />
+                            </LinearLayout>
 
                             <android.support.v4.widget.Space
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.48" />
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.28" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.42"
+                                android:orientation="horizontal">
+
+                                <android.support.v4.widget.Space
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.411" />
+
+                                <LinearLayout
+                                    android:id="@+id/btnMain1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.038"
+                                    android:background="@color/colorAccent" />
+
+                                <android.support.v4.widget.Space
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.104" />
+
+                                <LinearLayout
+                                    android:id="@+id/btnMain3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.038"
+                                    android:background="@color/colorAccent" />
+
+                                <android.support.v4.widget.Space
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.411" />
+                            </LinearLayout>
                         </LinearLayout>
 
-                        <android.support.v4.widget.Space
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="0.26" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="0.37"
-                            android:orientation="horizontal">
-
-                            <android.support.v4.widget.Space
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.413" />
-
-                            <LinearLayout
-                                android:id="@+id/btnMain1"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.036"
-                                android:background="@color/colorAccent" />
-
-                            <android.support.v4.widget.Space
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.104" />
-
-                            <LinearLayout
-                                android:id="@+id/btnMain3"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.036"
-                                android:background="@color/colorAccent" />
-
-                            <android.support.v4.widget.Space
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.413" />
-                        </LinearLayout>
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.32"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/btnEnableRuleMain"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.1"
+                            android:background="@color/white" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8" />
+
+                        <LinearLayout
+                            android:id="@+id/btnEnableRuleOffline"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.1"
+                            android:background="@color/white" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.28"
-                    android:orientation="horizontal">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/btnEnableRuleMain"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:background="@color/white" />
 
-                    <android.support.v4.widget.Space
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.8" />
-
-                    <LinearLayout
-                        android:id="@+id/btnEnableRuleOffline"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1"
-                        android:background="@color/white" />
+                    <vn.mran.bc1.widget.CustomTextView
+                        android:id="@+id/txtTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:freezesText="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:shadowColor="@color/black"
+                        android:shadowDx="4"
+                        android:shadowDy="4"
+                        android:shadowRadius="4"
+                        android:singleLine="true"
+                        android:textColor="@color/yellow_text"
+                        android:textSize="@dimen/button_text_size" />
                 </LinearLayout>
-            </LinearLayout>
+            </FrameLayout>
         </FrameLayout>
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/frCenter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <vn.mran.bc1.draw.DrawGame
+        android:id="@+id/drawGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
-        <vn.mran.bc1.draw.DrawGame
-            android:id="@+id/drawLid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
-    </FrameLayout>
-
-    <vn.mran.bc1.draw.DrawParallaxStar
-        android:id="@+id/drawParallaxStar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!--<vn.mran.bc1.draw.DrawParallaxStar-->
+    <!--android:id="@+id/drawParallaxStar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent" />-->
 
 </FrameLayout>
