@@ -48,6 +48,7 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
 
     private Bitmap bpSoundOn;
     private Bitmap bpSoundOff;
+    private Bitmap bpBack;
     private Bitmap bpQuestion;
 
     private Bitmap[] bpTopArray = new Bitmap[6];
@@ -55,8 +56,6 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
 
     private boolean isEnableMainRuleBySecretKey = false;
     private boolean isEnableRuleOfflineBySecretKey = false;
-
-    private byte previousRule;
 
     @Override
     public void initLayout() {
@@ -80,21 +79,10 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
 //        drawParallaxStar.setStarSize((int)screenWidth/15);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 2));
-        imgBack.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
 
-        txtTitle.setText(preferences.getStringValue(PrefValue.TEXT));
-
-        bpSoundOn = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_on), screenWidth / 10);
-        bpSoundOff = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_off), screenWidth / 10);
         TouchEffect.addAlpha(imgAction);
         TouchEffect.addAlpha(imgBack);
         TouchEffect.addAlpha(imgSound);
-
-        if (preferences.getBooleanValue(PrefValue.SETTING_SOUND, true)) {
-            imgSound.setImageBitmap(bpSoundOn);
-        } else {
-            imgSound.setImageBitmap(bpSoundOff);
-        }
 
         bpTopArray[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau), screenWidth / 4);
         bpTopArray[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua), screenWidth / 4);
@@ -105,7 +93,52 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
 
         bpQuestion = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.question), screenWidth / 4);
 
+        initUIFromFirebase();
+
         resetTopImage();
+    }
+
+    private void initUIFromFirebase() {
+        //Text
+        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
+
+        //Main rule
+        String ruleMainStatus = preferences.getStringValue(PrefValue.RULE_MAIN_STATUS, PrefValue.DEFAULT_STATUS);
+        if (ruleMainStatus.equals(Rule.getInstance().STATUS_ON)) {
+            if (isEnableMainRuleBySecretKey) {
+                bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
+            } else {
+                bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_off), screenWidth / 10));
+            }
+        } else {
+            bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
+
+        }
+        imgBack.setImageBitmap(bpBack);
+
+        //Child rule
+        String ruleChildStatus = preferences.getStringValue(PrefValue.RULE_CHILD_STATUS, PrefValue.DEFAULT_STATUS);
+        if (ruleChildStatus.equals(Rule.getInstance().STATUS_ON)) {
+            switch (preferences.getIntValue(PrefValue.RULE_CHILD_RULE, PrefValue.DEFAULT_RULE)) {
+                case 1:
+                    bpSoundOn = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_on_1), screenWidth / 10);
+                    bpSoundOff = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_off_1), screenWidth / 10);
+                    break;
+                case 2:
+                    bpSoundOn = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_on_2), screenWidth / 10);
+                    bpSoundOff = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_off_2), screenWidth / 10);
+                    break;
+            }
+        } else {
+            bpSoundOn = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_on), screenWidth / 10);
+            bpSoundOff = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_off), screenWidth / 10);
+        }
+
+        if (preferences.getBooleanValue(PrefValue.SETTING_SOUND, true)) {
+            imgSound.setImageBitmap(bpSoundOn);
+        } else {
+            imgSound.setImageBitmap(bpSoundOff);
+        }
     }
 
     @Override
@@ -129,13 +162,17 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
                             if (isEnableMainRuleBySecretKey) {
                                 setPreviousRule();
                                 isEnableMainRuleBySecretKey = false;
+                                bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_off), screenWidth / 10));
                             } else {
                                 isEnableMainRuleBySecretKey = true;
+                                bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
                             }
                         } else {
+                            bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
                             setPreviousRule();
                             isEnableMainRuleBySecretKey = false;
                         }
+                        imgBack.setImageBitmap(bpBack);
                         Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
                         break;
                     case R.id.btnEnableRuleOffline:
@@ -152,6 +189,7 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
                             isEnableRuleOfflineBySecretKey = false;
                             setPreviousRule();
                         }
+                        updateText(preferences.getStringValue(PrefValue.TEXT,PrefValue.DEFAULT_TEXT));
                         break;
                 }
             }
@@ -340,14 +378,32 @@ public class BattleActivity extends BaseActivity implements DrawGame.OnDrawLidUp
         if (isEnable) {
             isEnableRuleOfflineBySecretKey = false;
         }
+        updateText(preferences.getStringValue(PrefValue.TEXT,PrefValue.DEFAULT_TEXT));
     }
 
     @Override
     public void onTextChanged(String text) {
-        String oldtext = preferences.getStringValue(PrefValue.TEXT);
-        if (!text.equalsIgnoreCase(oldtext)) {
-            preferences.storeValue(PrefValue.TEXT, text);
-            txtTitle.setText(text);
-        }
+        updateText(text);
+    }
+
+    private void updateText(final String text) {
+        Task.runOnUIThread(new Runnable() {
+            @Override
+            public void run() {
+                StringBuilder stringBuilder = new StringBuilder(text);
+                if (preferences.getStringValue(PrefValue.RULE_OFFLINE_STATUS).equals(Rule.getInstance().STATUS_ON)) {
+                    stringBuilder.append(" !");
+                    if (isEnableRuleOfflineBySecretKey){
+                        stringBuilder.append(".");
+                    }
+                }
+                txtTitle.setText(presenter.updateText(stringBuilder.toString()));
+            }
+        });
+    }
+
+    @Override
+    public void onDataChanged() {
+        initUIFromFirebase();
     }
 }

@@ -32,6 +32,8 @@ public class Rule {
 
     public interface OnFireBaseDataBattleChanged {
         void onTextChanged(String TEXT);
+
+        void onDataChanged();
     }
 
     private final String TAG = getClass().getSimpleName();
@@ -628,15 +630,16 @@ public class Rule {
                         preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_STATUS, ruleOfflinePlayStatus);
 
                         //Text
-                        final String text = updateText(dataSnapshot.child("Text").getValue().toString());
+                        final String text = dataSnapshot.child("Text").getValue().toString();
+                        preferences.storeValue(PrefValue.TEXT, text);
                         Log.d(TAG, "Text : " + text);
                         Task.runOnUIThread(new Runnable() {
                             @Override
                             public void run() {
-                                preferences.storeValue(PrefValue.TEXT,text);
-                                if (onFireBaseDataBattleChanged != null)
-
+                                if (onFireBaseDataBattleChanged != null) {
                                     onFireBaseDataBattleChanged.onTextChanged(text);
+                                    onFireBaseDataBattleChanged.onDataChanged();
+                                }
                             }
                         });
                     }
@@ -693,18 +696,5 @@ public class Rule {
                 }
                 break;
         }
-    }
-
-    private String updateText(String oldText) {
-        if (oldText.length() * 2 < 60) {
-            StringBuilder stringBuilder = new StringBuilder(oldText);
-            for (int i = stringBuilder.length() * 2; i <= 60; i++) {
-                stringBuilder.append(" ");
-            }
-
-            stringBuilder.append(oldText);
-            return stringBuilder.toString();
-        }
-        return oldText;
     }
 }

@@ -8,6 +8,7 @@ public interface PrefValue {
     String SETTING_SOUND = "SETTING_SOUND";
     int DEFAULT_QUANTUM = 10000;
     String DEFAULT_STATUS = "on";
+    String DEFAULT_TEXT = "Chúc các bạn chơi vui ve";
     int DEFAULT_ADDITIONAL_NUMBER = 0;
     int DEFAULT_RULE = 1;
     int DEFAULT_ASSIGN_NUM_1 = 0;

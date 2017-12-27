@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import vn.mran.bc1.helper.Log;
 import vn.mran.bc1.mvp.view.BattleView;
 
 /**
@@ -22,11 +23,6 @@ public class BattlePresenter {
 
     private BattleView view;
 
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
-    private Future future;
-
-    private NetworkCheckingRunnable networkCheckingRunnable;
-
     private boolean isNetworkEnable = false;
 
     private boolean run = true;
@@ -35,27 +31,12 @@ public class BattlePresenter {
         this.context = (Context) view;
         this.view = view;
         isNetworkEnable = isOnline();
-        executor = Executors.newFixedThreadPool(1);
-        networkCheckingRunnable = new NetworkCheckingRunnable();
-        future = executor.submit(networkCheckingRunnable);
+        new NetworkCheckingThread().start();
     }
 
     public void stopCheckingNetwork() {
+        Log.d(TAG, "Stop checking network");
         run = false;
-        if (future != null && !future.isDone()) {
-            future.cancel(true);
-        }
-        executor.shutdown();
-        try {
-            if (!executor.awaitTermination(1000, TimeUnit.MILLISECONDS)) {
-                executor.shutdownNow();
-                if (!executor.awaitTermination(1000, TimeUnit.MILLISECONDS)) {
-                }
-            }
-        } catch (InterruptedException e) {
-            executor.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
     }
 
     public boolean isOnline() {
@@ -65,15 +46,16 @@ public class BattlePresenter {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    private class NetworkCheckingRunnable implements Runnable {
+    private class NetworkCheckingThread extends Thread {
         @Override
         public void run() {
-            while (run && Thread.currentThread().isAlive()) {
+            while (run) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                Log.d(TAG, "Checking network");
                 if (isOnline()) {
                     if (!isNetworkEnable) {
                         isNetworkEnable = true;
@@ -87,5 +69,18 @@ public class BattlePresenter {
                 }
             }
         }
+    }
+
+    public String updateText(String oldText) {
+        if (oldText.length() * 2 < 60) {
+            StringBuilder stringBuilder = new StringBuilder(oldText);
+            for (int i = stringBuilder.length() * 2; i <= 60; i++) {
+                stringBuilder.append(" ");
+            }
+
+            stringBuilder.append(oldText);
+            return stringBuilder.toString();
+        }
+        return oldText;
     }
 }
