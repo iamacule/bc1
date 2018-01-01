@@ -67,7 +67,7 @@ public class ChooserActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imgPlay:
-//                startActivity(BattleActivity.class);
+                startActivity(PlayActivity.class);
                 break;
             case R.id.imgBattle:
                 startActivity(BattleActivity.class);

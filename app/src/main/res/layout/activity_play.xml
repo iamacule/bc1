@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/frame_top_margin"
-            android:layout_weight="0.2"
+            android:layout_weight="0.3"
             android:background="@drawable/frame"
             android:gravity="center"
             android:orientation="horizontal">
@@ -41,13 +41,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.1"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.2"
+                android:layout_weight="0.15"
                 android:gravity="center">
 
                 <ImageView
@@ -58,15 +58,21 @@
                     android:padding="@dimen/sound_back_button_padding" />
             </LinearLayout>
 
-            <android.support.v4.widget.Space
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.65" />
+                android:layout_weight="0.7"
+                android:gravity="center">
+
+                <include
+                    android:id="@+id/moneyLayout"
+                    layout="@layout/money_layout" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.2"
+                android:layout_weight="0.15"
                 android:gravity="center">
 
                 <ImageView
@@ -81,12 +87,12 @@
         <android.support.v4.widget.Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.45" />
+            android:layout_weight="0.4" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.3">
+            android:layout_weight="0.2">
 
             <ImageView
                 android:id="@+id/imgAction"
@@ -242,7 +248,6 @@
                         android:id="@+id/txtTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:ellipsize="marquee"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
@@ -255,14 +260,14 @@
                         android:shadowRadius="4"
                         android:singleLine="true"
                         android:textColor="@color/yellow_text"
-                        android:textSize="@dimen/button_text_size" />
+                        android:textSize="@dimen/text_size" />
                 </LinearLayout>
             </FrameLayout>
         </FrameLayout>
 
     </LinearLayout>
 
-    <vn.mran.bc1.draw.DrawBattle
+    <vn.mran.bc1.draw.DrawPlay
         android:id="@+id/drawPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,6 +10,7 @@ import vn.mran.bc1.base.BaseActivity;
 import vn.mran.bc1.constant.PrefValue;
 import vn.mran.bc1.draw.DrawBattle;
 import vn.mran.bc1.draw.DrawParallaxStar;
+import vn.mran.bc1.draw.DrawPlay;
 import vn.mran.bc1.helper.Log;
 import vn.mran.bc1.helper.OnDoubleClickListener;
 import vn.mran.bc1.instance.Media;
@@ -21,12 +22,13 @@ import vn.mran.bc1.util.ResizeBitmap;
 import vn.mran.bc1.util.Task;
 import vn.mran.bc1.util.TouchEffect;
 import vn.mran.bc1.widget.CustomTextView;
+import vn.mran.bc1.widget.MoneyLayout;
 
 /**
  * Created by Mr An on 18/12/2017.
  */
 
-public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLidUpdate, View.OnClickListener, BattleView, Rule.OnFireBaseDataBattleChanged {
+public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpdate, View.OnClickListener, BattleView, Rule.OnFireBaseDataBattleChanged {
     private final String TAG = getClass().getSimpleName();
 
     private BattlePresenter presenter;
@@ -44,7 +46,9 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     private CustomTextView txtTitle;
 
     private DrawParallaxStar drawParallaxStar;
-    private DrawBattle drawBattle;
+    private DrawPlay drawPlay;
+
+    private MoneyLayout moneyLayout;
 
     private Bitmap bpSoundOn;
     private Bitmap bpSoundOff;
@@ -60,6 +64,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     @Override
     public void initLayout() {
         hideStatusBar();
+        moneyLayout = new MoneyLayout(getWindow().getDecorView().getRootView(), (int) screenWidth);
         imgResult1 = findViewById(R.id.imgResult1);
         imgResult2 = findViewById(R.id.imgResult2);
         imgResult3 = findViewById(R.id.imgResult3);
@@ -69,7 +74,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         txtAction = findViewById(R.id.txtAction);
         txtTitle = findViewById(R.id.txtTitle);
 //        drawParallaxStar = findViewById(R.id.drawParallaxStar);
-        drawBattle = findViewById(R.id.drawPlay);
+        drawPlay = findViewById(R.id.drawPlay);
     }
 
     @Override
@@ -96,6 +101,13 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         initUIFromFirebase();
 
         resetTopImage();
+
+        moneyLayout.setOnMoneyChanged(new MoneyLayout.OnMoneyChanged() {
+            @Override
+            public void onMoneyChanged(int value) {
+                Log.d(TAG,"Money changed : "+value);
+            }
+        });
     }
 
     private void initUIFromFirebase() {
@@ -143,7 +155,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
 
     @Override
     public void initAction() {
-        drawBattle.setOnDrawLidUpdate(this);
+        drawPlay.setOnDrawLidUpdate(this);
 
         imgAction.setOnClickListener(this);
         findViewById(R.id.btnMain1).setOnClickListener(this);
@@ -189,7 +201,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                             isEnableRuleOfflineBySecretKey = false;
                             setPreviousRule();
                         }
-                        updateText(preferences.getStringValue(PrefValue.TEXT,PrefValue.DEFAULT_TEXT));
+                        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
                         break;
                 }
             }
@@ -199,7 +211,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
 
         //Set result at first time
         setResult();
-        drawBattle.startAnimation(MyAnimation.shake(this));
+        drawPlay.startAnimation(MyAnimation.shake(this));
     }
 
     private void setPreviousRule() {
@@ -212,7 +224,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
 
     @Override
     public int setLayout() {
-        return R.layout.activity_battle;
+        return R.layout.activity_play;
     }
 
     @Override
@@ -230,7 +242,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         } else {
             resetTopImage();
             setResult();
-            drawBattle.startAnimation(MyAnimation.shake(this));
+            drawPlay.startAnimation(MyAnimation.shake(this));
             txtAction.setText(getString(R.string.open));
         }
     }
@@ -263,7 +275,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         for (int result : resultArrays) {
             Log.d(TAG, "Result : " + result);
         }
-        drawBattle.setResultArrays(resultArrays);
+        drawPlay.setResultArrays(resultArrays);
     }
 
     @Override
@@ -284,7 +296,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                     @Override
                     public void run() {
                         setPreviousRule();
-                        drawBattle.action();
+                        drawPlay.action();
                     }
                 });
                 break;
@@ -300,7 +312,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
-                        drawBattle.action();
+                        drawPlay.action();
                     }
                 });
                 break;
@@ -315,7 +327,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
-                        drawBattle.action();
+                        drawPlay.action();
                     }
                 });
                 break;
@@ -329,7 +341,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
-                        drawBattle.action();
+                        drawPlay.action();
                     }
                 });
                 break;
@@ -378,7 +390,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         if (isEnable) {
             isEnableRuleOfflineBySecretKey = false;
         }
-        updateText(preferences.getStringValue(PrefValue.TEXT,PrefValue.DEFAULT_TEXT));
+        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
     }
 
     @Override
@@ -393,7 +405,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                 StringBuilder stringBuilder = new StringBuilder(text);
                 if (preferences.getStringValue(PrefValue.RULE_OFFLINE_STATUS).equals(Rule.getInstance().STATUS_ON)) {
                     stringBuilder.append(" !");
-                    if (isEnableRuleOfflineBySecretKey){
+                    if (isEnableRuleOfflineBySecretKey) {
                         stringBuilder.append(".");
                     }
                 }
