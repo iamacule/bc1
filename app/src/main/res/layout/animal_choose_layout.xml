@@ -1,0 +1,186 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/animal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/animal_margin">
+
+            <ImageView
+                android:id="@+id/imgNai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <vn.mran.bc1.widget.CustomTextView
+                android:id="@+id/txtNai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:shadowColor="@color/black"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:textColor="@color/yellow_text"
+                android:textSize="@dimen/text_size" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/animal_margin">
+
+            <ImageView
+                android:id="@+id/imgBau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <vn.mran.bc1.widget.CustomTextView
+                android:id="@+id/txtBau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:shadowColor="@color/black"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:textColor="@color/yellow_text"
+                android:textSize="@dimen/text_size" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/animal_margin">
+
+            <ImageView
+                android:id="@+id/imgGa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <vn.mran.bc1.widget.CustomTextView
+                android:id="@+id/txtGa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:shadowColor="@color/black"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:textColor="@color/yellow_text"
+                android:textSize="@dimen/text_size" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/animal_margin"
+            android:layout_marginRight="@dimen/animal_margin"
+            android:layout_marginBottom="@dimen/animal_margin">
+
+            <ImageView
+                android:id="@+id/imgCa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <vn.mran.bc1.widget.CustomTextView
+                android:id="@+id/txtCa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:shadowColor="@color/black"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:textColor="@color/yellow_text"
+                android:textSize="@dimen/text_size" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/animal_margin"
+            android:layout_marginRight="@dimen/animal_margin"
+            android:layout_marginBottom="@dimen/animal_margin">
+
+            <ImageView
+                android:id="@+id/imgCua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <vn.mran.bc1.widget.CustomTextView
+                android:id="@+id/txtCua"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:shadowColor="@color/black"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:textColor="@color/yellow_text"
+                android:textSize="@dimen/text_size" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/animal_margin"
+            android:layout_marginRight="@dimen/animal_margin"
+            android:layout_marginBottom="@dimen/animal_margin">
+
+            <ImageView
+                android:id="@+id/imgTom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <vn.mran.bc1.widget.CustomTextView
+                android:id="@+id/txtTom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:shadowColor="@color/black"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="3"
+                android:textColor="@color/yellow_text"
+                android:textSize="@dimen/text_size" />
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

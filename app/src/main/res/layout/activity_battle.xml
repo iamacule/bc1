@@ -107,7 +107,7 @@
                 android:shadowRadius="3"
                 android:text="@string/shake"
                 android:textColor="@color/yellow_text"
-                android:textSize="@dimen/button_text_size_large" />
+                android:textSize="@dimen/button_text_size_large_battle" />
 
             <FrameLayout
                 android:layout_width="match_parent"

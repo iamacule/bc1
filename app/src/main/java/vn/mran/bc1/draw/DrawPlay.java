@@ -79,9 +79,9 @@ public class DrawPlay extends View {
         width = w;
         height = h;
 
-        midPoint = new Point(width / 2, height * 62 / 100);
-        bpLid = ResizeBitmap.resize(bpLid, w * 75 / 100);
-        bpPlate = ResizeBitmap.resize(bpPlate, w * 75 / 100);
+        midPoint = new Point(width / 2, height * 69 / 100);
+        bpLid = ResizeBitmap.resize(bpLid, w * 70 / 100);
+        bpPlate = ResizeBitmap.resize(bpPlate, w * 70 / 100);
 
         Task.startNewBackGroundThread(new Thread(new Runnable() {
             @Override
@@ -112,7 +112,7 @@ public class DrawPlay extends View {
     protected void onDraw(Canvas canvas) {
 
         //Draw
-        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height * 62 / 100 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height * 62 / 100 + bpPlate.getHeight() / 2);
+        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height * 69 / 100 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height * 69 / 100 + bpPlate.getHeight() / 2);
         canvas.drawBitmap(bpPlate, null, rectPlate, null);
 
         if (resultArrays.length > 0) {
@@ -143,22 +143,22 @@ public class DrawPlay extends View {
                 for (int i = 0; i < randomMidPointArrays.length; i++) {
                     switch (i) {
                         case 0:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 35 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 52 / 100, height * 55 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 33 / 100, width * 36 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 61 / 100, height * 64 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 64 / 100, width * 67 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 52 / 100, height * 55 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 63 / 100, width * 66 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 61 / 100, height * 64 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
                             randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 69 / 100, height * 72 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 75 / 100, height * 78 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
@@ -170,21 +170,21 @@ public class DrawPlay extends View {
                     switch (i) {
                         case 0:
                             randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 52 / 100, height * 55 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 61 / 100, height * 64 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 35 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 69 / 100, height * 72 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 33 / 100, width * 36 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 75 / 100, height * 78 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 64 / 100, width * 67 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 69 / 100, height * 72 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 63 / 100, width * 66 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 75 / 100, height * 78 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
@@ -214,7 +214,7 @@ public class DrawPlay extends View {
     }
 
     private void closeLid() {
-        for (int i = 0 - bpLid.getHeight() / 2; i <= height * 62 / 100; i += height / 170) {
+        for (int i = 0 - bpLid.getHeight() / 2; i <= height * 69 / 100; i += height / 170) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -246,7 +246,7 @@ public class DrawPlay extends View {
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });
-        for (int i = height * 62 / 100; i >= 0 - bpLid.getHeight() / 2; i -= height / 170) {
+        for (int i = height * 69 / 100; i >= 0 - bpLid.getHeight() / 2; i -= height / 170) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {

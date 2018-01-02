@@ -21,6 +21,7 @@ import vn.mran.bc1.util.MyAnimation;
 import vn.mran.bc1.util.ResizeBitmap;
 import vn.mran.bc1.util.Task;
 import vn.mran.bc1.util.TouchEffect;
+import vn.mran.bc1.widget.AnimalChooserLayout;
 import vn.mran.bc1.widget.CustomTextView;
 import vn.mran.bc1.widget.MoneyLayout;
 
@@ -32,10 +33,6 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     private final String TAG = getClass().getSimpleName();
 
     private BattlePresenter presenter;
-
-    private ImageView imgResult1;
-    private ImageView imgResult2;
-    private ImageView imgResult3;
 
     private ImageView imgAction;
 
@@ -49,11 +46,11 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     private DrawPlay drawPlay;
 
     private MoneyLayout moneyLayout;
+    private AnimalChooserLayout animalChooserLayout;
 
     private Bitmap bpSoundOn;
     private Bitmap bpSoundOff;
     private Bitmap bpBack;
-    private Bitmap bpQuestion;
 
     private Bitmap[] bpTopArray = new Bitmap[6];
     private int[] resultArrays;
@@ -64,10 +61,10 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     @Override
     public void initLayout() {
         hideStatusBar();
+
         moneyLayout = new MoneyLayout(getWindow().getDecorView().getRootView(), (int) screenWidth);
-        imgResult1 = findViewById(R.id.imgResult1);
-        imgResult2 = findViewById(R.id.imgResult2);
-        imgResult3 = findViewById(R.id.imgResult3);
+        animalChooserLayout = new AnimalChooserLayout(getWindow().getDecorView().getRootView(), (int) screenWidth);
+
         imgAction = findViewById(R.id.imgAction);
         imgSound = findViewById(R.id.imgSound);
         imgBack = findViewById(R.id.imgBack);
@@ -83,7 +80,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         presenter = new BattlePresenter(this);
 //        drawParallaxStar.setStarSize((int)screenWidth/15);
 
-        imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 2));
+        imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
 
         TouchEffect.addAlpha(imgAction);
         TouchEffect.addAlpha(imgBack);
@@ -96,16 +93,20 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         bpTopArray[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga), screenWidth / 4);
         bpTopArray[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai), screenWidth / 4);
 
-        bpQuestion = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.question), screenWidth / 4);
-
         initUIFromFirebase();
-
-        resetTopImage();
 
         moneyLayout.setOnMoneyChanged(new MoneyLayout.OnMoneyChanged() {
             @Override
             public void onMoneyChanged(int value) {
-                Log.d(TAG,"Money changed : "+value);
+                Log.d(TAG, "Money changed : " + value);
+                animalChooserLayout.reset(10);
+            }
+        });
+
+        animalChooserLayout.setOnAnimalChooseListener(new AnimalChooserLayout.OnAnimalChooseListener() {
+            @Override
+            public void onChoose(int[] valueArrays) {
+                Log.d(TAG, "Changed");
             }
         });
     }
@@ -237,10 +238,8 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         Log.d(TAG, "isLidOpened : " + isOpened);
         if (isOpened) {
             minusNumberOffRule();
-            setTopImage();
             txtAction.setText(getString(R.string.shake));
         } else {
-            resetTopImage();
             setResult();
             drawPlay.startAnimation(MyAnimation.shake(this));
             txtAction.setText(getString(R.string.open));
@@ -253,18 +252,6 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             Rule.getInstance().minusRuleNumber(Rule.getInstance().RULE_MAIN);
         if (isEnableRuleOfflineBySecretKey)
             Rule.getInstance().minusRuleNumber(Rule.getInstance().RULE_OFFLINE);
-    }
-
-    private void setTopImage() {
-        imgResult1.setImageBitmap(bpTopArray[resultArrays[0]]);
-        imgResult2.setImageBitmap(bpTopArray[resultArrays[1]]);
-        imgResult3.setImageBitmap(bpTopArray[resultArrays[2]]);
-    }
-
-    private void resetTopImage() {
-        imgResult1.setImageBitmap(bpQuestion);
-        imgResult2.setImageBitmap(bpQuestion);
-        imgResult3.setImageBitmap(bpQuestion);
     }
 
     /**
