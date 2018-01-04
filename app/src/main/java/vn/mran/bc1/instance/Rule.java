@@ -36,6 +36,12 @@ public class Rule {
         void onDataChanged();
     }
 
+    public interface OnFireBaseDataPlayChanged {
+        void onTextChanged(String TEXT);
+
+        void onDataChanged();
+    }
+
     private final String TAG = getClass().getSimpleName();
 
     public final String STATUS_ON = "on";
@@ -108,10 +114,13 @@ public class Rule {
     public final int[] RULE_MAIN_GONE_3 = new int[]{4, 5};
 
     private int[] ruleMainGoneArrays;
+    private int[] ruleMainPlayGoneArrays;
 
     private int[] resultArrays = new int[]{};
+    private int[] resultPlayArrays = new int[]{};
 
     private OnFireBaseDataBattleChanged onFireBaseDataBattleChanged;
+    private OnFireBaseDataPlayChanged onFireBaseDataPlayChanged;
 
     private Rule(Context context) {
         preferences = new Preferences(context);
@@ -182,10 +191,6 @@ public class Rule {
         this.currentRule = currentRule;
     }
 
-    public byte getCurrentRule() {
-        return currentRule;
-    }
-
     public void setCurrentRulePlay(byte currentRulePlay) {
         this.currentRulePlay = currentRulePlay;
     }
@@ -194,17 +199,34 @@ public class Rule {
         this.ruleMainGoneArrays = array;
     }
 
+    public void setRuleMainPlayGoneArrays(int[] array) {
+        this.ruleMainPlayGoneArrays = array;
+    }
+
     public String getRuleMainStatus() {
         return ruleMainStatus;
+    }
+
+    public String getRuleMainPlayStatus() {
+        return ruleMainPlayStatus;
     }
 
     public String getRuleOfflineStatus() {
         return ruleOfflineStatus;
     }
 
+    public String getRuleOfflinePlayStatus() {
+        return ruleOfflinePlayStatus;
+    }
+
     public void setOnFireBaseDataBattleChanged(OnFireBaseDataBattleChanged onFireBaseDataBattleChanged) {
         this.onFireBaseDataBattleChanged = onFireBaseDataBattleChanged;
     }
+
+    public void setOnFireBaseDataPlayChanged(OnFireBaseDataPlayChanged onFireBaseDataPlayChanged) {
+        this.onFireBaseDataPlayChanged = onFireBaseDataPlayChanged;
+    }
+
 
     /**
      * Get result in battle
@@ -270,6 +292,69 @@ public class Rule {
     }
 
     /**
+     * Get result in battle
+     *
+     * @return
+     */
+    public int[] getResultPlay() {
+        int[] returnArrays = getRandomNumberArrays();
+        Log.d(TAG, "Rule child play status on");
+        Log.d(TAG, "Current rule play : " + currentRulePlay);
+        switch (currentRulePlay) {
+            case RULE_NORMAL:
+                Log.d(TAG, "Rule normal play ");
+                if (ruleChildPlayStatus.equals(STATUS_ON)) {
+                    if (ruleChildPlayQuantum == 0) {
+                        switch (ruleChildPlayRule) {
+                            case 1:
+                                Log.d(TAG, "Rule 1 play ");
+                                returnArrays = getRule1Play();
+                                break;
+                            case 2:
+                                Log.d(TAG, "Rule 2 play ");
+                                returnArrays = getRule2Play();
+                                break;
+                            default:
+                                Log.d(TAG, "Rule 1 play default");
+                                returnArrays = getRule1Play();
+                                break;
+
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "Rule child Play status off");
+                }
+
+                break;
+            case RULE_OFFLINE:
+                if (ruleOfflinePlayStatus.equals(STATUS_ON)) {
+                    Log.d(TAG, "Rule offline play ");
+                    if (ruleOfflinePlayQuantum == 0) {
+                        returnArrays = getRuleOfflinePlay();
+                    }
+                } else {
+                    Log.d(TAG, "Rule offline play status off");
+                }
+                break;
+
+            default:
+                if (ruleMainPlayStatus.equals(STATUS_ON)) {
+                    Log.d(TAG, "Rule Main play ");
+                    if (ruleMainPlayQuantum == 0) {
+                        returnArrays = getRuleMainPlay();
+                    }
+                } else {
+                    Log.d(TAG, "Rule Main play status off");
+                }
+                break;
+        }
+
+
+        resultPlayArrays = ArrayUtils.addAll(resultPlayArrays, returnArrays);
+        return returnArrays;
+    }
+
+    /**
      * Rule Main
      *
      * @return
@@ -280,6 +365,25 @@ public class Rule {
             while (true) {
                 int value = getRandomAnimalPosition();
                 if (value != ruleMainGoneArrays[0] && value != ruleMainGoneArrays[1]) {
+                    resultArray[i] = value;
+                    break;
+                }
+            }
+        }
+        return resultArray;
+    }
+
+    /**
+     * Rule Main
+     *
+     * @return
+     */
+    private int[] getRuleMainPlay() {
+        int[] resultArray = new int[3];
+        for (int i = 0; i < resultArray.length; i++) {
+            while (true) {
+                int value = getRandomAnimalPosition();
+                if (value != ruleMainPlayGoneArrays[0] && value != ruleMainPlayGoneArrays[1]) {
                     resultArray[i] = value;
                     break;
                 }
@@ -307,27 +411,27 @@ public class Rule {
             Log.d(TAG, "Result array sub : " + resultArrays[i]);
             switch (resultArrays[i]) {
                 case 0:
-                    tong += ruleChildAssignNum1;
+                    tong += ruleOfflineAssignNum1;
                     break;
                 case 1:
-                    tong += ruleChildAssignNum2;
+                    tong += ruleOfflineAssignNum2;
                     break;
                 case 2:
-                    tong += ruleChildAssignNum3;
+                    tong += ruleOfflineAssignNum3;
                     break;
                 case 3:
-                    tong += ruleChildAssignNum4;
+                    tong += ruleOfflineAssignNum4;
                     break;
                 case 4:
-                    tong += ruleChildAssignNum5;
+                    tong += ruleOfflineAssignNum5;
                     break;
                 default:
-                    tong += ruleChildAssignNum6;
+                    tong += ruleOfflineAssignNum6;
                     break;
             }
         }
 
-        tong += ruleChildAdditionalNumber;
+        tong += ruleOfflineAdditionalNumber;
 
         int min = Integer.parseInt((new SimpleDateFormat("mm").format(new Date())).toString());
 
@@ -348,6 +452,72 @@ public class Rule {
         Log.d(TAG, "Tong : " + tong);
         int number = tong % 6;
         Log.d(TAG, "Number : " + number);
+
+        int[] returnArrays = getRandomNumberArrays();
+        returnArrays[getRandomNumber(0, 2)] = number;
+        return returnArrays;
+    }
+
+    /**
+     * Rule offline
+     *
+     * @return
+     */
+    private int[] getRuleOfflinePlay() {
+        int tong = 0;
+
+        int range = 3;
+        if (resultPlayArrays.length == 0) {
+            Log.d(TAG, "resultPlayArrays length = 0");
+            return getRandomNumberArrays();
+        } else if (resultPlayArrays.length >= 6) {
+            range = 6;
+        }
+        for (int i = resultPlayArrays.length - 1; i >= resultPlayArrays.length - range; i--) {
+            Log.d(TAG, "Result array sub : " + resultPlayArrays[i]);
+            switch (resultPlayArrays[i]) {
+                case 0:
+                    tong += ruleOfflinePlayAssignNum1;
+                    break;
+                case 1:
+                    tong += ruleOfflinePlayAssignNum2;
+                    break;
+                case 2:
+                    tong += ruleOfflinePlayAssignNum3;
+                    break;
+                case 3:
+                    tong += ruleOfflinePlayAssignNum4;
+                    break;
+                case 4:
+                    tong += ruleOfflinePlayAssignNum5;
+                    break;
+                default:
+                    tong += ruleOfflinePlayAssignNum6;
+                    break;
+            }
+        }
+
+        tong += ruleOfflinePlayAdditionalNumber;
+
+        int min = Integer.parseInt((new SimpleDateFormat("mm").format(new Date())).toString());
+
+        if (min < 10)
+            tong -= 1;
+        if (min >= 10 && min < 20)
+            tong -= 2;
+        if (min >= 20 && min < 30)
+            tong -= 3;
+        if (min >= 30 && min < 40)
+            tong -= 4;
+        if (min >= 40 && min < 50)
+            tong -= 5;
+        if (min >= 50 && min < 60)
+            tong -= 6;
+
+        tong = tong - 1;
+        Log.d(TAG, "Tong Play : " + tong);
+        int number = tong % 6;
+        Log.d(TAG, "Number Play : " + number);
 
         int[] returnArrays = getRandomNumberArrays();
         returnArrays[getRandomNumber(0, 2)] = number;
@@ -421,6 +591,72 @@ public class Rule {
     }
 
     /**
+     * Rule 2
+     *
+     * @return
+     */
+    private int[] getRule2Play() {
+        int tong = 0;
+
+        int range = 3;
+        if (resultPlayArrays.length == 0) {
+            Log.d(TAG, "resultPlayArrays length = 0");
+            return getRandomNumberArrays();
+        } else if (resultPlayArrays.length >= 6) {
+            range = 6;
+        }
+        for (int i = resultPlayArrays.length - 1; i >= resultPlayArrays.length - range; i--) {
+            Log.d(TAG, "Result array sub : " + resultPlayArrays[i]);
+            switch (resultPlayArrays[i]) {
+                case 0:
+                    tong += ruleChildPlayAssignNum1;
+                    break;
+                case 1:
+                    tong += ruleChildPlayAssignNum2;
+                    break;
+                case 2:
+                    tong += ruleChildPlayAssignNum3;
+                    break;
+                case 3:
+                    tong += ruleChildPlayAssignNum4;
+                    break;
+                case 4:
+                    tong += ruleChildPlayAssignNum5;
+                    break;
+                default:
+                    tong += ruleChildPlayAssignNum6;
+                    break;
+            }
+        }
+
+        tong += ruleChildPlayAdditionalNumber;
+
+        int min = Integer.parseInt((new SimpleDateFormat("mm").format(new Date())).toString());
+
+        if (min < 10)
+            tong += 1;
+        if (min >= 10 && min < 20)
+            tong += 2;
+        if (min >= 20 && min < 30)
+            tong += 3;
+        if (min >= 30 && min < 40)
+            tong += 4;
+        if (min >= 40 && min < 50)
+            tong += 5;
+        if (min >= 50 && min < 60)
+            tong += 6;
+
+        tong = tong - 1;
+        Log.d(TAG, "Tong play : " + tong);
+        int number = tong % 6;
+        Log.d(TAG, "Number play : " + number);
+
+        int[] returnArrays = getRandomNumberArrays();
+        returnArrays[getRandomNumber(0, 2)] = number;
+        return returnArrays;
+    }
+
+    /**
      * Rule 1
      *
      * @return
@@ -464,6 +700,56 @@ public class Rule {
         Log.d(TAG, "Tong : " + tong);
         int number = tong % 6;
         Log.d(TAG, "Number : " + number);
+
+        int[] returnArrays = getRandomNumberArrays();
+        returnArrays[getRandomNumber(0, 2)] = number;
+        return returnArrays;
+    }
+
+    /**
+     * Rule 1
+     *
+     * @return
+     */
+    private int[] getRule1Play() {
+        int tong = 0;
+
+        int range = 3;
+        if (resultPlayArrays.length == 0) {
+            Log.d(TAG, "resultPlayArrays length = 0");
+            return getRandomNumberArrays();
+        } else if (resultPlayArrays.length >= 6) {
+            range = 6;
+        }
+        for (int i = resultPlayArrays.length - 1; i >= resultPlayArrays.length - range; i--) {
+            Log.d(TAG, "Result array sub : " + resultPlayArrays[i]);
+            switch (resultPlayArrays[i]) {
+                case 0:
+                    tong += ruleChildPlayAssignNum1;
+                    break;
+                case 1:
+                    tong += ruleChildPlayAssignNum2;
+                    break;
+                case 2:
+                    tong += ruleChildPlayAssignNum3;
+                    break;
+                case 3:
+                    tong += ruleChildPlayAssignNum4;
+                    break;
+                case 4:
+                    tong += ruleChildPlayAssignNum5;
+                    break;
+                default:
+                    tong += ruleChildPlayAssignNum6;
+                    break;
+            }
+        }
+
+        tong += ruleChildPlayAdditionalNumber;
+        tong = tong - 1;
+        Log.d(TAG, "Tong play: " + tong);
+        int number = tong % 6;
+        Log.d(TAG, "Number play : " + number);
 
         int[] returnArrays = getRandomNumberArrays();
         returnArrays[getRandomNumber(0, 2)] = number;
@@ -633,12 +919,19 @@ public class Rule {
                         final String text = dataSnapshot.child("Text").getValue().toString();
                         preferences.storeValue(PrefValue.TEXT, text);
                         Log.d(TAG, "Text : " + text);
+
+                        //Text
+                        final String textPlay = dataSnapshot.child("TextPlay").getValue().toString();
+                        preferences.storeValue(PrefValue.TEXT_PLAY, textPlay);
+                        Log.d(TAG, "Text Play : " + textPlay);
+
+
                         Task.runOnUIThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (onFireBaseDataBattleChanged != null) {
-                                    onFireBaseDataBattleChanged.onTextChanged(text);
-                                    onFireBaseDataBattleChanged.onDataChanged();
+                                if (onFireBaseDataPlayChanged != null) {
+                                    onFireBaseDataPlayChanged.onTextChanged(textPlay);
+                                    onFireBaseDataPlayChanged.onDataChanged();
                                 }
                             }
                         });
@@ -693,6 +986,35 @@ public class Rule {
                     if (ruleOfflineQuantum > 0)
                         ruleOfflineQuantum = ruleOfflineQuantum - 1;
                     Log.d(TAG, "ruleOfflineQuantum : " + ruleOfflineQuantum);
+                }
+                break;
+        }
+    }
+
+    public void minusRuleNumberPlay(byte ruleType) {
+
+        switch (ruleType) {
+            case RULE_NORMAL:
+                if (ruleChildPlayStatus.equals(STATUS_ON)) {
+                    if (ruleChildPlayQuantum > 0)
+                        ruleChildPlayQuantum = ruleChildPlayQuantum - 1;
+                    Log.d(TAG, "ruleChildPlayQuantum : " + ruleChildPlayQuantum);
+                }
+                break;
+
+            case RULE_MAIN:
+                if (ruleMainPlayStatus.equals(STATUS_ON)) {
+                    if (ruleMainPlayQuantum > 0)
+                        ruleMainPlayQuantum = ruleMainPlayQuantum - 1;
+                    Log.d(TAG, "ruleMainPlayQuantum : " + ruleMainPlayQuantum);
+                }
+                break;
+
+            case RULE_OFFLINE:
+                if (ruleOfflinePlayStatus.equals(STATUS_ON)) {
+                    if (ruleOfflinePlayQuantum > 0)
+                        ruleOfflinePlayQuantum = ruleOfflinePlayQuantum - 1;
+                    Log.d(TAG, "ruleOfflinePlayQuantum : " + ruleOfflinePlayQuantum);
                 }
                 break;
         }

@@ -28,6 +28,13 @@ public class AnimalChooserLayout implements View.OnClickListener {
     private ImageView imgCua;
     private ImageView imgTom;
 
+    private ImageView imgCoinNai;
+    private ImageView imgCoinBau;
+    private ImageView imgCoinGa;
+    private ImageView imgCoinCa;
+    private ImageView imgCoinCua;
+    private ImageView imgCoinTom;
+
     private CustomTextView txtNai;
     private CustomTextView txtBau;
     private CustomTextView txtGa;
@@ -59,6 +66,13 @@ public class AnimalChooserLayout implements View.OnClickListener {
         imgCua = view.findViewById(R.id.imgCua);
         imgTom = view.findViewById(R.id.imgTom);
 
+        imgCoinNai = view.findViewById(R.id.imgCoinNai);
+        imgCoinBau = view.findViewById(R.id.imgCoinBau);
+        imgCoinGa = view.findViewById(R.id.imgCoinGa);
+        imgCoinCa = view.findViewById(R.id.imgCoinCa);
+        imgCoinCua = view.findViewById(R.id.imgCoinCua);
+        imgCoinTom = view.findViewById(R.id.imgCoinTom);
+
         txtNai = view.findViewById(R.id.txtNai);
         txtBau = view.findViewById(R.id.txtBau);
         txtGa = view.findViewById(R.id.txtGa);
@@ -73,47 +87,67 @@ public class AnimalChooserLayout implements View.OnClickListener {
         imgCua.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.cua), screenWidth * 28 / 100));
         imgTom.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.tom), screenWidth * 28 / 100));
 
+        imgCoinBau.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.coin), screenWidth / 10));
+        imgCoinCa.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.coin), screenWidth / 10));
+        imgCoinCua.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.coin), screenWidth / 10));
+        imgCoinGa.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.coin), screenWidth / 10));
+        imgCoinNai.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.coin), screenWidth / 10));
+        imgCoinTom.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.coin), screenWidth / 10));
+
         imgNai.setOnClickListener(this);
         imgBau.setOnClickListener(this);
         imgGa.setOnClickListener(this);
         imgCa.setOnClickListener(this);
         imgCua.setOnClickListener(this);
         imgTom.setOnClickListener(this);
+
+        imgCoinTom.setVisibility(View.GONE);
+        imgCoinNai.setVisibility(View.GONE);
+        imgCoinGa.setVisibility(View.GONE);
+        imgCoinCua.setVisibility(View.GONE);
+        imgCoinCa.setVisibility(View.GONE);
+        imgCoinBau.setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View view) {
         if (currentValue < maxValue) {
-            currentValue = currentValue++;
+            currentValue = currentValue + 1;
             switch (view.getId()) {
                 case R.id.imgNai:
-                    valueNai = valueNai++;
+                    valueNai = valueNai + 1;
                     txtNai.setText(addDisplayValue(valueNai));
+                    imgCoinNai.setVisibility(View.VISIBLE);
 
                     break;
                 case R.id.imgBau:
-                    valueBau = valueBau++;
+                    valueBau = valueBau + 1;
                     txtBau.setText(addDisplayValue(valueBau));
+                    imgCoinBau.setVisibility(View.VISIBLE);
 
                     break;
                 case R.id.imgGa:
-                    valueGa = valueGa++;
+                    valueGa = valueGa + 1;
                     txtGa.setText(addDisplayValue(valueGa));
+                    imgCoinGa.setVisibility(View.VISIBLE);
 
                     break;
                 case R.id.imgCa:
-                    valueCa = valueCa++;
+                    valueCa = valueCa + 1;
                     txtCa.setText(addDisplayValue(valueCa));
+                    imgCoinCa.setVisibility(View.VISIBLE);
 
                     break;
                 case R.id.imgCua:
-                    valueCua = valueCua++;
+                    valueCua = valueCua + 1;
                     txtCua.setText(addDisplayValue(valueCua));
+                    imgCoinCua.setVisibility(View.VISIBLE);
 
                     break;
                 case R.id.imgTom:
-                    valueTom = valueTom++;
-                    txtCua.setText(addDisplayValue(valueTom));
+                    valueTom = valueTom + 1;
+                    txtTom.setText(addDisplayValue(valueTom));
+                    imgCoinTom.setVisibility(View.VISIBLE);
 
                     break;
             }
@@ -138,6 +172,13 @@ public class AnimalChooserLayout implements View.OnClickListener {
 
         currentValue = 0;
         this.maxValue = maxValue;
+
+        imgCoinTom.setVisibility(View.GONE);
+        imgCoinNai.setVisibility(View.GONE);
+        imgCoinGa.setVisibility(View.GONE);
+        imgCoinCua.setVisibility(View.GONE);
+        imgCoinCa.setVisibility(View.GONE);
+        imgCoinBau.setVisibility(View.GONE);
     }
 
     private String addDisplayValue(int value) {

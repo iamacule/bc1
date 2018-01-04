@@ -6,23 +6,24 @@ import android.net.NetworkInfo;
 
 import vn.mran.bc1.helper.Log;
 import vn.mran.bc1.mvp.view.BattleView;
+import vn.mran.bc1.mvp.view.PlayView;
 
 /**
  * Created by Mr An on 29/11/2017.
  */
 
-public class BattlePresenter {
+public class PlayPresenter {
     private final String TAG = getClass().getSimpleName();
 
     private Context context;
 
-    private BattleView view;
+    private PlayView view;
 
     private boolean isNetworkEnable = false;
 
     private boolean run = true;
 
-    public BattlePresenter(BattleView view) {
+    public PlayPresenter(PlayView view) {
         this.context = (Context) view;
         this.view = view;
         isNetworkEnable = isOnline();

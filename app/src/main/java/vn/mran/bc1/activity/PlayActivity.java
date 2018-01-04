@@ -16,7 +16,9 @@ import vn.mran.bc1.helper.OnDoubleClickListener;
 import vn.mran.bc1.instance.Media;
 import vn.mran.bc1.instance.Rule;
 import vn.mran.bc1.mvp.presenter.BattlePresenter;
+import vn.mran.bc1.mvp.presenter.PlayPresenter;
 import vn.mran.bc1.mvp.view.BattleView;
+import vn.mran.bc1.mvp.view.PlayView;
 import vn.mran.bc1.util.MyAnimation;
 import vn.mran.bc1.util.ResizeBitmap;
 import vn.mran.bc1.util.Task;
@@ -29,10 +31,10 @@ import vn.mran.bc1.widget.MoneyLayout;
  * Created by Mr An on 18/12/2017.
  */
 
-public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpdate, View.OnClickListener, BattleView, Rule.OnFireBaseDataBattleChanged {
+public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpdate, View.OnClickListener, PlayView, Rule.OnFireBaseDataBattleChanged {
     private final String TAG = getClass().getSimpleName();
 
-    private BattlePresenter presenter;
+    private PlayPresenter presenter;
 
     private ImageView imgAction;
 
@@ -77,7 +79,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     @Override
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
-        presenter = new BattlePresenter(this);
+        presenter = new PlayPresenter(this);
 //        drawParallaxStar.setStarSize((int)screenWidth/15);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
@@ -113,10 +115,10 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
 
     private void initUIFromFirebase() {
         //Text
-        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
+        updateText(preferences.getStringValue(PrefValue.TEXT_PLAY, PrefValue.DEFAULT_TEXT));
 
         //Main rule
-        String ruleMainStatus = preferences.getStringValue(PrefValue.RULE_MAIN_STATUS, PrefValue.DEFAULT_STATUS);
+        String ruleMainStatus = preferences.getStringValue(PrefValue.RULE_MAIN_PLAY_STATUS, PrefValue.DEFAULT_STATUS);
         if (ruleMainStatus.equals(Rule.getInstance().STATUS_ON)) {
             if (isEnableMainRuleBySecretKey) {
                 bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
@@ -130,9 +132,9 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         imgBack.setImageBitmap(bpBack);
 
         //Child rule
-        String ruleChildStatus = preferences.getStringValue(PrefValue.RULE_CHILD_STATUS, PrefValue.DEFAULT_STATUS);
+        String ruleChildStatus = preferences.getStringValue(PrefValue.RULE_CHILD_PLAY_STATUS, PrefValue.DEFAULT_STATUS);
         if (ruleChildStatus.equals(Rule.getInstance().STATUS_ON)) {
-            switch (preferences.getIntValue(PrefValue.RULE_CHILD_RULE, PrefValue.DEFAULT_RULE)) {
+            switch (preferences.getIntValue(PrefValue.RULE_CHILD_PLAY_RULE, PrefValue.DEFAULT_RULE)) {
                 case 1:
                     bpSoundOn = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_on_1), screenWidth / 10);
                     bpSoundOff = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_off_1), screenWidth / 10);
@@ -171,7 +173,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                 switch (v.getId()) {
                     case R.id.btnEnableRuleMain:
                         Log.d(TAG, "btnEnableRuleMain clicked");
-                        if (Rule.getInstance().getRuleMainStatus().equals(Rule.getInstance().STATUS_ON)) {
+                        if (Rule.getInstance().getRuleMainPlayStatus().equals(Rule.getInstance().STATUS_ON)) {
                             if (isEnableMainRuleBySecretKey) {
                                 setPreviousRule();
                                 isEnableMainRuleBySecretKey = false;
@@ -189,7 +191,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                         Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
                         break;
                     case R.id.btnEnableRuleOffline:
-                        if (Rule.getInstance().getRuleOfflineStatus().equals(Rule.getInstance().STATUS_ON)) {
+                        if (Rule.getInstance().getRuleOfflinePlayStatus().equals(Rule.getInstance().STATUS_ON)) {
                             Log.d(TAG, "Internet : " + presenter.isOnline());
                             if (!presenter.isOnline()) {
                                 if (isEnableRuleOfflineBySecretKey) {
@@ -202,7 +204,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                             isEnableRuleOfflineBySecretKey = false;
                             setPreviousRule();
                         }
-                        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
+                        updateText(preferences.getStringValue(PrefValue.TEXT_PLAY, PrefValue.DEFAULT_TEXT));
                         break;
                 }
             }
@@ -217,9 +219,9 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
 
     private void setPreviousRule() {
         if (isEnableRuleOfflineBySecretKey) {
-            Rule.getInstance().setCurrentRule(Rule.getInstance().RULE_OFFLINE);
+            Rule.getInstance().setCurrentRulePlay(Rule.getInstance().RULE_OFFLINE);
         } else {
-            Rule.getInstance().setCurrentRule(Rule.getInstance().RULE_NORMAL);
+            Rule.getInstance().setCurrentRulePlay(Rule.getInstance().RULE_NORMAL);
         }
     }
 
@@ -247,18 +249,18 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     }
 
     private void minusNumberOffRule() {
-        Rule.getInstance().minusRuleNumber(Rule.getInstance().RULE_NORMAL);
+        Rule.getInstance().minusRuleNumberPlay(Rule.getInstance().RULE_NORMAL);
         if (isEnableMainRuleBySecretKey)
-            Rule.getInstance().minusRuleNumber(Rule.getInstance().RULE_MAIN);
+            Rule.getInstance().minusRuleNumberPlay(Rule.getInstance().RULE_MAIN);
         if (isEnableRuleOfflineBySecretKey)
-            Rule.getInstance().minusRuleNumber(Rule.getInstance().RULE_OFFLINE);
+            Rule.getInstance().minusRuleNumberPlay(Rule.getInstance().RULE_OFFLINE);
     }
 
     /**
      * Set result from rule
      */
     private void setResult() {
-        resultArrays = Rule.getInstance().getResult();
+        resultArrays = Rule.getInstance().getResultPlay();
         for (int result : resultArrays) {
             Log.d(TAG, "Result : " + result);
         }
@@ -294,8 +296,8 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                     @Override
                     public void run() {
                         if (isEnableMainRuleBySecretKey) {
-                            Rule.getInstance().setRuleMainGoneArrays(Rule.getInstance().RULE_MAIN_GONE_1);
-                            Rule.getInstance().setCurrentRule(Rule.getInstance().RULE_MAIN);
+                            Rule.getInstance().setRuleMainPlayGoneArrays(Rule.getInstance().RULE_MAIN_GONE_1);
+                            Rule.getInstance().setCurrentRulePlay(Rule.getInstance().RULE_MAIN);
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
@@ -309,8 +311,8 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                     @Override
                     public void run() {
                         if (isEnableMainRuleBySecretKey) {
-                            Rule.getInstance().setRuleMainGoneArrays(Rule.getInstance().RULE_MAIN_GONE_2);
-                            Rule.getInstance().setCurrentRule(Rule.getInstance().RULE_MAIN);
+                            Rule.getInstance().setRuleMainPlayGoneArrays(Rule.getInstance().RULE_MAIN_GONE_2);
+                            Rule.getInstance().setCurrentRulePlay(Rule.getInstance().RULE_MAIN);
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
@@ -323,8 +325,8 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                     @Override
                     public void run() {
                         if (isEnableMainRuleBySecretKey) {
-                            Rule.getInstance().setRuleMainGoneArrays(Rule.getInstance().RULE_MAIN_GONE_3);
-                            Rule.getInstance().setCurrentRule(Rule.getInstance().RULE_MAIN);
+                            Rule.getInstance().setRuleMainPlayGoneArrays(Rule.getInstance().RULE_MAIN_GONE_3);
+                            Rule.getInstance().setCurrentRulePlay(Rule.getInstance().RULE_MAIN);
                         } else {
                             Log.d(TAG, "Rule Main disabled");
                         }
@@ -390,7 +392,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             @Override
             public void run() {
                 StringBuilder stringBuilder = new StringBuilder(text);
-                if (preferences.getStringValue(PrefValue.RULE_OFFLINE_STATUS).equals(Rule.getInstance().STATUS_ON)) {
+                if (preferences.getStringValue(PrefValue.RULE_OFFLINE_PLAY_STATUS).equals(Rule.getInstance().STATUS_ON)) {
                     stringBuilder.append(" !");
                     if (isEnableRuleOfflineBySecretKey) {
                         stringBuilder.append(".");

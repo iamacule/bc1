@@ -5,9 +5,9 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/animal_margin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/animal_margin"
         android:layout_weight="0.5"
         android:gravity="center"
         android:orientation="horizontal">
@@ -23,19 +23,32 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
-            <vn.mran.bc1.widget.CustomTextView
-                android:id="@+id/txtNai"
+            <FrameLayout
+                android:id="@+id/frNai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:shadowColor="@color/black"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:textColor="@color/yellow_text"
-                android:textSize="@dimen/text_size" />
+                android:layout_gravity="right|bottom">
+
+                <ImageView
+                    android:id="@+id/imgCoinNai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <vn.mran.bc1.widget.CustomTextView
+                    android:id="@+id/txtNai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"
+                    android:textColor="@color/yellow_text"
+                    android:textSize="@dimen/text_size_small" />
+            </FrameLayout>
         </FrameLayout>
 
         <FrameLayout
@@ -49,19 +62,32 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
-            <vn.mran.bc1.widget.CustomTextView
-                android:id="@+id/txtBau"
+            <FrameLayout
+                android:id="@+id/frBau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:shadowColor="@color/black"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:textColor="@color/yellow_text"
-                android:textSize="@dimen/text_size" />
+                android:layout_gravity="right|bottom">
+
+                <ImageView
+                    android:id="@+id/imgCoinBau"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <vn.mran.bc1.widget.CustomTextView
+                    android:id="@+id/txtBau"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"
+                    android:textColor="@color/yellow_text"
+                    android:textSize="@dimen/text_size_small" />
+            </FrameLayout>
         </FrameLayout>
 
         <FrameLayout
@@ -75,19 +101,32 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
-            <vn.mran.bc1.widget.CustomTextView
-                android:id="@+id/txtGa"
+            <FrameLayout
+                android:id="@+id/frGa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:shadowColor="@color/black"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:textColor="@color/yellow_text"
-                android:textSize="@dimen/text_size" />
+                android:layout_gravity="right|bottom">
+
+                <ImageView
+                    android:id="@+id/imgCoinGa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <vn.mran.bc1.widget.CustomTextView
+                    android:id="@+id/txtGa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"
+                    android:textColor="@color/yellow_text"
+                    android:textSize="@dimen/text_size_small" />
+            </FrameLayout>
         </FrameLayout>
     </LinearLayout>
 
@@ -101,9 +140,9 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/animal_margin"
             android:layout_marginLeft="@dimen/animal_margin"
-            android:layout_marginRight="@dimen/animal_margin"
-            android:layout_marginBottom="@dimen/animal_margin">
+            android:layout_marginRight="@dimen/animal_margin">
 
             <ImageView
                 android:id="@+id/imgCa"
@@ -111,27 +150,40 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
-            <vn.mran.bc1.widget.CustomTextView
-                android:id="@+id/txtCa"
+            <FrameLayout
+                android:id="@+id/frCa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:shadowColor="@color/black"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:textColor="@color/yellow_text"
-                android:textSize="@dimen/text_size" />
+                android:layout_gravity="right|bottom">
+
+                <ImageView
+                    android:id="@+id/imgCoinCa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <vn.mran.bc1.widget.CustomTextView
+                    android:id="@+id/txtCa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"
+                    android:textColor="@color/yellow_text"
+                    android:textSize="@dimen/text_size_small" />
+            </FrameLayout>
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/animal_margin"
             android:layout_marginLeft="@dimen/animal_margin"
-            android:layout_marginRight="@dimen/animal_margin"
-            android:layout_marginBottom="@dimen/animal_margin">
+            android:layout_marginRight="@dimen/animal_margin">
 
             <ImageView
                 android:id="@+id/imgCua"
@@ -139,27 +191,40 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
-            <vn.mran.bc1.widget.CustomTextView
-                android:id="@+id/txtCua"
+            <FrameLayout
+                android:id="@+id/frCua"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:shadowColor="@color/black"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:textColor="@color/yellow_text"
-                android:textSize="@dimen/text_size" />
+                android:layout_gravity="right|bottom">
+
+                <ImageView
+                    android:id="@+id/imgCoinCua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <vn.mran.bc1.widget.CustomTextView
+                    android:id="@+id/txtCua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"
+                    android:textColor="@color/yellow_text"
+                    android:textSize="@dimen/text_size_small" />
+            </FrameLayout>
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/animal_margin"
             android:layout_marginLeft="@dimen/animal_margin"
-            android:layout_marginRight="@dimen/animal_margin"
-            android:layout_marginBottom="@dimen/animal_margin">
+            android:layout_marginRight="@dimen/animal_margin">
 
             <ImageView
                 android:id="@+id/imgTom"
@@ -167,19 +232,32 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
 
-            <vn.mran.bc1.widget.CustomTextView
-                android:id="@+id/txtTom"
+            <FrameLayout
+                android:id="@+id/frTom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center|bottom"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:shadowColor="@color/black"
-                android:shadowDx="3"
-                android:shadowDy="3"
-                android:shadowRadius="3"
-                android:textColor="@color/yellow_text"
-                android:textSize="@dimen/text_size" />
+                android:layout_gravity="right|bottom">
+
+                <ImageView
+                    android:id="@+id/imgCoinTom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <vn.mran.bc1.widget.CustomTextView
+                    android:id="@+id/txtTom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"
+                    android:textColor="@color/yellow_text"
+                    android:textSize="@dimen/text_size_small" />
+            </FrameLayout>
         </FrameLayout>
     </LinearLayout>
 
