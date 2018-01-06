@@ -8,4 +8,6 @@
     <string name="sound">ÂM THANH</string>
     <string name="open">MỞ</string>
     <string name="shake">XỐC</string>
+    <string name="error_choose_money_type">Vui lòng chọn mức cược !</string>
+    <string name="error_money_pick">Bạn không đủ tiền cược !</string>
 </resources>

@@ -69,4 +69,7 @@ public interface PrefValue {
 
     String TEXT = "TEXT";
     String TEXT_PLAY = "TEXT_PLAY";
+
+    String MONEY = "MONEY";
+    int DEFAULT_MONEY = 5000;
 }

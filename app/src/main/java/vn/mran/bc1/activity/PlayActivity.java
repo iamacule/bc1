@@ -2,27 +2,27 @@ package vn.mran.bc1.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import vn.mran.bc1.R;
 import vn.mran.bc1.base.BaseActivity;
 import vn.mran.bc1.constant.PrefValue;
-import vn.mran.bc1.draw.DrawBattle;
 import vn.mran.bc1.draw.DrawParallaxStar;
 import vn.mran.bc1.draw.DrawPlay;
 import vn.mran.bc1.helper.Log;
 import vn.mran.bc1.helper.OnDoubleClickListener;
 import vn.mran.bc1.instance.Media;
 import vn.mran.bc1.instance.Rule;
-import vn.mran.bc1.mvp.presenter.BattlePresenter;
 import vn.mran.bc1.mvp.presenter.PlayPresenter;
-import vn.mran.bc1.mvp.view.BattleView;
 import vn.mran.bc1.mvp.view.PlayView;
 import vn.mran.bc1.util.MyAnimation;
 import vn.mran.bc1.util.ResizeBitmap;
 import vn.mran.bc1.util.Task;
 import vn.mran.bc1.util.TouchEffect;
+import vn.mran.bc1.util.toast.Boast;
 import vn.mran.bc1.widget.AnimalChooserLayout;
 import vn.mran.bc1.widget.CustomTextView;
 import vn.mran.bc1.widget.MoneyLayout;
@@ -43,6 +43,9 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
 
     private CustomTextView txtAction;
     private CustomTextView txtTitle;
+    private CustomTextView txtMoney;
+
+    private TextView txtTime;
 
     private DrawParallaxStar drawParallaxStar;
     private DrawPlay drawPlay;
@@ -60,6 +63,8 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     private boolean isEnableMainRuleBySecretKey = false;
     private boolean isEnableRuleOfflineBySecretKey = false;
 
+    private int currentMoney = 0;
+
     @Override
     public void initLayout() {
         hideStatusBar();
@@ -72,6 +77,8 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         imgBack = findViewById(R.id.imgBack);
         txtAction = findViewById(R.id.txtAction);
         txtTitle = findViewById(R.id.txtTitle);
+        txtMoney = findViewById(R.id.txtMoney);
+        txtTime = findViewById(R.id.txtTime);
 //        drawParallaxStar = findViewById(R.id.drawParallaxStar);
         drawPlay = findViewById(R.id.drawPlay);
     }
@@ -101,7 +108,14 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             @Override
             public void onMoneyChanged(int value) {
                 Log.d(TAG, "Money changed : " + value);
-                animalChooserLayout.reset(10);
+                animalChooserLayout.setMaxValue(currentMoney / value);
+                presenter.setCurrentMoney(value);
+            }
+
+            @Override
+            public void onErrorPickMoney() {
+                Boast.makeText(PlayActivity.this, getString(R.string.error_money_pick));
+                txtMoney.startAnimation(MyAnimation.vibrate(getApplicationContext()));
             }
         });
 
@@ -109,8 +123,25 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             @Override
             public void onChoose(int[] valueArrays) {
                 Log.d(TAG, "Changed");
+                presenter.onChoose(valueArrays);
+            }
+
+            @Override
+            public void onError() {
+                Boast.makeText(PlayActivity.this, getString(R.string.error_choose_money_type));
+                findViewById(R.id.lnMoney).startAnimation(MyAnimation.vibrate(getApplicationContext()));
             }
         });
+
+        checkingMoney();
+    }
+
+    private void checkingMoney() {
+        currentMoney = preferences.getIntValue(PrefValue.MONEY, PrefValue.DEFAULT_MONEY);
+        txtMoney.setText(presenter.updateMoneyValue(currentMoney));
+
+        presenter.setEnablePlusMoney(currentMoney < 5000);
+        moneyLayout.setCurrentMoney(currentMoney);
     }
 
     private void initUIFromFirebase() {
@@ -240,6 +271,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         Log.d(TAG, "isLidOpened : " + isOpened);
         if (isOpened) {
             minusNumberOffRule();
+            presenter.executeResult();
             txtAction.setText(getString(R.string.shake));
         } else {
             setResult();
@@ -265,6 +297,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             Log.d(TAG, "Result : " + result);
         }
         drawPlay.setResultArrays(resultArrays);
+        presenter.calculateResult(resultArrays);
     }
 
     @Override
@@ -380,6 +413,42 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             isEnableRuleOfflineBySecretKey = false;
         }
         updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
+    }
+
+    @Override
+    public void onTimeChanged(String value) {
+        txtTime.setText(value);
+    }
+
+    @Override
+    public void onResultExecute(int tong) {
+        currentMoney = currentMoney + tong;
+        if (currentMoney <= 0) {
+            currentMoney = 0;
+            animalChooserLayout.setMaxValue(currentMoney);
+            presenter.setCurrentMoney(0);
+        }
+        preferences.storeValue(PrefValue.MONEY, currentMoney);
+
+        if (tong < 0) {
+            Boast.makeText(this, presenter.updateMoneyValue(tong), Color.RED);
+        } else if (tong > 0) {
+            Boast.makeText(this, "+" + presenter.updateMoneyValue(tong), Color.GREEN);
+        }
+
+        Task.postDelay(new Runnable() {
+            @Override
+            public void run() {
+                checkingMoney();
+            }
+        }, 500);
+    }
+
+    @Override
+    public void onAddMoney() {
+        currentMoney = currentMoney + 10;
+        preferences.storeValue(PrefValue.MONEY, currentMoney);
+        checkingMoney();
     }
 
     @Override

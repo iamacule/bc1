@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import vn.mran.bc1.R;
+import vn.mran.bc1.util.MyAnimation;
 import vn.mran.bc1.util.ResizeBitmap;
 
 /**
@@ -15,6 +16,8 @@ public class AnimalChooserLayout implements View.OnClickListener {
 
     public interface OnAnimalChooseListener {
         void onChoose(int[] valueArrays);
+
+        void onError();
     }
 
     private OnAnimalChooseListener onAnimalChooseListener;
@@ -111,51 +114,60 @@ public class AnimalChooserLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (currentValue < maxValue) {
-            currentValue = currentValue + 1;
-            switch (view.getId()) {
-                case R.id.imgNai:
-                    valueNai = valueNai + 1;
-                    txtNai.setText(addDisplayValue(valueNai));
-                    imgCoinNai.setVisibility(View.VISIBLE);
+        if (maxValue <= 0)
+            onAnimalChooseListener.onError();
+        else {
+            if (currentValue < maxValue) {
+                currentValue = currentValue + 1;
+                switch (view.getId()) {
+                    case R.id.imgNai:
+                        valueNai = valueNai + 1;
+                        txtNai.setText(addDisplayValue(valueNai));
+                        imgCoinNai.setVisibility(View.VISIBLE);
+                        imgNai.startAnimation(MyAnimation.vibrate(view.getContext()));
+                        break;
+                    case R.id.imgBau:
+                        valueBau = valueBau + 1;
+                        txtBau.setText(addDisplayValue(valueBau));
+                        imgCoinBau.setVisibility(View.VISIBLE);
+                        imgBau.startAnimation(MyAnimation.vibrate(view.getContext()));
 
-                    break;
-                case R.id.imgBau:
-                    valueBau = valueBau + 1;
-                    txtBau.setText(addDisplayValue(valueBau));
-                    imgCoinBau.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.imgGa:
+                        valueGa = valueGa + 1;
+                        txtGa.setText(addDisplayValue(valueGa));
+                        imgCoinGa.setVisibility(View.VISIBLE);
+                        imgGa.startAnimation(MyAnimation.vibrate(view.getContext()));
 
-                    break;
-                case R.id.imgGa:
-                    valueGa = valueGa + 1;
-                    txtGa.setText(addDisplayValue(valueGa));
-                    imgCoinGa.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.imgCa:
+                        valueCa = valueCa + 1;
+                        txtCa.setText(addDisplayValue(valueCa));
+                        imgCoinCa.setVisibility(View.VISIBLE);
+                        imgCa.startAnimation(MyAnimation.vibrate(view.getContext()));
 
-                    break;
-                case R.id.imgCa:
-                    valueCa = valueCa + 1;
-                    txtCa.setText(addDisplayValue(valueCa));
-                    imgCoinCa.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.imgCua:
+                        valueCua = valueCua + 1;
+                        txtCua.setText(addDisplayValue(valueCua));
+                        imgCoinCua.setVisibility(View.VISIBLE);
+                        imgCua.startAnimation(MyAnimation.vibrate(view.getContext()));
 
-                    break;
-                case R.id.imgCua:
-                    valueCua = valueCua + 1;
-                    txtCua.setText(addDisplayValue(valueCua));
-                    imgCoinCua.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.imgTom:
+                        valueTom = valueTom + 1;
+                        txtTom.setText(addDisplayValue(valueTom));
+                        imgCoinTom.setVisibility(View.VISIBLE);
+                        imgTom.startAnimation(MyAnimation.vibrate(view.getContext()));
 
-                    break;
-                case R.id.imgTom:
-                    valueTom = valueTom + 1;
-                    txtTom.setText(addDisplayValue(valueTom));
-                    imgCoinTom.setVisibility(View.VISIBLE);
-
-                    break;
+                        break;
+                }
+                onAnimalChooseListener.onChoose(new int[]{valueBau, valueCua, valueTom, valueCa, valueGa, valueNai});
             }
-            onAnimalChooseListener.onChoose(new int[]{valueBau, valueCua, valueTom, valueCa, valueGa, valueNai});
         }
     }
 
-    public void reset(int maxValue) {
+    public void reset() {
         txtNai.setText("");
         txtBau.setText("");
         txtGa.setText("");
@@ -171,7 +183,6 @@ public class AnimalChooserLayout implements View.OnClickListener {
         valueTom = 0;
 
         currentValue = 0;
-        this.maxValue = maxValue;
 
         imgCoinTom.setVisibility(View.GONE);
         imgCoinNai.setVisibility(View.GONE);
@@ -183,5 +194,10 @@ public class AnimalChooserLayout implements View.OnClickListener {
 
     private String addDisplayValue(int value) {
         return "x" + value;
+    }
+
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+        reset();
     }
 }

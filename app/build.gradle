@@ -5,6 +5,8 @@ int VERSION_CODE = 1
 String VERSION_NAME = "1.0.0.0"
 String DATE = new Date().format('yyyyMMdd')
 
+project.archivesBaseName = APK_NAME + VERSION_NAME + "_" + DATE;
+
 android {
     compileSdkVersion 26
     defaultConfig {

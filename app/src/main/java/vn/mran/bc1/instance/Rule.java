@@ -929,6 +929,11 @@ public class Rule {
                         Task.runOnUIThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (onFireBaseDataBattleChanged != null) {
+                                    onFireBaseDataBattleChanged.onTextChanged(text);
+                                    onFireBaseDataBattleChanged.onDataChanged();
+                                }
+
                                 if (onFireBaseDataPlayChanged != null) {
                                     onFireBaseDataPlayChanged.onTextChanged(textPlay);
                                     onFireBaseDataPlayChanged.onDataChanged();

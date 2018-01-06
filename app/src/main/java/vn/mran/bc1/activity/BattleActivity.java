@@ -247,6 +247,10 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         imgResult1.setImageBitmap(bpTopArray[resultArrays[0]]);
         imgResult2.setImageBitmap(bpTopArray[resultArrays[1]]);
         imgResult3.setImageBitmap(bpTopArray[resultArrays[2]]);
+
+        imgResult1.startAnimation(MyAnimation.vibrate(getApplicationContext()));
+        imgResult2.startAnimation(MyAnimation.vibrate(getApplicationContext()));
+        imgResult3.startAnimation(MyAnimation.vibrate(getApplicationContext()));
     }
 
     private void resetTopImage() {
