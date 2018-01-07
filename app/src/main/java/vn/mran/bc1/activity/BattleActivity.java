@@ -68,7 +68,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         imgBack = findViewById(R.id.imgBack);
         txtAction = findViewById(R.id.txtAction);
         txtTitle = findViewById(R.id.txtTitle);
-//        drawParallaxStar = findViewById(R.id.drawParallaxStar);
+        drawParallaxStar = findViewById(R.id.drawParallaxStar);
         drawBattle = findViewById(R.id.drawPlay);
     }
 
@@ -76,7 +76,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new BattlePresenter(this);
-//        drawParallaxStar.setStarSize((int)screenWidth/15);
+        drawParallaxStar.setStarSize((int)screenWidth/15);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 2));
 

@@ -67,6 +67,10 @@ public class PlayPresenter {
         }
     }
 
+    public void resetMoneyArray(){
+        moneyArrays = new int[6];
+    }
+
     public void setCurrentMoney(int currentMoney) {
         this.currentMoney = currentMoney;
     }
