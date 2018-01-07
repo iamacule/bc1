@@ -38,7 +38,7 @@
                     android:id="@+id/imgBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left|top"
+                    android:layout_gravity="left|center"
                     android:padding="@dimen/sound_back_button_padding" />
             </LinearLayout>
 
@@ -64,7 +64,7 @@
                     android:id="@+id/imgSound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right|top"
+                    android:layout_gravity="right|center"
                     android:padding="@dimen/sound_back_button_padding" />
             </LinearLayout>
         </LinearLayout>
