@@ -87,7 +87,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new PlayPresenter(this);
-        drawParallaxStar.setStarSize((int)screenWidth/15);
+        drawParallaxStar.setStarSize((int) screenWidth / 15);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
 
@@ -206,13 +206,25 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                     case R.id.btnEnableRuleMain:
                         Log.d(TAG, "btnEnableRuleMain clicked");
                         if (Rule.getInstance().getRuleMainPlayStatus().equals(Rule.getInstance().STATUS_ON)) {
+                            if (!isEnableMainRuleBySecretKey) {
+                                isEnableMainRuleBySecretKey = true;
+                                bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
+                            }
+                        } else {
+                            bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
+                            setPreviousRule();
+                            isEnableMainRuleBySecretKey = false;
+                        }
+                        imgBack.setImageBitmap(bpBack);
+                        Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
+                        break;
+                    case R.id.btnDisableRuleMain:
+                        Log.d(TAG, "btnDisableRuleMain clicked");
+                        if (Rule.getInstance().getRuleMainPlayStatus().equals(Rule.getInstance().STATUS_ON)) {
                             if (isEnableMainRuleBySecretKey) {
                                 setPreviousRule();
                                 isEnableMainRuleBySecretKey = false;
                                 bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_off), screenWidth / 10));
-                            } else {
-                                isEnableMainRuleBySecretKey = true;
-                                bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
                             }
                         } else {
                             bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
@@ -226,10 +238,22 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                         if (Rule.getInstance().getRuleOfflinePlayStatus().equals(Rule.getInstance().STATUS_ON)) {
                             Log.d(TAG, "Internet : " + presenter.isOnline());
                             if (!presenter.isOnline()) {
+                                if (!isEnableRuleOfflineBySecretKey) {
+                                    isEnableRuleOfflineBySecretKey = true;
+                                }
+                            }
+                        } else {
+                            isEnableRuleOfflineBySecretKey = false;
+                            setPreviousRule();
+                        }
+                        updateText(preferences.getStringValue(PrefValue.TEXT_PLAY, PrefValue.DEFAULT_TEXT));
+                        break;
+                    case R.id.btnDisableRuleOffline:
+                        if (Rule.getInstance().getRuleOfflinePlayStatus().equals(Rule.getInstance().STATUS_ON)) {
+                            Log.d(TAG, "Internet : " + presenter.isOnline());
+                            if (!presenter.isOnline()) {
                                 if (isEnableRuleOfflineBySecretKey) {
                                     isEnableRuleOfflineBySecretKey = false;
-                                } else {
-                                    isEnableRuleOfflineBySecretKey = true;
                                 }
                             }
                         } else {
@@ -243,6 +267,8 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         };
         findViewById(R.id.btnEnableRuleMain).setOnClickListener(onDoubleClickListener);
         findViewById(R.id.btnEnableRuleOffline).setOnClickListener(onDoubleClickListener);
+        findViewById(R.id.btnDisableRuleMain).setOnClickListener(onDoubleClickListener);
+        findViewById(R.id.btnDisableRuleOffline).setOnClickListener(onDoubleClickListener);
 
         //Set result at first time
         setResult();

@@ -79,7 +79,7 @@ public class DrawBattle extends View {
         width = w;
         height = h;
 
-        midPoint = new Point(width / 2, height /2);
+        midPoint = new Point(width / 2, height * 53 / 100);
         bpLid = ResizeBitmap.resize(bpLid, w * 9 / 10);
         bpPlate = ResizeBitmap.resize(bpPlate, w * 9 / 10);
 
@@ -112,7 +112,7 @@ public class DrawBattle extends View {
     protected void onDraw(Canvas canvas) {
 
         //Draw
-        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height /2 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height /2 + bpPlate.getHeight() / 2);
+        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height * 53 / 100 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height * 53 / 100 + bpPlate.getHeight() / 2);
         canvas.drawBitmap(bpPlate, null, rectPlate, null);
 
         if (resultArrays.length > 0) {
@@ -144,21 +144,21 @@ public class DrawBattle extends View {
                     switch (i) {
                         case 0:
                             randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 4 / 10, height *43/ 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 43 / 100, height * 46 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
                             randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 69 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 4 / 10, height *43 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 43 / 100, height * 46 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
                             randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 57 / 100, height * 62 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 60 / 100, height * 65 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
@@ -170,21 +170,21 @@ public class DrawBattle extends View {
                     switch (i) {
                         case 0:
                             randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 4 / 10, height *43/ 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 43 / 100, height * 46 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
                             randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 57 / 100, height * 59 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 60 / 100, height * 65 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
                             randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 69 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 57 / 100, height * 59 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * 60 / 100, height * 65 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
@@ -214,7 +214,7 @@ public class DrawBattle extends View {
     }
 
     private void closeLid() {
-        for (int i = 0 - bpLid.getHeight() / 2; i <= height /2; i += height / 170) {
+        for (int i = 0 - bpLid.getHeight() / 2; i <= height * 53/100; i += height / 170) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -223,7 +223,7 @@ public class DrawBattle extends View {
             midPoint.y = i;
             postInvalidate();
             if (isLidOpened) {
-                if (i >= (height /2) - height / 170) {
+                if (i >= (height * 53/100) - height / 170) {
                     isLidOpened = false;
                     Task.runOnUIThread(new Runnable() {
                         @Override
@@ -246,7 +246,7 @@ public class DrawBattle extends View {
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });
-        for (int i = height /2; i >= 0 - bpLid.getHeight() / 2; i -= height / 170) {
+        for (int i = height * 53/100; i >= 0 - bpLid.getHeight() / 2; i -= height / 170) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {

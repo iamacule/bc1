@@ -118,10 +118,31 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <android.support.v4.widget.Space
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.32" />
+                        android:layout_weight="0.32"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/btnDisableRuleMain"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.1"
+                            android:background="@color/white" />
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.8" />
+
+                        <LinearLayout
+                            android:id="@+id/btnDisableRuleOffline"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.1"
+                            android:background="@color/white" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -135,70 +156,80 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
+                            <android.support.v4.widget.Space
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.1" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="0.4"
+                                android:layout_weight="0.3"
                                 android:orientation="horizontal">
 
                                 <android.support.v4.widget.Space
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.48" />
+                                    android:layout_weight="0.485" />
 
                                 <LinearLayout
                                     android:id="@+id/btnMain2"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.04"
+                                    android:layout_weight="0.03"
                                     android:background="@color/colorAccent"></LinearLayout>
 
                                 <android.support.v4.widget.Space
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.48" />
+                                    android:layout_weight="0.485" />
                             </LinearLayout>
 
                             <android.support.v4.widget.Space
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="0.28" />
+                                android:layout_weight="0.22" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="0.42"
+                                android:layout_weight="0.28"
                                 android:orientation="horizontal">
 
                                 <android.support.v4.widget.Space
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.411" />
+                                    android:layout_weight="0.43" />
 
                                 <LinearLayout
                                     android:id="@+id/btnMain1"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.038"
+                                    android:layout_weight="0.032"
                                     android:background="@color/colorAccent" />
 
                                 <android.support.v4.widget.Space
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.104" />
+                                    android:layout_weight="0.083" />
 
                                 <LinearLayout
                                     android:id="@+id/btnMain3"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.038"
+                                    android:layout_weight="0.032"
                                     android:background="@color/colorAccent" />
 
                                 <android.support.v4.widget.Space
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.411" />
+                                    android:layout_weight="0.423" />
                             </LinearLayout>
+
+                            <android.support.v4.widget.Space
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="0.2" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -263,10 +294,10 @@
     </LinearLayout>
 
     <vn.mran.bc1.draw.DrawBattle
-        android:id="@+id/drawPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+    android:id="@+id/drawPlay"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" />
 
     <vn.mran.bc1.draw.DrawParallaxStar
     android:id="@+id/drawParallaxStar"

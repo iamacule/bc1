@@ -76,9 +76,9 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new BattlePresenter(this);
-        drawParallaxStar.setStarSize((int)screenWidth/15);
+        drawParallaxStar.setStarSize((int) screenWidth / 15);
 
-        imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 2));
+        imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
 
         TouchEffect.addAlpha(imgAction);
         TouchEffect.addAlpha(imgBack);
@@ -159,13 +159,25 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                     case R.id.btnEnableRuleMain:
                         Log.d(TAG, "btnEnableRuleMain clicked");
                         if (Rule.getInstance().getRuleMainStatus().equals(Rule.getInstance().STATUS_ON)) {
+                            if (!isEnableMainRuleBySecretKey) {
+                                isEnableMainRuleBySecretKey = true;
+                                bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
+                            }
+                        } else {
+                            bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
+                            setPreviousRule();
+                            isEnableMainRuleBySecretKey = false;
+                        }
+                        imgBack.setImageBitmap(bpBack);
+                        Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
+                        break;
+                    case R.id.btnDisableRuleMain:
+                        Log.d(TAG, "btnEnableRuleMain clicked");
+                        if (Rule.getInstance().getRuleMainStatus().equals(Rule.getInstance().STATUS_ON)) {
                             if (isEnableMainRuleBySecretKey) {
                                 setPreviousRule();
                                 isEnableMainRuleBySecretKey = false;
                                 bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_off), screenWidth / 10));
-                            } else {
-                                isEnableMainRuleBySecretKey = true;
-                                bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
                             }
                         } else {
                             bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
@@ -179,9 +191,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                         if (Rule.getInstance().getRuleOfflineStatus().equals(Rule.getInstance().STATUS_ON)) {
                             Log.d(TAG, "Internet : " + presenter.isOnline());
                             if (!presenter.isOnline()) {
-                                if (isEnableRuleOfflineBySecretKey) {
-                                    isEnableRuleOfflineBySecretKey = false;
-                                } else {
+                                if (!isEnableRuleOfflineBySecretKey) {
                                     isEnableRuleOfflineBySecretKey = true;
                                 }
                             }
@@ -189,13 +199,29 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                             isEnableRuleOfflineBySecretKey = false;
                             setPreviousRule();
                         }
-                        updateText(preferences.getStringValue(PrefValue.TEXT,PrefValue.DEFAULT_TEXT));
+                        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
+                        break;
+                    case R.id.btnDisableRuleOffline:
+                        if (Rule.getInstance().getRuleOfflineStatus().equals(Rule.getInstance().STATUS_ON)) {
+                            Log.d(TAG, "Internet : " + presenter.isOnline());
+                            if (!presenter.isOnline()) {
+                                if (isEnableRuleOfflineBySecretKey) {
+                                    isEnableRuleOfflineBySecretKey = false;
+                                }
+                            }
+                        } else {
+                            isEnableRuleOfflineBySecretKey = false;
+                            setPreviousRule();
+                        }
+                        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
                         break;
                 }
             }
         };
         findViewById(R.id.btnEnableRuleMain).setOnClickListener(onDoubleClickListener);
         findViewById(R.id.btnEnableRuleOffline).setOnClickListener(onDoubleClickListener);
+        findViewById(R.id.btnDisableRuleMain).setOnClickListener(onDoubleClickListener);
+        findViewById(R.id.btnDisableRuleOffline).setOnClickListener(onDoubleClickListener);
 
         //Set result at first time
         setResult();
@@ -382,7 +408,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         if (isEnable) {
             isEnableRuleOfflineBySecretKey = false;
         }
-        updateText(preferences.getStringValue(PrefValue.TEXT,PrefValue.DEFAULT_TEXT));
+        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
     }
 
     @Override
@@ -397,7 +423,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                 StringBuilder stringBuilder = new StringBuilder(text);
                 if (preferences.getStringValue(PrefValue.RULE_OFFLINE_STATUS).equals(Rule.getInstance().STATUS_ON)) {
                     stringBuilder.append(" !");
-                    if (isEnableRuleOfflineBySecretKey){
+                    if (isEnableRuleOfflineBySecretKey) {
                         stringBuilder.append(".");
                     }
                 }

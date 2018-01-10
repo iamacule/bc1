@@ -166,10 +166,17 @@
                                 android:layout_weight="0.4"
                                 android:orientation="horizontal">
 
+                                <LinearLayout
+                                    android:id="@+id/btnDisableRuleMain"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.1"
+                                    android:background="@color/white" />
+
                                 <android.support.v4.widget.Space
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.485" />
+                                    android:layout_weight="0.385" />
 
                                 <LinearLayout
                                     android:id="@+id/btnMain2"
@@ -181,7 +188,14 @@
                                 <android.support.v4.widget.Space
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:layout_weight="0.485" />
+                                    android:layout_weight="0.385" />
+
+                                <LinearLayout
+                                    android:id="@+id/btnDisableRuleOffline"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="0.1"
+                                    android:background="@color/white" />
                             </LinearLayout>
 
                             <android.support.v4.widget.Space
