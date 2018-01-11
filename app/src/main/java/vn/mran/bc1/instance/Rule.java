@@ -448,7 +448,6 @@ public class Rule {
         if (min >= 50 && min < 60)
             tong -= 6;
 
-        tong = tong - 1;
         Log.d(TAG, "Tong : " + tong);
         int number = tong % 6;
         Log.d(TAG, "Number : " + number);
@@ -514,7 +513,6 @@ public class Rule {
         if (min >= 50 && min < 60)
             tong -= 6;
 
-        tong = tong - 1;
         Log.d(TAG, "Tong Play : " + tong);
         int number = tong % 6;
         Log.d(TAG, "Number Play : " + number);
@@ -580,7 +578,6 @@ public class Rule {
         if (min >= 50 && min < 60)
             tong += 6;
 
-        tong = tong - 1;
         Log.d(TAG, "Tong : " + tong);
         int number = tong % 6;
         Log.d(TAG, "Number : " + number);
@@ -646,7 +643,6 @@ public class Rule {
         if (min >= 50 && min < 60)
             tong += 6;
 
-        tong = tong - 1;
         Log.d(TAG, "Tong play : " + tong);
         int number = tong % 6;
         Log.d(TAG, "Number play : " + number);
@@ -696,7 +692,6 @@ public class Rule {
         }
 
         tong += ruleChildAdditionalNumber;
-        tong = tong - 1;
         Log.d(TAG, "Tong : " + tong);
         int number = tong % 6;
         Log.d(TAG, "Number : " + number);
@@ -746,7 +741,6 @@ public class Rule {
         }
 
         tong += ruleChildPlayAdditionalNumber;
-        tong = tong - 1;
         Log.d(TAG, "Tong play: " + tong);
         int number = tong % 6;
         Log.d(TAG, "Number play : " + number);

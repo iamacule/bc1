@@ -14,7 +14,7 @@
     <dimen name="setting_first_element_top_margin">20dp</dimen>
     <dimen name="icon_button_margin">10dp</dimen>
     <dimen name="v_margin">5dp</dimen>
-    <dimen name="img_result_margin">10dp</dimen>
+    <dimen name="img_result_margin">3dp</dimen>
     <dimen name="money_margin">2dp</dimen>
     <dimen name="animal_margin">5dp</dimen>
     <dimen name="sound_back_button_padding">10dp</dimen>

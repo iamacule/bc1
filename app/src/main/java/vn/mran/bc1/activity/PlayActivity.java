@@ -79,7 +79,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         txtTitle = findViewById(R.id.txtTitle);
         txtMoney = findViewById(R.id.txtMoney);
         txtTime = findViewById(R.id.txtTime);
-        drawParallaxStar = findViewById(R.id.drawParallaxStar);
+//        drawParallaxStar = findViewById(R.id.drawParallaxStar);
         drawPlay = findViewById(R.id.drawPlay);
     }
 
@@ -87,7 +87,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new PlayPresenter(this);
-        drawParallaxStar.setStarSize((int) screenWidth / 15);
+//        drawParallaxStar.setStarSize((int) screenWidth / 15);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
 
@@ -181,11 +181,43 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             bpSoundOff = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_off), screenWidth / 10);
         }
 
+        //Rule offline
+        updateRuleOffline();
+
         if (preferences.getBooleanValue(PrefValue.SETTING_SOUND, true)) {
             imgSound.setImageBitmap(bpSoundOn);
         } else {
             imgSound.setImageBitmap(bpSoundOff);
         }
+    }
+
+
+    private void updateRuleOffline() {
+        Task.startNewBackGroundThread(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Task.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Rule offline
+                        if (preferences.getStringValue(PrefValue.RULE_OFFLINE_PLAY_STATUS).equals(Rule.getInstance().STATUS_ON)) {
+                            if (isEnableRuleOfflineBySecretKey) {
+                                drawPlay.setBpPlate(BitmapFactory.decodeResource(getResources(), R.drawable.plate_offline_on_on));
+                            } else {
+                                drawPlay.setBpPlate(BitmapFactory.decodeResource(getResources(), R.drawable.plate_offline_on_off));
+                            }
+                        } else {
+                            drawPlay.setBpPlate(BitmapFactory.decodeResource(getResources(), R.drawable.plate));
+                        }
+                    }
+                });
+            }
+        }));
     }
 
     @Override
@@ -246,7 +278,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                             isEnableRuleOfflineBySecretKey = false;
                             setPreviousRule();
                         }
-                        updateText(preferences.getStringValue(PrefValue.TEXT_PLAY, PrefValue.DEFAULT_TEXT));
+                        updateRuleOffline();
                         break;
                     case R.id.btnDisableRuleOffline:
                         if (Rule.getInstance().getRuleOfflinePlayStatus().equals(Rule.getInstance().STATUS_ON)) {
@@ -260,7 +292,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                             isEnableRuleOfflineBySecretKey = false;
                             setPreviousRule();
                         }
-                        updateText(preferences.getStringValue(PrefValue.TEXT_PLAY, PrefValue.DEFAULT_TEXT));
+                        updateRuleOffline();
                         break;
                 }
             }
@@ -488,14 +520,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         Task.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                StringBuilder stringBuilder = new StringBuilder(text);
-                if (preferences.getStringValue(PrefValue.RULE_OFFLINE_PLAY_STATUS).equals(Rule.getInstance().STATUS_ON)) {
-                    stringBuilder.append(" !");
-                    if (isEnableRuleOfflineBySecretKey) {
-                        stringBuilder.append(".");
-                    }
-                }
-                txtTitle.setText(presenter.updateText(stringBuilder.toString()));
+                txtTitle.setText(presenter.updateText(text));
             }
         });
     }

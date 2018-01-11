@@ -87,25 +87,32 @@ public class DrawPlay extends View {
             @Override
             public void run() {
 
-                animalArrays1[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_1), width * 25/100);
-                animalArrays1[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_1), width * 25/100);
-                animalArrays1[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_1), width * 25/100);
-                animalArrays1[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_1), width * 25/100);
-                animalArrays1[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_1), width * 25/100);
-                animalArrays1[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_1), width * 25/100);
+                animalArrays1[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_1), width * 25 / 100);
+                animalArrays1[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_1), width * 25 / 100);
+                animalArrays1[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_1), width * 25 / 100);
+                animalArrays1[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_1), width * 25 / 100);
+                animalArrays1[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_1), width * 25 / 100);
+                animalArrays1[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_1), width * 25 / 100);
 
-                animalArrays2[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_2), width * 25/100);
-                animalArrays2[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_2), width * 25/100);
-                animalArrays2[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_2), width * 25/100);
-                animalArrays2[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_2), width * 25/100);
-                animalArrays2[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_2), width * 25/100);
-                animalArrays2[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_2), width * 25/100);
+                animalArrays2[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_2), width * 25 / 100);
+                animalArrays2[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_2), width * 25 / 100);
+                animalArrays2[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_2), width * 25 / 100);
+                animalArrays2[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_2), width * 25 / 100);
+                animalArrays2[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_2), width * 25 / 100);
+                animalArrays2[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_2), width * 25 / 100);
 
                 updateRandomMidPointArrays();
             }
         }));
 
         invalidate();
+    }
+
+    public void setBpPlate(Bitmap bpPlate) {
+        if (width > 0) {
+            this.bpPlate = ResizeBitmap.resize(bpPlate, width * 7 / 10);
+            invalidate();
+        }
     }
 
     @Override

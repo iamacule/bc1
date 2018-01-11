@@ -83,12 +83,12 @@ public class AnimalChooserLayout implements View.OnClickListener {
         txtCua = view.findViewById(R.id.txtCua);
         txtTom = view.findViewById(R.id.txtTom);
 
-        imgNai.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.nai), screenWidth * 28 / 100));
-        imgBau.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.bau), screenWidth * 28 / 100));
-        imgGa.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.ga), screenWidth * 28 / 100));
-        imgCa.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.ca), screenWidth * 28 / 100));
-        imgCua.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.cua), screenWidth * 28 / 100));
-        imgTom.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.tom), screenWidth * 28 / 100));
+        imgNai.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.nai), screenWidth * 30 / 100));
+        imgBau.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.bau), screenWidth * 30 / 100));
+        imgGa.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.ga), screenWidth * 30 / 100));
+        imgCa.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.ca), screenWidth * 30 / 100));
+        imgCua.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.cua), screenWidth * 30 / 100));
+        imgTom.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.tom), screenWidth * 30 / 100));
 
         imgCoinBau.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.coin), screenWidth / 10));
         imgCoinCa.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(view.getResources(), R.drawable.coin), screenWidth / 10));

@@ -68,7 +68,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         imgBack = findViewById(R.id.imgBack);
         txtAction = findViewById(R.id.txtAction);
         txtTitle = findViewById(R.id.txtTitle);
-        drawParallaxStar = findViewById(R.id.drawParallaxStar);
+//        drawParallaxStar = findViewById(R.id.drawParallaxStar);
         drawBattle = findViewById(R.id.drawPlay);
     }
 
@@ -76,7 +76,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new BattlePresenter(this);
-        drawParallaxStar.setStarSize((int) screenWidth / 15);
+//        drawParallaxStar.setStarSize((int) screenWidth / 15);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
 
@@ -84,14 +84,14 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         TouchEffect.addAlpha(imgBack);
         TouchEffect.addAlpha(imgSound);
 
-        bpTopArray[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau), screenWidth / 4);
-        bpTopArray[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua), screenWidth / 4);
-        bpTopArray[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom), screenWidth / 4);
-        bpTopArray[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca), screenWidth / 4);
-        bpTopArray[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga), screenWidth / 4);
-        bpTopArray[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai), screenWidth / 4);
+        bpTopArray[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau), screenWidth / 3);
+        bpTopArray[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua), screenWidth / 3);
+        bpTopArray[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom), screenWidth / 3);
+        bpTopArray[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca), screenWidth / 3);
+        bpTopArray[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga), screenWidth / 3);
+        bpTopArray[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai), screenWidth / 3);
 
-        bpQuestion = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.question), screenWidth / 4);
+        bpQuestion = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.question), screenWidth / 3);
 
         initUIFromFirebase();
 
@@ -134,11 +134,41 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
             bpSoundOff = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.sound_off), screenWidth / 10);
         }
 
+        updateRuleOffline();
+
         if (preferences.getBooleanValue(PrefValue.SETTING_SOUND, true)) {
             imgSound.setImageBitmap(bpSoundOn);
         } else {
             imgSound.setImageBitmap(bpSoundOff);
         }
+    }
+
+    private void updateRuleOffline() {
+        Task.startNewBackGroundThread(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Task.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Rule offline
+                        if (preferences.getStringValue(PrefValue.RULE_OFFLINE_STATUS).equals(Rule.getInstance().STATUS_ON)) {
+                            if (isEnableRuleOfflineBySecretKey) {
+                                drawBattle.setBpPlate(BitmapFactory.decodeResource(getResources(), R.drawable.plate_offline_on_on));
+                            } else {
+                                drawBattle.setBpPlate(BitmapFactory.decodeResource(getResources(), R.drawable.plate_offline_on_off));
+                            }
+                        } else {
+                            drawBattle.setBpPlate(BitmapFactory.decodeResource(getResources(), R.drawable.plate));
+                        }
+                    }
+                });
+            }
+        }));
     }
 
     @Override
@@ -199,7 +229,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                             isEnableRuleOfflineBySecretKey = false;
                             setPreviousRule();
                         }
-                        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
+                        updateRuleOffline();
                         break;
                     case R.id.btnDisableRuleOffline:
                         if (Rule.getInstance().getRuleOfflineStatus().equals(Rule.getInstance().STATUS_ON)) {
@@ -213,7 +243,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                             isEnableRuleOfflineBySecretKey = false;
                             setPreviousRule();
                         }
-                        updateText(preferences.getStringValue(PrefValue.TEXT, PrefValue.DEFAULT_TEXT));
+                        updateRuleOffline();
                         break;
                 }
             }
@@ -420,14 +450,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         Task.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                StringBuilder stringBuilder = new StringBuilder(text);
-                if (preferences.getStringValue(PrefValue.RULE_OFFLINE_STATUS).equals(Rule.getInstance().STATUS_ON)) {
-                    stringBuilder.append(" !");
-                    if (isEnableRuleOfflineBySecretKey) {
-                        stringBuilder.append(".");
-                    }
-                }
-                txtTitle.setText(presenter.updateText(stringBuilder.toString()));
+                txtTitle.setText(presenter.updateText(text));
             }
         });
     }
