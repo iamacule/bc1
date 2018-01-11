@@ -87,7 +87,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new PlayPresenter(this);
-//        drawParallaxStar.setStarSize((int) screenWidth / 15);
+//        drawParallaxStar.setStarSize((int) screenWidth / 10);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
 

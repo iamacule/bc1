@@ -76,7 +76,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new BattlePresenter(this);
-//        drawParallaxStar.setStarSize((int) screenWidth / 15);
+//        drawParallaxStar.setStarSize((int) screenWidth / 10);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
 
