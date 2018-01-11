@@ -32,6 +32,7 @@ import vn.mran.bc1.widget.MoneyLayout;
  */
 
 public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpdate, View.OnClickListener, PlayView, Rule.OnFireBaseDataBattleChanged {
+    private static final int MONEY_VALUE = 100;
     private final String TAG = getClass().getSimpleName();
 
     private PlayPresenter presenter;
@@ -50,7 +51,6 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     private DrawParallaxStar drawParallaxStar;
     private DrawPlay drawPlay;
 
-    private MoneyLayout moneyLayout;
     private AnimalChooserLayout animalChooserLayout;
 
     private Bitmap bpSoundOn;
@@ -69,7 +69,6 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     public void initLayout() {
         hideStatusBar();
 
-        moneyLayout = new MoneyLayout(getWindow().getDecorView().getRootView(), (int) screenWidth);
         animalChooserLayout = new AnimalChooserLayout(getWindow().getDecorView().getRootView(), (int) screenWidth);
 
         imgAction = findViewById(R.id.imgAction);
@@ -104,21 +103,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
 
         initUIFromFirebase();
 
-        moneyLayout.setOnMoneyChanged(new MoneyLayout.OnMoneyChanged() {
-            @Override
-            public void onMoneyChanged(int value) {
-                Log.d(TAG, "Money changed : " + value);
-                animalChooserLayout.setMaxValue(currentMoney / value);
-                presenter.setCurrentMoney(value);
-                animalChooserLayout.reset();
-            }
-
-            @Override
-            public void onErrorPickMoney() {
-                Boast.makeText(PlayActivity.this, getString(R.string.error_money_pick));
-                txtMoney.startAnimation(MyAnimation.vibrate(getApplicationContext()));
-            }
-        });
+        updateMoneyDetail();
 
         animalChooserLayout.setOnAnimalChooseListener(new AnimalChooserLayout.OnAnimalChooseListener() {
             @Override
@@ -130,11 +115,21 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             @Override
             public void onError() {
                 Boast.makeText(PlayActivity.this, getString(R.string.error_choose_money_type));
-                findViewById(R.id.lnMoney).startAnimation(MyAnimation.vibrate(getApplicationContext()));
             }
         });
+    }
 
+    private void updateMoneyDetail() {
         checkingMoney();
+        if (preferences.getIntValue(PrefValue.MONEY, PrefValue.DEFAULT_MONEY) >= MONEY_VALUE) {
+            presenter.setCurrentMoney(MONEY_VALUE);
+            animalChooserLayout.setMaxValue(currentMoney / MONEY_VALUE);
+            animalChooserLayout.reset();
+        } else {
+            presenter.setCurrentMoney(0);
+            animalChooserLayout.setMaxValue(0);
+            animalChooserLayout.reset();
+        }
     }
 
     private void checkingMoney() {
@@ -142,7 +137,6 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         txtMoney.setText(presenter.updateMoneyValue(currentMoney));
 
         presenter.setEnablePlusMoney(currentMoney < 5000);
-        moneyLayout.setCurrentMoney(currentMoney);
     }
 
     private void initUIFromFirebase() {
@@ -485,7 +479,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         currentMoney = currentMoney + tong;
         if (currentMoney <= 0) {
             currentMoney = 0;
-            animalChooserLayout.setMaxValue(currentMoney);
+            animalChooserLayout.setMaxValue(0);
             presenter.setCurrentMoney(0);
         }
         preferences.storeValue(PrefValue.MONEY, currentMoney);
@@ -499,7 +493,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         Task.postDelay(new Runnable() {
             @Override
             public void run() {
-                checkingMoney();
+                updateMoneyDetail();
             }
         }, 500);
     }

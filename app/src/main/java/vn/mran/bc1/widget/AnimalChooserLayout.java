@@ -191,7 +191,8 @@ public class AnimalChooserLayout implements View.OnClickListener {
         imgCoinCa.setVisibility(View.GONE);
         imgCoinBau.setVisibility(View.GONE);
 
-        onAnimalChooseListener.onChoose(new int[]{valueBau, valueCua, valueTom, valueCa, valueGa, valueNai});
+        if (onAnimalChooseListener != null)
+            onAnimalChooseListener.onChoose(new int[]{valueBau, valueCua, valueTom, valueCa, valueGa, valueNai});
     }
 
     private String addDisplayValue(int value) {

@@ -49,7 +49,6 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     private Bitmap bpSoundOn;
     private Bitmap bpSoundOff;
     private Bitmap bpBack;
-    private Bitmap bpQuestion;
 
     private Bitmap[] bpTopArray = new Bitmap[6];
     private int[] resultArrays;
@@ -91,11 +90,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         bpTopArray[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga), screenWidth / 3);
         bpTopArray[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai), screenWidth / 3);
 
-        bpQuestion = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.question), screenWidth / 3);
-
         initUIFromFirebase();
-
-        resetTopImage();
     }
 
     private void initUIFromFirebase() {
@@ -284,7 +279,6 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
             setTopImage();
             txtAction.setText(getString(R.string.shake));
         } else {
-            resetTopImage();
             setResult();
             drawBattle.startAnimation(MyAnimation.shake(this));
             txtAction.setText(getString(R.string.open));
@@ -307,12 +301,6 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         imgResult1.startAnimation(MyAnimation.vibrate(getApplicationContext()));
         imgResult2.startAnimation(MyAnimation.vibrate(getApplicationContext()));
         imgResult3.startAnimation(MyAnimation.vibrate(getApplicationContext()));
-    }
-
-    private void resetTopImage() {
-        imgResult1.setImageBitmap(bpQuestion);
-        imgResult2.setImageBitmap(bpQuestion);
-        imgResult3.setImageBitmap(bpQuestion);
     }
 
     /**
