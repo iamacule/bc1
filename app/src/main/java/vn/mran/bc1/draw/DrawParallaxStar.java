@@ -20,7 +20,7 @@ public class DrawParallaxStar extends View {
 
     private final String TAG = getClass().getSimpleName();
     private Bitmap star;
-    private Rect[] rectStar = new Rect[10];
+    private Rect[] rectStar = new Rect[5];
     private int width = -1;
     private int height = -1;
 
@@ -35,7 +35,7 @@ public class DrawParallaxStar extends View {
     }
 
     private void init(Context context) {
-        star = BitmapFactory.decodeResource(context.getResources(), R.drawable.star_flip);
+        star = BitmapFactory.decodeResource(context.getResources(), R.drawable.flower);
 
         new ParallaxStarThread().start();
         new RandomStarThread().start();
@@ -75,11 +75,22 @@ public class DrawParallaxStar extends View {
                         if (rectStar[i] == null) {
                             int left = randomWithRange(0, width - star.getWidth());
                             int top = randomWithRange(0 - width, 0);
-                            rectStar[i] = new Rect(
+                            Rect rect = new Rect(
                                     left,
                                     top,
                                     left + star.getWidth(),
                                     top + star.getHeight());
+                            boolean isIntersect = false;
+                            for (int j = 0; j < rectStar.length; j++) {
+                                if (rectStar[j] != null) {
+                                    if (rect.intersect(rectStar[j])) {
+                                        isIntersect = true;
+                                    }
+                                }
+                            }
+                            if (!isIntersect)
+                                rectStar[i] = rect;
+
                         }
                     }
                 }

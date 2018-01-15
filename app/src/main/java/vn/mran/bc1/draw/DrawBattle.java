@@ -25,6 +25,17 @@ import vn.mran.bc1.util.Task;
 
 public class DrawBattle extends View {
 
+    private static final int MID_POINT_Y = 53;
+    private final int BOTTOM_Y_2 = 63;
+    private final int BOTTOM_Y_1 = 60;
+    private final int RIGHT_MAX = 62;
+    private final int LEFT_Y_2 = 46;
+    private final int LEFT_Y_1 = 41;
+    private final int LEFT_X_1 = 32;
+    private final int LEFT_X_2 = 34;
+    private final int RIGHT_X_1 = 67;
+    private final int RIGHT_X_2 = 69;
+
     public interface OnDrawLidUpdate {
         void onTouch();
 
@@ -79,7 +90,7 @@ public class DrawBattle extends View {
         width = w;
         height = h;
 
-        midPoint = new Point(width / 2, height * 53 / 100);
+        midPoint = new Point(width / 2, height * MID_POINT_Y / 100);
         bpLid = ResizeBitmap.resize(bpLid, w * 9 / 10);
         bpPlate = ResizeBitmap.resize(bpPlate, w * 9 / 10);
 
@@ -87,19 +98,19 @@ public class DrawBattle extends View {
             @Override
             public void run() {
 
-                animalArrays1[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_1), width * 3 / 10);
-                animalArrays1[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_1), width * 3 / 10);
-                animalArrays1[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_1), width * 3 / 10);
-                animalArrays1[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_1), width * 3 / 10);
-                animalArrays1[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_1), width * 3 / 10);
-                animalArrays1[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_1), width * 3 / 10);
+                animalArrays1[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_1), width * 45 / 100);
+                animalArrays1[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_1), width * 45 / 100);
+                animalArrays1[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_1), width * 45 / 100);
+                animalArrays1[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_1), width * 45 / 100);
+                animalArrays1[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_1), width * 45 / 100);
+                animalArrays1[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_1), width * 45 / 100);
 
-                animalArrays2[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_2), width * 3 / 10);
-                animalArrays2[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_2), width * 3 / 10);
-                animalArrays2[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_2), width * 3 / 10);
-                animalArrays2[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_2), width * 3 / 10);
-                animalArrays2[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_2), width * 3 / 10);
-                animalArrays2[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_2), width * 3 / 10);
+                animalArrays2[0] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.bau_2), width * 45 / 100);
+                animalArrays2[1] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.cua_2), width * 45 / 100);
+                animalArrays2[2] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.tom_2), width * 45 / 100);
+                animalArrays2[3] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ca_2), width * 45 / 100);
+                animalArrays2[4] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.ga_2), width * 45 / 100);
+                animalArrays2[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_2), width * 45 / 100);
 
                 updateRandomMidPointArrays();
             }
@@ -109,33 +120,35 @@ public class DrawBattle extends View {
     }
 
     public void setBpPlate(Bitmap bpPlate) {
-       if (width>0){
-           this.bpPlate = ResizeBitmap.resize(bpPlate, width * 9 / 10);
-           invalidate();
-       }
+        if (width > 0) {
+            this.bpPlate = ResizeBitmap.resize(bpPlate, width * 9 / 10);
+            invalidate();
+        }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
 
         //Draw
-        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height * 53 / 100 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height * 53 / 100 + bpPlate.getHeight() / 2);
+        rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height * MID_POINT_Y / 100 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height * MID_POINT_Y / 100 + bpPlate.getHeight() / 2);
         canvas.drawBitmap(bpPlate, null, rectPlate, null);
 
-        if (resultArrays.length > 0) {
-            for (int i = 0; i < resultArrays.length; i++) {
-                Bitmap bp = null;
-                Rect rect;
-                if (randomNumberArrays[i] == 0) {
-                    bp = animalArrays1[resultArrays[i]];
-                } else {
-                    bp = animalArrays2[resultArrays[i]];
-                }
+        if (isLidOpened) {
+            if (resultArrays.length > 0) {
+                for (int i = 0; i < resultArrays.length; i++) {
+                    Bitmap bp = null;
+                    Rect rect;
+                    if (randomNumberArrays[i] == 0) {
+                        bp = animalArrays1[resultArrays[i]];
+                    } else {
+                        bp = animalArrays2[resultArrays[i]];
+                    }
 
-                if (bp != null) {
-                    rect = new Rect(randomMidPointArrays[i].x - bp.getWidth() / 2, randomMidPointArrays[i].y - bp.getHeight() / 2,
-                            randomMidPointArrays[i].x + bp.getWidth() / 2, randomMidPointArrays[i].y + bp.getHeight() / 2);
-                    canvas.drawBitmap(bp, null, rect, null);
+                    if (bp != null) {
+                        rect = new Rect(randomMidPointArrays[i].x - bp.getWidth() / 2, randomMidPointArrays[i].y - bp.getHeight() / 2,
+                                randomMidPointArrays[i].x + bp.getWidth() / 2, randomMidPointArrays[i].y + bp.getHeight() / 2);
+                        canvas.drawBitmap(bp, null, rect, null);
+                    }
                 }
             }
         }
@@ -150,22 +163,22 @@ public class DrawBattle extends View {
                 for (int i = 0; i < randomMidPointArrays.length; i++) {
                     switch (i) {
                         case 0:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 43 / 100, height * 46 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * LEFT_X_1 / 100, width * LEFT_X_2 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * LEFT_Y_1 / 100, height * LEFT_Y_2 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 69 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 43 / 100, height * 46 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * RIGHT_X_1 / 100, width * RIGHT_X_2 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * LEFT_Y_1 / 100, height * LEFT_Y_2 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 60 / 100, height * 65 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * LEFT_X_1 / 100, width * RIGHT_MAX / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * BOTTOM_Y_1 / 100, height * BOTTOM_Y_2 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
@@ -176,22 +189,22 @@ public class DrawBattle extends View {
                 for (int i = 0; i < randomMidPointArrays.length; i++) {
                     switch (i) {
                         case 0:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 43 / 100, height * 46 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * LEFT_X_1 / 100, width * RIGHT_MAX / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * LEFT_Y_1 / 100, height * LEFT_Y_2 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 60 / 100, height * 65 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * LEFT_X_1 / 100, width * LEFT_X_2 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * BOTTOM_Y_1 / 100, height * BOTTOM_Y_2 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 69 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * 60 / 100, height * 65 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * RIGHT_X_1 / 100, width * RIGHT_X_2 / 100);
+                            randomMidPointArrays[i].y = getRandomNumber(height * BOTTOM_Y_1 / 100, height * BOTTOM_Y_2 / 100);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
@@ -221,25 +234,26 @@ public class DrawBattle extends View {
     }
 
     private void closeLid() {
-        for (int i = 0 - bpLid.getHeight() / 2; i <= height * 53 / 100; i += height / 170) {
+        int num = height / 170;
+        while (true) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            midPoint.y = i;
+            midPoint.y = midPoint.y + num;
+            midPoint.x = midPoint.x - num;
             postInvalidate();
-            if (isLidOpened) {
-                if (i >= (height * 53 / 100) - height / 170) {
-                    isLidOpened = false;
-                    Task.runOnUIThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Media.playShortSound(getContext(), R.raw.open_close);
-                            onDrawLidUpdate.onLidChanged(isLidOpened);
-                        }
-                    });
-                }
+            if (midPoint.y >= (height * MID_POINT_Y / 100) + num) {
+                isLidOpened = false;
+                Task.runOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Media.playShortSound(getContext(), R.raw.open_close);
+                        onDrawLidUpdate.onLidChanged(isLidOpened);
+                    }
+                });
+                break;
             }
         }
     }
@@ -253,14 +267,19 @@ public class DrawBattle extends View {
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });
-        for (int i = height * 53 / 100; i >= 0 - bpLid.getHeight() / 2; i -= height / 170) {
+        int num = height / 170;
+        while (true) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            midPoint.y = i;
+            midPoint.y = midPoint.y - num;
+            midPoint.x = midPoint.x + num;
             postInvalidate();
+            if (midPoint.x >= width + bpLid.getWidth() / 2) {
+                break;
+            }
         }
     }
 

@@ -78,7 +78,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         txtTitle = findViewById(R.id.txtTitle);
         txtMoney = findViewById(R.id.txtMoney);
         txtTime = findViewById(R.id.txtTime);
-//        drawParallaxStar = findViewById(R.id.drawParallaxStar);
+        drawParallaxStar = findViewById(R.id.drawParallaxStar);
         drawPlay = findViewById(R.id.drawPlay);
     }
 
@@ -86,7 +86,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
         presenter = new PlayPresenter(this);
-//        drawParallaxStar.setStarSize((int) screenWidth / 10);
+        drawParallaxStar.setStarSize((int) screenWidth / 10);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
 
