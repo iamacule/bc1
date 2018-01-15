@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.Random;
+
 import vn.mran.bc1.R;
 import vn.mran.bc1.util.ResizeBitmap;
 
@@ -72,6 +74,11 @@ public class DrawParallaxStar extends View {
                 //Draw star
                 if (width != -1 && height != -1) {
                     for (int i = 0; i < rectStar.length; i++) {
+                        try {
+                            Thread.sleep(getRandomNumber(0,5000));
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         if (rectStar[i] == null) {
                             int left = randomWithRange(0, width - star.getWidth());
                             int top = randomWithRange(0 - width, 0);
@@ -120,7 +127,7 @@ public class DrawParallaxStar extends View {
                         postInvalidate();
 
                         try {
-                            Thread.sleep(1);
+                            Thread.sleep(3);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -128,5 +135,9 @@ public class DrawParallaxStar extends View {
                 }
             }
         }
+    }
+
+    private int getRandomNumber(int min, int max) {
+        return new Random().nextInt((max - min) + 1);
     }
 }

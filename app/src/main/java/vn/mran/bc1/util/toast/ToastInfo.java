@@ -57,6 +57,7 @@ public class ToastInfo {
         CustomTextView text = (CustomTextView) layout.findViewById(R.id.toast_message);
         text.setTextColor(color);
         text.setText(message);
+        text.setTextSize(activity.getResources().getDimension(R.dimen.result_text_size));
 
         toast = new Toast(activity.getApplicationContext());
         toast.setDuration(Toast.LENGTH_LONG);
