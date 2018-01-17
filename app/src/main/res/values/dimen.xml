@@ -4,11 +4,11 @@
     <dimen name="text_size_44sp">44sp</dimen>
     <dimen name="button_text_size_large_battle">30sp</dimen>
     <dimen name="button_text_size_large_play">30sp</dimen>
-    <dimen name="txt_money_size">35sp</dimen>
+    <dimen name="txt_money_size">30sp</dimen>
     <dimen name="button_text_size">30sp</dimen>
     <dimen name="text_size">24sp</dimen>
     <dimen name="text_size_small">18sp</dimen>
-    <dimen name="text_size_small_2">12sp</dimen>
+    <dimen name="text_size_small_2">10sp</dimen>
 
     <dimen name="setting_element_margin">10dp</dimen>
     <dimen name="setting_first_element_top_margin">20dp</dimen>
@@ -19,4 +19,6 @@
     <dimen name="animal_margin">5dp</dimen>
     <dimen name="sound_back_button_padding">10dp</dimen>
     <dimen name="frame_top_margin">10dp</dimen>
+    <dimen name="menu_item_title_margin">12dp</dimen>
+    <dimen name="result_text_size">30sp</dimen>
 </resources>

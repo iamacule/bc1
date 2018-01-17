@@ -248,9 +248,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         findViewById(R.id.btnDisableRuleMain).setOnClickListener(onDoubleClickListener);
         findViewById(R.id.btnDisableRuleOffline).setOnClickListener(onDoubleClickListener);
 
-        //Set result at first time
         setResult();
-        drawBattle.startAnimation(MyAnimation.shake(this));
     }
 
     private void setPreviousRule() {
