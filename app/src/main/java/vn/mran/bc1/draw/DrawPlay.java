@@ -26,12 +26,12 @@ import vn.mran.bc1.util.Task;
 public class DrawPlay extends View {
 
     private final int ANIMAL_SIZE_PERCENT = 35;
-    private final int MID_POINT = 24;
-    private final int ANIMAL_1_Y_POINT_1 = 15;
-    private final int ANIMAL_1_Y_POINT_2 = 16;
-    private final int ANIMAL_2_Y_POINT_1 = 30;
-    private final int ANIMAL_2_Y_POINT_2 = 31;
-    private final int SIZE = 92;
+    private final int MID_POINT = 26;
+    private final int ANIMAL_1_Y_POINT_1 = 18;
+    private final int ANIMAL_1_Y_POINT_2 = 19;
+    private final int ANIMAL_2_Y_POINT_1 = 33;
+    private final int ANIMAL_2_Y_POINT_2 = 34;
+    private final int SIZE = 86;
 
     public interface OnDrawLidUpdate {
         void onTouch();
@@ -110,6 +110,8 @@ public class DrawPlay extends View {
                 animalArrays2[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_2), width * ANIMAL_SIZE_PERCENT / 100);
 
                 updateRandomMidPointArrays();
+
+                openLid(false);
             }
         }));
     }
@@ -128,7 +130,7 @@ public class DrawPlay extends View {
         rectPlate = new Rect(width / 2 - bpPlate.getWidth() / 2, height * MID_POINT / 100 - bpPlate.getHeight() / 2, width / 2 + bpPlate.getWidth() / 2, height * MID_POINT / 100 + bpPlate.getHeight() / 2);
         canvas.drawBitmap(bpPlate, null, rectPlate, null);
 
-        if (isLidOpened){
+        if (isLidOpened) {
             if (resultArrays.length > 0) {
                 for (int i = 0; i < resultArrays.length; i++) {
                     Bitmap bp = null;
@@ -225,7 +227,7 @@ public class DrawPlay extends View {
     public void action() {
         if (isLidOpened)
             closeLid();
-        else openLid();
+        else openLid(true);
     }
 
     private void closeLid() {
@@ -252,12 +254,13 @@ public class DrawPlay extends View {
         }
     }
 
-    private void openLid() {
+    private void openLid(final boolean sound) {
         isLidOpened = true;
         Task.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                Media.playShortSound(getContext(), R.raw.open_close);
+                if (sound)
+                    Media.playShortSound(getContext(), R.raw.open_close);
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });

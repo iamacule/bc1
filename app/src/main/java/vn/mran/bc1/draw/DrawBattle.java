@@ -25,13 +25,13 @@ import vn.mran.bc1.util.Task;
 
 public class DrawBattle extends View {
 
-    private final int MID_POINT_Y = 53;
+    private final int MID_POINT_Y = 55;
     private final int ANIMAL_SIZE_PERCENT = 40;
-    private final int BOTTOM_Y_2 = 61;
-    private final int BOTTOM_Y_1 = 60;
+    private final int BOTTOM_Y_2 = 63;
+    private final int BOTTOM_Y_1 = 62;
     private final int RIGHT_MAX = 62;
-    private final int LEFT_Y_2 = 46;
-    private final int LEFT_Y_1 = 45;
+    private final int LEFT_Y_2 = 48;
+    private final int LEFT_Y_1 = 47;
     private final int LEFT_X_1 = 32;
     private final int LEFT_X_2 = 34;
     private final int RIGHT_X_1 = 67;
@@ -114,6 +114,8 @@ public class DrawBattle extends View {
                 animalArrays2[5] = ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.nai_2), width * ANIMAL_SIZE_PERCENT / 100);
 
                 updateRandomMidPointArrays();
+
+                openLid(false);
             }
         }));
     }
@@ -229,7 +231,7 @@ public class DrawBattle extends View {
     public void action() {
         if (isLidOpened)
             closeLid();
-        else openLid();
+        else openLid(true);
     }
 
     private void closeLid() {
@@ -257,12 +259,13 @@ public class DrawBattle extends View {
         }
     }
 
-    private void openLid() {
+    private void openLid(final boolean sound) {
         isLidOpened = true;
         Task.runOnUIThread(new Runnable() {
             @Override
             public void run() {
-                Media.playShortSound(getContext(), R.raw.open_close);
+                if (sound)
+                    Media.playShortSound(getContext(), R.raw.open_close);
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });

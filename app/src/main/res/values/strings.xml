@@ -9,4 +9,5 @@
     <string name="open">MỞ</string>
     <string name="shake">XỐC</string>
     <string name="error_choose_money_type">Bạn không đủ tiền cược !</string>
+    <string name="loading">Đang tải ...</string>
 </resources>

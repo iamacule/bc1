@@ -297,7 +297,17 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
 
         //Set result at first time
         setResult();
-        drawPlay.startAnimation(MyAnimation.shake(this));
+
+        disableLoading();
+    }
+
+    private void disableLoading() {
+        Task.postDelay(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.lnLoad).setVisibility(View.GONE);
+            }
+        },2000);
     }
 
     private void setPreviousRule() {

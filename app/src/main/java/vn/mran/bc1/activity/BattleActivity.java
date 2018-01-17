@@ -249,6 +249,17 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         findViewById(R.id.btnDisableRuleOffline).setOnClickListener(onDoubleClickListener);
 
         setResult();
+
+        disableLoading();
+    }
+
+    private void disableLoading() {
+        Task.postDelay(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.lnLoad).setVisibility(View.GONE);
+            }
+        },2000);
     }
 
     private void setPreviousRule() {

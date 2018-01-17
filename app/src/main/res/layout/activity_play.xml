@@ -39,13 +39,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:orientation="vertical"
-                android:gravity="center|bottom">
+                android:gravity="center|bottom"
+                android:orientation="vertical">
 
                 <vn.mran.bc1.widget.CustomTextView
                     android:id="@+id/txtMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="-8dp"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:shadowColor="@color/black"
@@ -54,8 +55,7 @@
                     android:shadowRadius="3"
                     android:text="0000"
                     android:textColor="@color/yellow_text"
-                    android:textSize="@dimen/txt_money_size"
-                    android:layout_marginBottom="-8dp"/>
+                    android:textSize="@dimen/txt_money_size" />
 
                 <TextView
                     android:id="@+id/txtTime"
@@ -76,7 +76,7 @@
                 <ImageView
                     android:id="@+id/imgSound"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
 
@@ -285,14 +285,44 @@
     </LinearLayout>
 
     <vn.mran.bc1.draw.DrawPlay
-    android:id="@+id/drawPlay"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center" />
+        android:id="@+id/drawPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
     <vn.mran.bc1.draw.DrawParallaxStar
-    android:id="@+id/drawParallaxStar"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+        android:id="@+id/drawParallaxStar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/lnLoad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:gravity="center"
+        android:orientation="vertical">
 
+        <vn.mran.bc1.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:freezesText="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:shadowColor="@color/black"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="4"
+            android:singleLine="true"
+            android:text="@string/loading"
+            android:textColor="@color/yellow_text"
+            android:textSize="@dimen/text_size_small" />
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </FrameLayout>
