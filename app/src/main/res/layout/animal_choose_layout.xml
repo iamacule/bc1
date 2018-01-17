@@ -25,7 +25,6 @@
                 android:layout_gravity="center" />
 
             <FrameLayout
-                android:id="@+id/frNai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom">
@@ -64,7 +63,6 @@
                 android:layout_gravity="center" />
 
             <FrameLayout
-                android:id="@+id/frBau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom">
@@ -102,7 +100,6 @@
                 android:layout_gravity="center" />
 
             <FrameLayout
-                android:id="@+id/frGa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom">
@@ -149,7 +146,6 @@
                 android:layout_gravity="center" />
 
             <FrameLayout
-                android:id="@+id/frCa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom">
@@ -188,7 +184,6 @@
                 android:layout_gravity="center" />
 
             <FrameLayout
-                android:id="@+id/frCua"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom">
@@ -226,7 +221,6 @@
                 android:layout_gravity="center" />
 
             <FrameLayout
-                android:id="@+id/frTom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom">

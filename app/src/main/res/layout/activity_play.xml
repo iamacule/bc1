@@ -87,9 +87,7 @@
             android:layout_weight="0.38"
             android:gravity="center|top">
 
-            <include
-                android:id="@+id/animalLayout"
-                layout="@layout/animal_choose_layout" />
+            <include layout="@layout/animal_choose_layout" />
         </LinearLayout>
 
         <FrameLayout

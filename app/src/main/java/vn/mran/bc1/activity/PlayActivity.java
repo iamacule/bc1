@@ -25,7 +25,6 @@ import vn.mran.bc1.util.TouchEffect;
 import vn.mran.bc1.util.toast.Boast;
 import vn.mran.bc1.widget.AnimalChooserLayout;
 import vn.mran.bc1.widget.CustomTextView;
-import vn.mran.bc1.widget.MoneyLayout;
 
 /**
  * Created by Mr An on 18/12/2017.
