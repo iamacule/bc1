@@ -92,31 +92,31 @@
                     android:textSize="@dimen/button_text_size" />
             </FrameLayout>
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+            <!--<FrameLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="15dp">-->
 
-                <ImageView
-                    android:id="@+id/imgSetting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/imgSetting"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center" />-->
 
-                <vn.mran.bc1.widget.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:shadowColor="@color/black"
-                    android:shadowDx="3"
-                    android:shadowDy="3"
-                    android:shadowRadius="3"
-                    android:text="@string/setting"
-                    android:textColor="@color/yellow_text"
-                    android:textSize="@dimen/button_text_size" />
-            </FrameLayout>
+                <!--<vn.mran.bc1.widget.CustomTextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:focusable="false"-->
+                    <!--android:focusableInTouchMode="false"-->
+                    <!--android:shadowColor="@color/black"-->
+                    <!--android:shadowDx="3"-->
+                    <!--android:shadowDy="3"-->
+                    <!--android:shadowRadius="3"-->
+                    <!--android:text="@string/setting"-->
+                    <!--android:textColor="@color/yellow_text"-->
+                    <!--android:textSize="@dimen/button_text_size" />-->
+            <!--</FrameLayout>-->
 
             <FrameLayout
                 android:layout_width="wrap_content"

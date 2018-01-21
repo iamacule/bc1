@@ -27,11 +27,11 @@ public class DrawBattle extends View {
 
     private final int MID_POINT_Y = 55;
     private final int ANIMAL_SIZE_PERCENT = 40;
-    private final int BOTTOM_Y_2 = 63;
+    private final int BOTTOM_Y_2 = 62;
     private final int BOTTOM_Y_1 = 62;
     private final int RIGHT_MAX = 62;
     private final int LEFT_Y_2 = 48;
-    private final int LEFT_Y_1 = 47;
+    private final int LEFT_Y_1 = 48;
     private final int LEFT_X_1 = 32;
     private final int LEFT_X_2 = 34;
     private final int RIGHT_X_1 = 67;
@@ -165,21 +165,21 @@ public class DrawBattle extends View {
                     switch (i) {
                         case 0:
                             randomMidPointArrays[i].x = getRandomNumber(width * LEFT_X_1 / 100, width * LEFT_X_2 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * LEFT_Y_1 / 100, height * LEFT_Y_2 / 100);
+                            randomMidPointArrays[i].y = height * LEFT_Y_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
                             randomMidPointArrays[i].x = getRandomNumber(width * RIGHT_X_1 / 100, width * RIGHT_X_2 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * LEFT_Y_1 / 100, height * LEFT_Y_2 / 100);
+                            randomMidPointArrays[i].y = height * LEFT_Y_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
                             randomMidPointArrays[i].x = getRandomNumber(width * LEFT_X_1 / 100, width * RIGHT_MAX / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * BOTTOM_Y_1 / 100, height * BOTTOM_Y_2 / 100);
+                            randomMidPointArrays[i].y = height * BOTTOM_Y_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
@@ -191,21 +191,21 @@ public class DrawBattle extends View {
                     switch (i) {
                         case 0:
                             randomMidPointArrays[i].x = getRandomNumber(width * LEFT_X_1 / 100, width * RIGHT_MAX / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * LEFT_Y_1 / 100, height * LEFT_Y_2 / 100);
+                            randomMidPointArrays[i].y = height * LEFT_Y_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
                             randomMidPointArrays[i].x = getRandomNumber(width * LEFT_X_1 / 100, width * LEFT_X_2 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * BOTTOM_Y_1 / 100, height * BOTTOM_Y_2 / 100);
+                            randomMidPointArrays[i].y = height * BOTTOM_Y_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
                             randomMidPointArrays[i].x = getRandomNumber(width * RIGHT_X_1 / 100, width * RIGHT_X_2 / 100);
-                            randomMidPointArrays[i].y = getRandomNumber(height * BOTTOM_Y_1 / 100, height * BOTTOM_Y_2 / 100);
+                            randomMidPointArrays[i].y = height * BOTTOM_Y_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
