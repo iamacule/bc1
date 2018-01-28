@@ -847,7 +847,7 @@ public class Rule {
                         ruleMainPlayQuantum = ruleMainPlay.getQuantum();
                         preferences.storeValue(PrefValue.RULE_MAIN_PLAY_QUANTUM, ruleMainPlayQuantum);
 
-                        ruleMainPlayStatus = ruleMain.status;
+                        ruleMainPlayStatus = ruleMainPlay.status;
                         preferences.storeValue(PrefValue.RULE_MAIN_PLAY_STATUS, ruleMainPlayStatus);
 
 
