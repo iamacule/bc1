@@ -25,13 +25,13 @@ import vn.mran.bc1.util.Task;
 
 public class DrawPlay extends View {
 
-    private final int ANIMAL_SIZE_PERCENT = 35;
+    private final int ANIMAL_SIZE_PERCENT = 40;
     private final int MID_POINT = 26;
-    private final int ANIMAL_1_Y_POINT_1 = 19;
+    private final int ANIMAL_1_Y_POINT_1 = 18;
     private final int ANIMAL_1_Y_POINT_2 = 19;
     private final int ANIMAL_2_Y_POINT_1 = 33;
     private final int ANIMAL_2_Y_POINT_2 = 33;
-    private final int SIZE = 86;
+    private final int SIZE = 95;
 
     public interface OnDrawLidUpdate {
         void onTouch();
@@ -160,14 +160,14 @@ public class DrawPlay extends View {
                 for (int i = 0; i < randomMidPointArrays.length; i++) {
                     switch (i) {
                         case 0:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 34 / 100, width * 36 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
                             randomMidPointArrays[i].y = height * ANIMAL_1_Y_POINT_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 63 / 100, width * 65 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 68 / 100);
                             randomMidPointArrays[i].y = height * ANIMAL_1_Y_POINT_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
@@ -186,21 +186,21 @@ public class DrawPlay extends View {
                 for (int i = 0; i < randomMidPointArrays.length; i++) {
                     switch (i) {
                         case 0:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 36 / 100, width * 62 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 62 / 100);
                             randomMidPointArrays[i].y = height * ANIMAL_1_Y_POINT_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 1:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 34 / 100, width * 36 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 32 / 100, width * 34 / 100);
                             randomMidPointArrays[i].y = height * ANIMAL_2_Y_POINT_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
                             break;
 
                         case 2:
-                            randomMidPointArrays[i].x = getRandomNumber(width * 63 / 100, width * 65 / 100);
+                            randomMidPointArrays[i].x = getRandomNumber(width * 67 / 100, width * 68 / 100);
                             randomMidPointArrays[i].y = height * ANIMAL_2_Y_POINT_1 / 100;
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].x);
                             Log.d(TAG, "randomMidPointArrays : " + randomMidPointArrays[i].y);
