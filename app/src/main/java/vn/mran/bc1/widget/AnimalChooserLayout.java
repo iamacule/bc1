@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import vn.mran.bc1.R;
 import vn.mran.bc1.util.MyAnimation;
 import vn.mran.bc1.util.ResizeBitmap;
+import vn.mran.bc1.util.TouchEffect;
 
 /**
  * Created by Mr An on 01/01/2018.
@@ -112,6 +113,13 @@ public class AnimalChooserLayout implements View.OnClickListener {
         imgCoinCua.setVisibility(View.GONE);
         imgCoinCa.setVisibility(View.GONE);
         imgCoinBau.setVisibility(View.GONE);
+
+        TouchEffect.addAlpha(imgBau);
+        TouchEffect.addAlpha(imgNai);
+        TouchEffect.addAlpha(imgGa);
+        TouchEffect.addAlpha(imgCua);
+        TouchEffect.addAlpha(imgTom);
+        TouchEffect.addAlpha(imgCa);
     }
 
     @Override
@@ -126,41 +134,35 @@ public class AnimalChooserLayout implements View.OnClickListener {
                         valueNai = valueNai + 1;
                         txtNai.setText(addDisplayValue(valueNai));
                         imgCoinNai.setVisibility(View.VISIBLE);
-                        imgNai.startAnimation(MyAnimation.vibrate(view.getContext()));
                         break;
                     case R.id.imgBau:
                         valueBau = valueBau + 1;
                         txtBau.setText(addDisplayValue(valueBau));
                         imgCoinBau.setVisibility(View.VISIBLE);
-                        imgBau.startAnimation(MyAnimation.vibrate(view.getContext()));
 
                         break;
                     case R.id.imgGa:
                         valueGa = valueGa + 1;
                         txtGa.setText(addDisplayValue(valueGa));
                         imgCoinGa.setVisibility(View.VISIBLE);
-                        imgGa.startAnimation(MyAnimation.vibrate(view.getContext()));
 
                         break;
                     case R.id.imgCa:
                         valueCa = valueCa + 1;
                         txtCa.setText(addDisplayValue(valueCa));
                         imgCoinCa.setVisibility(View.VISIBLE);
-                        imgCa.startAnimation(MyAnimation.vibrate(view.getContext()));
 
                         break;
                     case R.id.imgCua:
                         valueCua = valueCua + 1;
                         txtCua.setText(addDisplayValue(valueCua));
                         imgCoinCua.setVisibility(View.VISIBLE);
-                        imgCua.startAnimation(MyAnimation.vibrate(view.getContext()));
 
                         break;
                     case R.id.imgTom:
                         valueTom = valueTom + 1;
                         txtTom.setText(addDisplayValue(valueTom));
                         imgCoinTom.setVisibility(View.VISIBLE);
-                        imgTom.startAnimation(MyAnimation.vibrate(view.getContext()));
 
                         break;
                 }

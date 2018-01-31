@@ -36,6 +36,7 @@ public class DrawBattle extends View {
     private final int LEFT_X_2 = 34;
     private final int RIGHT_X_1 = 67;
     private final int RIGHT_X_2 = 68;
+    private final int SIZE = 97;
 
     public interface OnDrawLidUpdate {
         void onTouch();
@@ -92,8 +93,8 @@ public class DrawBattle extends View {
         height = h;
 
         midPoint = new Point(width / 2, height * MID_POINT_Y / 100);
-        bpLid = ResizeBitmap.resize(bpLid, w * 95 / 100);
-        bpPlate = ResizeBitmap.resize(bpPlate, w * 95 / 100);
+        bpLid = ResizeBitmap.resize(bpLid, w * SIZE / 100);
+        bpPlate = ResizeBitmap.resize(bpPlate, w * SIZE / 100);
 
         Task.startNewBackGroundThread(new Thread(new Runnable() {
             @Override
@@ -121,9 +122,12 @@ public class DrawBattle extends View {
     }
 
     public void setBpPlate(Bitmap bpPlate) {
-        if (width > 0) {
-            this.bpPlate = ResizeBitmap.resize(bpPlate, width * 9 / 10);
+        try{
+            this.bpPlate = ResizeBitmap.resize(bpPlate, width * SIZE / 100);
+            Log.d(TAG,"Updated");
             invalidate();
+        }catch (Exception e){
+            Log.d(TAG,e.getMessage());
         }
     }
 

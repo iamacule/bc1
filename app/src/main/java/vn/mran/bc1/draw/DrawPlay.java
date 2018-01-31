@@ -31,7 +31,7 @@ public class DrawPlay extends View {
     private final int ANIMAL_1_Y_POINT_2 = 19;
     private final int ANIMAL_2_Y_POINT_1 = 33;
     private final int ANIMAL_2_Y_POINT_2 = 33;
-    private final int SIZE = 95;
+    private final int SIZE = 97;
 
     public interface OnDrawLidUpdate {
         void onTouch();
@@ -117,9 +117,12 @@ public class DrawPlay extends View {
     }
 
     public void setBpPlate(Bitmap bpPlate) {
-        if (width > 0) {
-            this.bpPlate = ResizeBitmap.resize(bpPlate, width * 8 / 10);
+        try{
+            this.bpPlate = ResizeBitmap.resize(bpPlate, width * SIZE / 100);
+            Log.d(TAG,"Updated");
             invalidate();
+        }catch (Exception e){
+            Log.d(TAG,e.getMessage());
         }
     }
 
