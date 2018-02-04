@@ -122,12 +122,12 @@ public class DrawBattle extends View {
     }
 
     public void setBpPlate(Bitmap bpPlate) {
-        try{
+        try {
             this.bpPlate = ResizeBitmap.resize(bpPlate, width * SIZE / 100);
-            Log.d(TAG,"Updated");
+            Log.d(TAG, "Updated");
             invalidate();
-        }catch (Exception e){
-            Log.d(TAG,e.getMessage());
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
         }
     }
 
@@ -239,7 +239,7 @@ public class DrawBattle extends View {
     }
 
     private void closeLid() {
-        int num = height / 170;
+        int num = width / 50;
         while (true) {
             try {
                 Thread.sleep(1);
@@ -249,7 +249,10 @@ public class DrawBattle extends View {
             midPoint.y = midPoint.y + num;
             midPoint.x = midPoint.x - num;
             postInvalidate();
-            if (midPoint.y >= (height * MID_POINT_Y / 100) + num) {
+            if (midPoint.y > (height * MID_POINT_Y / 100)) {
+                midPoint.y = (height * MID_POINT_Y / 100);
+                midPoint.x = width / 2;
+                postInvalidate();
                 isLidOpened = false;
                 Task.runOnUIThread(new Runnable() {
                     @Override
@@ -273,7 +276,7 @@ public class DrawBattle extends View {
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });
-        int num = height / 170;
+        int num = width / 50;
         while (true) {
             try {
                 Thread.sleep(1);

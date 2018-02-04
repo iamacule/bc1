@@ -234,7 +234,7 @@ public class DrawPlay extends View {
     }
 
     private void closeLid() {
-        for (int i = 0 - bpLid.getHeight() / 2; i <= height * MID_POINT / 100; i += height / 170) {
+        for (int i = 0 - bpLid.getHeight() / 2; i <= height * MID_POINT / 100; i += width / 50) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -243,7 +243,7 @@ public class DrawPlay extends View {
             midPoint.y = i;
             postInvalidate();
             if (isLidOpened) {
-                if (i >= (height * MID_POINT / 100) - height / 170) {
+                if (i >= (height * MID_POINT / 100) - width / 50) {
                     isLidOpened = false;
                     Task.runOnUIThread(new Runnable() {
                         @Override
@@ -267,7 +267,7 @@ public class DrawPlay extends View {
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });
-        for (int i = height * MID_POINT / 100; i >= 0 - bpLid.getHeight() / 2; i -= height / 170) {
+        for (int i = height * MID_POINT / 100; i >= 0 - bpLid.getHeight() / 2; i -= width / 50) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
