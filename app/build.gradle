@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 String APK_NAME = "BC1-"
-int VERSION_CODE = 4
-String VERSION_NAME = "1.0.0.3"
+int VERSION_CODE = 5
+String VERSION_NAME = "1.0.0.4"
 String DATE = new Date().format('yyyyMMdd')
 
 project.archivesBaseName = APK_NAME + VERSION_NAME + "_" + DATE;

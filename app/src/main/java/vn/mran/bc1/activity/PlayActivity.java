@@ -30,7 +30,7 @@ import vn.mran.bc1.widget.CustomTextView;
  * Created by Mr An on 18/12/2017.
  */
 
-public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpdate, View.OnClickListener, PlayView, Rule.OnFireBaseDataBattleChanged {
+public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpdate, View.OnClickListener, PlayView, Rule.OnFireBaseDataPlayChanged {
     private static final int MONEY_VALUE = 100;
     private final String TAG = getClass().getSimpleName();
 
@@ -83,7 +83,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
 
     @Override
     public void initValue() {
-        Rule.getInstance().setOnFireBaseDataBattleChanged(this);
+        Rule.getInstance().setOnFireBaseDataPlayChanged(this);
         presenter = new PlayPresenter(this);
         drawParallaxStar.setStarSize((int) screenWidth / 10);
 
