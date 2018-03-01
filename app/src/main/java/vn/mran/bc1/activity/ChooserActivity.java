@@ -1,8 +1,11 @@
 package vn.mran.bc1.activity;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import vn.mran.bc1.R;
 import vn.mran.bc1.base.BaseActivity;
@@ -17,7 +20,7 @@ public class ChooserActivity extends BaseActivity implements View.OnClickListene
     private final String TAG = "ChooserActivity";
     private ImageView imgPlay;
     private ImageView imgBattle;
-//    private ImageView imgSetting;
+    //    private ImageView imgSetting;
     private ImageView imgExit;
 
     @Override
@@ -34,6 +37,17 @@ public class ChooserActivity extends BaseActivity implements View.OnClickListene
         TouchEffect.addAlpha(imgBattle);
 //        TouchEffect.addAlpha(imgSetting);
         TouchEffect.addAlpha(imgExit);
+
+        setVersion();
+    }
+
+    private void setVersion() {
+        try {
+            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+            ((TextView) findViewById(R.id.txtVersion)).setText("v" + pInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

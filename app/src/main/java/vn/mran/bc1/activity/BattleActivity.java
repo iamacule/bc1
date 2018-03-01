@@ -284,11 +284,11 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     public void onLidChanged(boolean isOpened) {
         Log.d(TAG, "isLidOpened : " + isOpened);
         if (isOpened) {
+            setResult();
             minusNumberOffRule();
             setTopImage();
             txtAction.setText(getString(R.string.shake));
         } else {
-            setResult();
             drawBattle.startAnimation(MyAnimation.shake(this));
             txtAction.setText(getString(R.string.open));
         }

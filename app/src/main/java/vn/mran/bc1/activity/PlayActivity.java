@@ -307,7 +307,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             public void run() {
                 findViewById(R.id.lnLoad).setVisibility(View.GONE);
             }
-        },2000);
+        }, 2000);
     }
 
     private void setPreviousRule() {
@@ -332,12 +332,12 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     public void onLidChanged(boolean isOpened) {
         Log.d(TAG, "isLidOpened : " + isOpened);
         if (isOpened) {
+            setResult();
             minusNumberOffRule();
             presenter.executeResult();
             txtAction.setText(getString(R.string.shake));
             animalChooserLayout.reset();
         } else {
-            setResult();
             drawPlay.startAnimation(MyAnimation.shake(this));
             txtAction.setText(getString(R.string.open));
         }
