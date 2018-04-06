@@ -5,7 +5,7 @@ package vn.mran.bc1.helper;
  */
 
 public class Log {
-    private static boolean enableLog = false;
+    private static boolean enableLog = true;
 
     public static void d(String tag, String message) {
         if (enableLog)

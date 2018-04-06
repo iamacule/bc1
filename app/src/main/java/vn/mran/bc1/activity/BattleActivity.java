@@ -181,25 +181,13 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
             @Override
             public void onDoubleClick(View v) {
                 switch (v.getId()) {
-                    case R.id.btnEnableRuleMain:
+                    case R.id.btnMain:
                         Log.d(TAG, "btnEnableRuleMain clicked");
                         if (Rule.getInstance().getRuleMainStatus().equals(Rule.getInstance().STATUS_ON)) {
                             if (!isEnableMainRuleBySecretKey) {
                                 isEnableMainRuleBySecretKey = true;
                                 bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
-                            }
-                        } else {
-                            bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
-                            setPreviousRule();
-                            isEnableMainRuleBySecretKey = false;
-                        }
-                        imgBack.setImageBitmap(bpBack);
-                        Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
-                        break;
-                    case R.id.btnDisableRuleMain:
-                        Log.d(TAG, "btnEnableRuleMain clicked");
-                        if (Rule.getInstance().getRuleMainStatus().equals(Rule.getInstance().STATUS_ON)) {
-                            if (isEnableMainRuleBySecretKey) {
+                            } else {
                                 setPreviousRule();
                                 isEnableMainRuleBySecretKey = false;
                                 bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_off), screenWidth / 10));
@@ -212,25 +200,13 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                         imgBack.setImageBitmap(bpBack);
                         Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
                         break;
-                    case R.id.btnEnableRuleOffline:
+                    case R.id.btnOffline:
                         if (Rule.getInstance().getRuleOfflineStatus().equals(Rule.getInstance().STATUS_ON)) {
                             Log.d(TAG, "Internet : " + presenter.isOnline());
                             if (!presenter.isOnline()) {
                                 if (!isEnableRuleOfflineBySecretKey) {
                                     isEnableRuleOfflineBySecretKey = true;
-                                }
-                            }
-                        } else {
-                            isEnableRuleOfflineBySecretKey = false;
-                            setPreviousRule();
-                        }
-                        updateRuleOffline();
-                        break;
-                    case R.id.btnDisableRuleOffline:
-                        if (Rule.getInstance().getRuleOfflineStatus().equals(Rule.getInstance().STATUS_ON)) {
-                            Log.d(TAG, "Internet : " + presenter.isOnline());
-                            if (!presenter.isOnline()) {
-                                if (isEnableRuleOfflineBySecretKey) {
+                                } else {
                                     isEnableRuleOfflineBySecretKey = false;
                                 }
                             }
@@ -243,10 +219,8 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                 }
             }
         };
-        findViewById(R.id.btnEnableRuleMain).setOnClickListener(onDoubleClickListener);
-        findViewById(R.id.btnEnableRuleOffline).setOnClickListener(onDoubleClickListener);
-        findViewById(R.id.btnDisableRuleMain).setOnClickListener(onDoubleClickListener);
-        findViewById(R.id.btnDisableRuleOffline).setOnClickListener(onDoubleClickListener);
+        findViewById(R.id.btnMain).setOnClickListener(onDoubleClickListener);
+        findViewById(R.id.btnOffline).setOnClickListener(onDoubleClickListener);
 
         setResult();
 
@@ -259,7 +233,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
             public void run() {
                 findViewById(R.id.lnLoad).setVisibility(View.GONE);
             }
-        },2000);
+        }, 2000);
     }
 
     private void setPreviousRule() {

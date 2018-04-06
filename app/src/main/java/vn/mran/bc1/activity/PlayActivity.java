@@ -228,25 +228,13 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             @Override
             public void onDoubleClick(View v) {
                 switch (v.getId()) {
-                    case R.id.btnEnableRuleMain:
-                        Log.d(TAG, "btnEnableRuleMain clicked");
+                    case R.id.btnMain:
+                        Log.d(TAG, "btnMain clicked");
                         if (Rule.getInstance().getRuleMainPlayStatus().equals(Rule.getInstance().STATUS_ON)) {
                             if (!isEnableMainRuleBySecretKey) {
                                 isEnableMainRuleBySecretKey = true;
                                 bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_on), screenWidth / 10));
-                            }
-                        } else {
-                            bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back), screenWidth / 10));
-                            setPreviousRule();
-                            isEnableMainRuleBySecretKey = false;
-                        }
-                        imgBack.setImageBitmap(bpBack);
-                        Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
-                        break;
-                    case R.id.btnDisableRuleMain:
-                        Log.d(TAG, "btnDisableRuleMain clicked");
-                        if (Rule.getInstance().getRuleMainPlayStatus().equals(Rule.getInstance().STATUS_ON)) {
-                            if (isEnableMainRuleBySecretKey) {
+                            }else {
                                 setPreviousRule();
                                 isEnableMainRuleBySecretKey = false;
                                 bpBack = (ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.back_main_on_secret_off), screenWidth / 10));
@@ -259,25 +247,13 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                         imgBack.setImageBitmap(bpBack);
                         Log.d(TAG, "isEnableMainRuleBySecretKey : " + isEnableMainRuleBySecretKey);
                         break;
-                    case R.id.btnEnableRuleOffline:
+                    case R.id.btnOffline:
                         if (Rule.getInstance().getRuleOfflinePlayStatus().equals(Rule.getInstance().STATUS_ON)) {
                             Log.d(TAG, "Internet : " + presenter.isOnline());
                             if (!presenter.isOnline()) {
                                 if (!isEnableRuleOfflineBySecretKey) {
                                     isEnableRuleOfflineBySecretKey = true;
-                                }
-                            }
-                        } else {
-                            isEnableRuleOfflineBySecretKey = false;
-                            setPreviousRule();
-                        }
-                        updateRuleOffline();
-                        break;
-                    case R.id.btnDisableRuleOffline:
-                        if (Rule.getInstance().getRuleOfflinePlayStatus().equals(Rule.getInstance().STATUS_ON)) {
-                            Log.d(TAG, "Internet : " + presenter.isOnline());
-                            if (!presenter.isOnline()) {
-                                if (isEnableRuleOfflineBySecretKey) {
+                                }else {
                                     isEnableRuleOfflineBySecretKey = false;
                                 }
                             }
@@ -286,14 +262,13 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                             setPreviousRule();
                         }
                         updateRuleOffline();
+                        Log.d(TAG, "isEnableRuleOfflineBySecretKey : " + isEnableRuleOfflineBySecretKey);
                         break;
                 }
             }
         };
-        findViewById(R.id.btnEnableRuleMain).setOnClickListener(onDoubleClickListener);
-        findViewById(R.id.btnEnableRuleOffline).setOnClickListener(onDoubleClickListener);
-        findViewById(R.id.btnDisableRuleMain).setOnClickListener(onDoubleClickListener);
-        findViewById(R.id.btnDisableRuleOffline).setOnClickListener(onDoubleClickListener);
+        findViewById(R.id.btnMain).setOnClickListener(onDoubleClickListener);
+        findViewById(R.id.btnOffline).setOnClickListener(onDoubleClickListener);
 
         //Set result at first time
         setResult();

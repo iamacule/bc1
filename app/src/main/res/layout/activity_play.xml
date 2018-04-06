@@ -124,6 +124,56 @@
                     android:textSize="@dimen/button_text_size_large_play" />
             </FrameLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5"
+                    android:orientation="horizontal">
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:id="@+id/btnMain"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                    </LinearLayout>
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6" />
+
+                    <LinearLayout
+                        android:id="@+id/btnOffline"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                    </LinearLayout>
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="5" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -137,17 +187,10 @@
                     android:layout_weight="0.25"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/btnDisableRuleMain"
-                        android:layout_width="0dp"
-
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1" />
-
                     <android.support.v4.widget.Space
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.38" />
+                        android:layout_weight="0.48" />
 
                     <LinearLayout
                         android:id="@+id/btnMain2"
@@ -159,15 +202,9 @@
                     <android.support.v4.widget.Space
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.38" />
-
-                    <LinearLayout
-                        android:id="@+id/btnDisableRuleOffline"
-
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.1" />
+                        android:layout_weight="0.48" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -215,43 +252,6 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.65" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.35"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/btnEnableRuleMain"
-
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.1" />
-
-                        <android.support.v4.widget.Space
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.8" />
-
-                        <LinearLayout
-                            android:id="@+id/btnEnableRuleOffline"
-
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.1" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom"
@@ -283,45 +283,45 @@
     </LinearLayout>
 
     <vn.mran.bc1.draw.DrawPlay
-    android:id="@+id/drawPlay"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center" />
+        android:id="@+id/drawPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
     <vn.mran.bc1.draw.DrawParallaxStar
-    android:id="@+id/drawParallaxStar"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+        android:id="@+id/drawParallaxStar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
-    android:id="@+id/lnLoad"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:gravity="center"
-    android:orientation="vertical">
+        android:id="@+id/lnLoad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <vn.mran.bc1.widget.CustomTextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:ellipsize="marquee"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:freezesText="true"
-    android:marqueeRepeatLimit="marquee_forever"
-    android:scrollHorizontally="true"
-    android:shadowColor="@color/black"
-    android:shadowDx="4"
-    android:shadowDy="4"
-    android:shadowRadius="4"
-    android:singleLine="true"
-    android:text="@string/loading"
-    android:textColor="@color/yellow_text"
-    android:textSize="@dimen/text_size_small" />
+        <vn.mran.bc1.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:freezesText="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:shadowColor="@color/black"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="4"
+            android:singleLine="true"
+            android:text="@string/loading"
+            android:textColor="@color/yellow_text"
+            android:textSize="@dimen/text_size_small" />
 
-    <ProgressBar
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </FrameLayout>

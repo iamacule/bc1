@@ -112,10 +112,23 @@
             </LinearLayout>
         </LinearLayout>
 
-        <android.support.v4.widget.Space
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.40" />
+            android:layout_weight="0.40">
+            <LinearLayout
+                android:id="@+id/btnMain"
+                android:background="@color/black"
+                android:layout_gravity="right|top"
+                android:layout_width="50dp"
+                android:layout_height="50dp"></LinearLayout>
+            <LinearLayout
+                android:id="@+id/btnOffline"
+                android:background="@color/black"
+                android:layout_width="50dp"
+                android:layout_gravity="bottom|left"
+                android:layout_height="50dp"></LinearLayout>
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -220,65 +233,6 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.32"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/btnDisableRuleMain"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.1" />
-
-                        <android.support.v4.widget.Space
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.8" />
-
-                        <LinearLayout
-                            android:id="@+id/btnDisableRuleOffline"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.1" />
-                    </LinearLayout>
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.36" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.32"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/btnEnableRuleMain"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.1" />
-
-                        <android.support.v4.widget.Space
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.8" />
-
-                        <LinearLayout
-                            android:id="@+id/btnEnableRuleOffline"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.1" />
-                    </LinearLayout>
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
