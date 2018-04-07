@@ -163,6 +163,7 @@ public class BattleFragment extends BaseFragment implements Rule.OnFireBaseDataB
 
     @Override
     public void initAction() {
+        drawBattle.initialize((int) screenWidth, (int) screenHeight);
         drawBattle.setOnDrawLidUpdate(this);
 
         imgAction.setOnClickListener(this);
@@ -218,17 +219,6 @@ public class BattleFragment extends BaseFragment implements Rule.OnFireBaseDataB
         v.findViewById(R.id.btnOffline).setOnClickListener(onDoubleClickListener);
 
         setResult();
-
-        disableLoading();
-    }
-
-    private void disableLoading() {
-        Task.postDelay(new Runnable() {
-            @Override
-            public void run() {
-                v.findViewById(R.id.lnLoad).setVisibility(View.GONE);
-            }
-        }, 2000);
     }
 
     private void setPreviousRule() {
@@ -422,6 +412,7 @@ public class BattleFragment extends BaseFragment implements Rule.OnFireBaseDataB
             @Override
             public void run() {
                 txtTitle.setText(presenter.updateText(text));
+                txtTitle.setSelected(true);
             }
         });
     }

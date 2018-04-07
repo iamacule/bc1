@@ -211,6 +211,7 @@ public class PlayFragment extends BaseFragment implements Rule.OnFireBaseDataPla
 
     @Override
     public void initAction() {
+        drawPlay.initialize((int) screenWidth, (int) screenHeight);
         drawPlay.setOnDrawLidUpdate(this);
 
         imgAction.setOnClickListener(this);
@@ -268,17 +269,6 @@ public class PlayFragment extends BaseFragment implements Rule.OnFireBaseDataPla
 
         //Set result at first time
         setResult();
-
-        disableLoading();
-    }
-
-    private void disableLoading() {
-        Task.postDelay(new Runnable() {
-            @Override
-            public void run() {
-                v.findViewById(R.id.lnLoad).setVisibility(View.GONE);
-            }
-        }, 2000);
     }
 
     private void setPreviousRule() {
@@ -495,6 +485,7 @@ public class PlayFragment extends BaseFragment implements Rule.OnFireBaseDataPla
             @Override
             public void run() {
                 txtTitle.setText(presenter.updateText(text));
+                txtTitle.setSelected(true);
             }
         });
     }
