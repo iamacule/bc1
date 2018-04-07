@@ -32,8 +32,8 @@ public class PlayPresenter {
     private int[] moneyArrays = new int[6];
     private int tong;
 
-    public PlayPresenter(PlayView view) {
-        this.context = (Context) view;
+    public PlayPresenter(PlayView view,Context context) {
+        this.context = context;
         this.view = view;
         isNetworkEnable = isOnline();
 

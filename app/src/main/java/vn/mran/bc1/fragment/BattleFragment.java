@@ -1,4 +1,4 @@
-package vn.mran.bc1.activity;
+package vn.mran.bc1.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -6,13 +6,12 @@ import android.view.View;
 import android.widget.ImageView;
 
 import vn.mran.bc1.R;
-import vn.mran.bc1.base.BaseActivity;
+import vn.mran.bc1.base.BaseFragment;
 import vn.mran.bc1.constant.PrefValue;
 import vn.mran.bc1.draw.DrawBattle;
 import vn.mran.bc1.draw.DrawParallaxStar;
 import vn.mran.bc1.helper.Log;
 import vn.mran.bc1.helper.OnDoubleClickListener;
-import vn.mran.bc1.instance.Media;
 import vn.mran.bc1.instance.Rule;
 import vn.mran.bc1.mvp.presenter.BattlePresenter;
 import vn.mran.bc1.mvp.view.BattleView;
@@ -22,11 +21,7 @@ import vn.mran.bc1.util.Task;
 import vn.mran.bc1.util.TouchEffect;
 import vn.mran.bc1.widget.CustomTextView;
 
-/**
- * Created by Mr An on 18/12/2017.
- */
-
-public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLidUpdate, View.OnClickListener, BattleView, Rule.OnFireBaseDataBattleChanged {
+public class BattleFragment extends BaseFragment implements Rule.OnFireBaseDataBattleChanged, BattleView, DrawBattle.OnDrawLidUpdate, View.OnClickListener {
     private final String TAG = getClass().getSimpleName();
 
     private BattlePresenter presenter;
@@ -59,22 +54,22 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
     @Override
     public void initLayout() {
         hideStatusBar();
-        imgResult1 = findViewById(R.id.imgResult1);
-        imgResult2 = findViewById(R.id.imgResult2);
-        imgResult3 = findViewById(R.id.imgResult3);
-        imgAction = findViewById(R.id.imgAction);
-        imgSound = findViewById(R.id.imgSound);
-        imgBack = findViewById(R.id.imgBack);
-        txtAction = findViewById(R.id.txtAction);
-        txtTitle = findViewById(R.id.txtTitle);
-        drawParallaxStar = findViewById(R.id.drawParallaxStar);
-        drawBattle = findViewById(R.id.drawPlay);
+        imgResult1 = v.findViewById(R.id.imgResult1);
+        imgResult2 = v.findViewById(R.id.imgResult2);
+        imgResult3 = v.findViewById(R.id.imgResult3);
+        imgAction = v.findViewById(R.id.imgAction);
+        imgSound = v.findViewById(R.id.imgSound);
+        imgBack = v.findViewById(R.id.imgBack);
+        txtAction = v.findViewById(R.id.txtAction);
+        txtTitle = v.findViewById(R.id.txtTitle);
+        drawParallaxStar = v.findViewById(R.id.drawParallaxStar);
+        drawBattle = v.findViewById(R.id.drawPlay);
     }
 
     @Override
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataBattleChanged(this);
-        presenter = new BattlePresenter(this);
+        presenter = new BattlePresenter(this,getContext());
         drawParallaxStar.setStarSize((int) screenWidth / 10);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
@@ -171,9 +166,9 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         drawBattle.setOnDrawLidUpdate(this);
 
         imgAction.setOnClickListener(this);
-        findViewById(R.id.btnMain1).setOnClickListener(this);
-        findViewById(R.id.btnMain2).setOnClickListener(this);
-        findViewById(R.id.btnMain3).setOnClickListener(this);
+        v.findViewById(R.id.btnMain1).setOnClickListener(this);
+        v.findViewById(R.id.btnMain2).setOnClickListener(this);
+        v.findViewById(R.id.btnMain3).setOnClickListener(this);
         imgSound.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
@@ -219,8 +214,8 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                 }
             }
         };
-        findViewById(R.id.btnMain).setOnClickListener(onDoubleClickListener);
-        findViewById(R.id.btnOffline).setOnClickListener(onDoubleClickListener);
+        v.findViewById(R.id.btnMain).setOnClickListener(onDoubleClickListener);
+        v.findViewById(R.id.btnOffline).setOnClickListener(onDoubleClickListener);
 
         setResult();
 
@@ -231,7 +226,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         Task.postDelay(new Runnable() {
             @Override
             public void run() {
-                findViewById(R.id.lnLoad).setVisibility(View.GONE);
+                v.findViewById(R.id.lnLoad).setVisibility(View.GONE);
             }
         }, 2000);
     }
@@ -246,7 +241,7 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
 
     @Override
     public int setLayout() {
-        return R.layout.activity_battle;
+        return R.layout.fragment_battle;
     }
 
     @Override
@@ -263,9 +258,14 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
             setTopImage();
             txtAction.setText(getString(R.string.shake));
         } else {
-            drawBattle.startAnimation(MyAnimation.shake(this));
+            drawBattle.startAnimation(MyAnimation.shake(getActivity()));
             txtAction.setText(getString(R.string.open));
         }
+    }
+
+    @Override
+    public void onSoundEffect(int id) {
+        getMedia().playShortSound(id);
     }
 
     private void minusNumberOffRule() {
@@ -281,9 +281,9 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
         imgResult2.setImageBitmap(bpTopArray[resultArrays[1]]);
         imgResult3.setImageBitmap(bpTopArray[resultArrays[2]]);
 
-        imgResult1.startAnimation(MyAnimation.vibrate(getApplicationContext()));
-        imgResult2.startAnimation(MyAnimation.vibrate(getApplicationContext()));
-        imgResult3.startAnimation(MyAnimation.vibrate(getApplicationContext()));
+        imgResult1.startAnimation(MyAnimation.vibrate(getContext()));
+        imgResult2.startAnimation(MyAnimation.vibrate(getContext()));
+        imgResult3.startAnimation(MyAnimation.vibrate(getContext()));
     }
 
     /**
@@ -377,9 +377,9 @@ public class BattleActivity extends BaseActivity implements DrawBattle.OnDrawLid
                     @Override
                     public void run() {
                         if (!isPlaySound) {
-                            Media.playBackgroundMusic(getApplicationContext());
+                            getMedia().playBackgroundMusic();
                         } else {
-                            Media.stopBackgroundMusic();
+                            getMedia().stopBackgroundMusic();
                         }
                     }
                 }));

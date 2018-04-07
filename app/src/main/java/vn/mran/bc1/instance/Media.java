@@ -11,12 +11,17 @@ import vn.mran.bc1.R;
  */
 
 public class Media {
-    public static MediaPlayer mediaPlayer;
-    public static MediaPlayer shakePlayer;
+    public MediaPlayer mediaPlayer;
+    public MediaPlayer shakePlayer;
+    private Context context;
 
-    private static String TAG = "Media";
+    public Media(Context context) {
+        this.context = context;
+    }
 
-    public static void playBackgroundMusic(Context context) {
+    private String TAG = "Media";
+
+    public void playBackgroundMusic() {
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(context, R.raw.bc_background_music);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -26,24 +31,34 @@ public class Media {
         }
     }
 
-    public static void stopBackgroundMusic() {
+    public void stopBackgroundMusic() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer = null;
         }
     }
 
-    public static void stopShortSound() {
+    public void pausePlayBackgroundMusic() {
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+            } else {
+                mediaPlayer.start();
+            }
+        }
+    }
+
+    public void stopShortSound() {
         if (shakePlayer != null) {
             shakePlayer.release();
             shakePlayer = null;
         }
     }
 
-    public static void playShortSound(Context c, int id) {
+    public void playShortSound(int id) {
         stopShortSound();
 
-        shakePlayer = MediaPlayer.create(c, id);
+        shakePlayer = MediaPlayer.create(context, id);
         shakePlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {

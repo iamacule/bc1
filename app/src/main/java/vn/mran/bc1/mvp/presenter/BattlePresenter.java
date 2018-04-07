@@ -22,8 +22,8 @@ public class BattlePresenter {
 
     private boolean run = true;
 
-    public BattlePresenter(BattleView view) {
-        this.context = (Context) view;
+    public BattlePresenter(BattleView view,Context context) {
+        this.context = context;
         this.view = view;
         isNetworkEnable = isOnline();
         new NetworkCheckingThread().start();

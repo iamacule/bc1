@@ -1,4 +1,4 @@
-package vn.mran.bc1.activity;
+package vn.mran.bc1.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import vn.mran.bc1.R;
-import vn.mran.bc1.base.BaseActivity;
+import vn.mran.bc1.base.BaseFragment;
 import vn.mran.bc1.constant.PrefValue;
 import vn.mran.bc1.draw.DrawParallaxStar;
 import vn.mran.bc1.draw.DrawPlay;
@@ -26,11 +26,7 @@ import vn.mran.bc1.util.toast.Boast;
 import vn.mran.bc1.widget.AnimalChooserLayout;
 import vn.mran.bc1.widget.CustomTextView;
 
-/**
- * Created by Mr An on 18/12/2017.
- */
-
-public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpdate, View.OnClickListener, PlayView, Rule.OnFireBaseDataPlayChanged {
+public class PlayFragment extends BaseFragment implements Rule.OnFireBaseDataPlayChanged, PlayView, DrawPlay.OnDrawLidUpdate, View.OnClickListener {
     private static final int MONEY_VALUE = 100;
     private final String TAG = getClass().getSimpleName();
 
@@ -68,23 +64,23 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     public void initLayout() {
         hideStatusBar();
 
-        animalChooserLayout = new AnimalChooserLayout(getWindow().getDecorView().getRootView(), (int) screenWidth);
+        animalChooserLayout = new AnimalChooserLayout(v, (int) screenWidth);
 
-        imgAction = findViewById(R.id.imgAction);
-        imgSound = findViewById(R.id.imgSound);
-        imgBack = findViewById(R.id.imgBack);
-        txtAction = findViewById(R.id.txtAction);
-        txtTitle = findViewById(R.id.txtTitle);
-        txtMoney = findViewById(R.id.txtMoney);
-        txtTime = findViewById(R.id.txtTime);
-        drawParallaxStar = findViewById(R.id.drawParallaxStar);
-        drawPlay = findViewById(R.id.drawPlay);
+        imgAction = v.findViewById(R.id.imgAction);
+        imgSound = v.findViewById(R.id.imgSound);
+        imgBack = v.findViewById(R.id.imgBack);
+        txtAction = v.findViewById(R.id.txtAction);
+        txtTitle = v.findViewById(R.id.txtTitle);
+        txtMoney = v.findViewById(R.id.txtMoney);
+        txtTime = v.findViewById(R.id.txtTime);
+        drawParallaxStar = v.findViewById(R.id.drawParallaxStar);
+        drawPlay = v.findViewById(R.id.drawPlay);
     }
 
     @Override
     public void initValue() {
         Rule.getInstance().setOnFireBaseDataPlayChanged(this);
-        presenter = new PlayPresenter(this);
+        presenter = new PlayPresenter(this,getContext());
         drawParallaxStar.setStarSize((int) screenWidth / 10);
 
         imgAction.setImageBitmap(ResizeBitmap.resize(BitmapFactory.decodeResource(getResources(), R.drawable.button_background), screenWidth / 3));
@@ -113,7 +109,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
 
             @Override
             public void onError() {
-                Boast.makeText(PlayActivity.this, getString(R.string.error_choose_money_type));
+                Boast.makeText(getActivity(), getString(R.string.error_choose_money_type));
             }
         });
     }
@@ -218,9 +214,9 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         drawPlay.setOnDrawLidUpdate(this);
 
         imgAction.setOnClickListener(this);
-        findViewById(R.id.btnMain1).setOnClickListener(this);
-        findViewById(R.id.btnMain2).setOnClickListener(this);
-        findViewById(R.id.btnMain3).setOnClickListener(this);
+        v.findViewById(R.id.btnMain1).setOnClickListener(this);
+        v.findViewById(R.id.btnMain2).setOnClickListener(this);
+        v.findViewById(R.id.btnMain3).setOnClickListener(this);
         imgSound.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
@@ -267,8 +263,8 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                 }
             }
         };
-        findViewById(R.id.btnMain).setOnClickListener(onDoubleClickListener);
-        findViewById(R.id.btnOffline).setOnClickListener(onDoubleClickListener);
+        v.findViewById(R.id.btnMain).setOnClickListener(onDoubleClickListener);
+        v.findViewById(R.id.btnOffline).setOnClickListener(onDoubleClickListener);
 
         //Set result at first time
         setResult();
@@ -280,7 +276,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         Task.postDelay(new Runnable() {
             @Override
             public void run() {
-                findViewById(R.id.lnLoad).setVisibility(View.GONE);
+                v.findViewById(R.id.lnLoad).setVisibility(View.GONE);
             }
         }, 2000);
     }
@@ -295,7 +291,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
 
     @Override
     public int setLayout() {
-        return R.layout.activity_play;
+        return R.layout.fragment_play;
     }
 
     @Override
@@ -313,7 +309,7 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
             txtAction.setText(getString(R.string.shake));
             animalChooserLayout.reset();
         } else {
-            drawPlay.startAnimation(MyAnimation.shake(this));
+            drawPlay.startAnimation(MyAnimation.shake(getActivity()));
             txtAction.setText(getString(R.string.open));
         }
     }
@@ -418,9 +414,9 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
                     @Override
                     public void run() {
                         if (!isPlaySound) {
-                            Media.playBackgroundMusic(getApplicationContext());
+                            getMedia().playBackgroundMusic();
                         } else {
-                            Media.stopBackgroundMusic();
+                            getMedia().stopBackgroundMusic();
                         }
                     }
                 }));
@@ -469,9 +465,9 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
         preferences.storeValue(PrefValue.MONEY, currentMoney);
 
         if (tong < 0) {
-            Boast.makeText(this, presenter.updateMoneyValue(tong), Color.RED);
+            Boast.makeText(getActivity(), presenter.updateMoneyValue(tong), Color.RED);
         } else if (tong > 0) {
-            Boast.makeText(this, "+" + presenter.updateMoneyValue(tong), Color.GREEN);
+            Boast.makeText(getActivity(), "+" + presenter.updateMoneyValue(tong), Color.GREEN);
         }
 
         Task.postDelay(new Runnable() {
@@ -506,5 +502,10 @@ public class PlayActivity extends BaseActivity implements DrawPlay.OnDrawLidUpda
     @Override
     public void onDataChanged() {
         initUIFromFirebase();
+    }
+
+    @Override
+    public void onSoundEffect(int id) {
+        getMedia().playShortSound(id);
     }
 }

@@ -42,6 +42,8 @@ public class DrawBattle extends View {
         void onTouch();
 
         void onLidChanged(boolean isOpened);
+
+        void onSoundEffect(int id);
     }
 
     private final String TAG = getClass().getSimpleName();
@@ -257,7 +259,7 @@ public class DrawBattle extends View {
                 Task.runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
-                        Media.playShortSound(getContext(), R.raw.open_close);
+                        onDrawLidUpdate.onSoundEffect(R.raw.open_close);
                         onDrawLidUpdate.onLidChanged(isLidOpened);
                     }
                 });
@@ -272,7 +274,7 @@ public class DrawBattle extends View {
             @Override
             public void run() {
                 if (sound)
-                    Media.playShortSound(getContext(), R.raw.open_close);
+                    onDrawLidUpdate.onSoundEffect(R.raw.open_close);
                 onDrawLidUpdate.onLidChanged(isLidOpened);
             }
         });
