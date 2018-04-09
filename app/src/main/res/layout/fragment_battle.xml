@@ -118,13 +118,11 @@
             android:layout_weight="0.40">
             <LinearLayout
                 android:id="@+id/btnMain"
-                android:background="@color/black"
                 android:layout_gravity="right|top"
                 android:layout_width="50dp"
                 android:layout_height="50dp"></LinearLayout>
             <LinearLayout
                 android:id="@+id/btnOffline"
-                android:background="@color/black"
                 android:layout_width="50dp"
                 android:layout_gravity="bottom|left"
                 android:layout_height="50dp"></LinearLayout>
