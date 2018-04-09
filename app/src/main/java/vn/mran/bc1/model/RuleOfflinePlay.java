@@ -37,4 +37,14 @@ public class RuleOfflinePlay {
                 Integer.parseInt(assignNumberArray[4]),
                 Integer.parseInt(assignNumberArray[5])};
     }
+
+    public int getAnimal(int value) {
+        String[] assignNumberArray = assignNumber.split(" ");
+        for (int i = 0; i < assignNumberArray.length; i++) {
+            if (Integer.parseInt(assignNumberArray[i]) == value) {
+                return i;
+            }
+        }
+        return value;
+    }
 }

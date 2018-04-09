@@ -30,6 +30,11 @@ import vn.mran.bc1.util.Task;
 
 public class Rule {
 
+    private int[] ruleChildAssignNumArray;
+    private int[] ruleChildPlayAssignNumArray;
+    private int[] ruleOfflineAssignNumArray;
+    private int[] ruleOfflinePlayAssignNumArray;
+
     public interface OnFireBaseDataBattleChanged {
         void onTextChanged(String TEXT);
 
@@ -51,23 +56,23 @@ public class Rule {
     private Preferences preferences;
 
     private int ruleChildAdditionalNumber;
-    private int ruleChildAssignNum1;
-    private int ruleChildAssignNum2;
-    private int ruleChildAssignNum3;
-    private int ruleChildAssignNum4;
-    private int ruleChildAssignNum5;
-    private int ruleChildAssignNum6;
+    public int ruleChildAssignNum1;
+    public int ruleChildAssignNum2;
+    public int ruleChildAssignNum3;
+    public int ruleChildAssignNum4;
+    public int ruleChildAssignNum5;
+    public int ruleChildAssignNum6;
     private int ruleChildQuantum;
     private int ruleChildRule;
     private String ruleChildStatus;
 
     private int ruleChildPlayAdditionalNumber;
-    private int ruleChildPlayAssignNum1;
-    private int ruleChildPlayAssignNum2;
-    private int ruleChildPlayAssignNum3;
-    private int ruleChildPlayAssignNum4;
-    private int ruleChildPlayAssignNum5;
-    private int ruleChildPlayAssignNum6;
+    public int ruleChildPlayAssignNum1;
+    public int ruleChildPlayAssignNum2;
+    public int ruleChildPlayAssignNum3;
+    public int ruleChildPlayAssignNum4;
+    public int ruleChildPlayAssignNum5;
+    public int ruleChildPlayAssignNum6;
     private int ruleChildPlayQuantum;
     private int ruleChildPlayRule;
     private String ruleChildPlayStatus;
@@ -79,23 +84,23 @@ public class Rule {
     private String ruleMainPlayStatus;
 
     private int ruleOfflineAdditionalNumber;
-    private int ruleOfflineAssignNum1;
-    private int ruleOfflineAssignNum2;
-    private int ruleOfflineAssignNum3;
-    private int ruleOfflineAssignNum4;
-    private int ruleOfflineAssignNum5;
-    private int ruleOfflineAssignNum6;
+    public int ruleOfflineAssignNum1;
+    public int ruleOfflineAssignNum2;
+    public int ruleOfflineAssignNum3;
+    public int ruleOfflineAssignNum4;
+    public int ruleOfflineAssignNum5;
+    public int ruleOfflineAssignNum6;
     private int ruleOfflineQuantum;
     private String ruleOfflineStatus;
 
     private int ruleOfflinePlayAdditionalNumber;
-    private int ruleOfflinePlayAssignNum1;
-    private int ruleOfflinePlayAssignNum2;
-    private int ruleOfflinePlayAssignNum3;
-    private int ruleOfflinePlayAssignNum4;
-    private int ruleOfflinePlayAssignNum5;
-    private int ruleOfflinePlayAssignNum6;
-    private int ruleOfflinePlayQuantum;
+    public int ruleOfflinePlayAssignNum1;
+    public int ruleOfflinePlayAssignNum2;
+    public int ruleOfflinePlayAssignNum3;
+    public int ruleOfflinePlayAssignNum4;
+    public int ruleOfflinePlayAssignNum5;
+    public int ruleOfflinePlayAssignNum6;
+    public int ruleOfflinePlayQuantum;
     private String ruleOfflinePlayStatus;
 
     public final byte RULE_NORMAL = 0;
@@ -246,14 +251,17 @@ public class Rule {
                             case 1:
                                 Log.d(TAG, "Rule 1");
                                 returnArrays = getRule1();
+                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
                                 break;
                             case 2:
                                 Log.d(TAG, "Rule 2");
                                 returnArrays = getRule2();
+                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
                                 break;
                             default:
                                 Log.d(TAG, "Rule 1 default");
                                 returnArrays = getRule1();
+                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
                                 break;
 
                         }
@@ -268,6 +276,7 @@ public class Rule {
                     Log.d(TAG, "Rule offline");
                     if (ruleOfflineQuantum == 0) {
                         returnArrays = getRuleOffline();
+                        returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_OFFLINE, false);
                     }
                 } else {
                     Log.d(TAG, "Rule offline status off");
@@ -291,6 +300,57 @@ public class Rule {
         return returnArrays;
     }
 
+    private int[] updateReturnArrayFollowAssignNumber(int[] returnArrays, int rule, boolean isPlayMode) {
+        Log.d(TAG, "Before update : ");
+        for (int i : returnArrays) {
+            Log.d(TAG, i+"");
+        }
+        if (isPlayMode) {
+            switch (rule) {
+                case RULE_NORMAL:
+                    if (ruleChildPlayAssignNumArray != null) {
+                        returnArrays[0] = getAnimalByAssignNumber(ruleChildPlayAssignNumArray, returnArrays[0]);
+                        returnArrays[1] = getAnimalByAssignNumber(ruleChildPlayAssignNumArray, returnArrays[1]);
+                        returnArrays[2] = getAnimalByAssignNumber(ruleChildPlayAssignNumArray, returnArrays[2]);
+                    }
+
+                    break;
+
+                default:
+                    if (ruleOfflinePlayAssignNumArray != null) {
+                        returnArrays[0] = getAnimalByAssignNumber(ruleOfflinePlayAssignNumArray, returnArrays[0]);
+                        returnArrays[1] = getAnimalByAssignNumber(ruleOfflinePlayAssignNumArray, returnArrays[1]);
+                        returnArrays[2] = getAnimalByAssignNumber(ruleOfflinePlayAssignNumArray, returnArrays[2]);
+                    }
+                    break;
+            }
+        } else {
+            switch (rule) {
+                case RULE_NORMAL:
+                    if (ruleChildAssignNumArray != null) {
+                        returnArrays[0] = getAnimalByAssignNumber(ruleChildAssignNumArray, returnArrays[0]);
+                        returnArrays[1] = getAnimalByAssignNumber(ruleChildAssignNumArray, returnArrays[1]);
+                        returnArrays[2] = getAnimalByAssignNumber(ruleChildAssignNumArray, returnArrays[2]);
+                    }
+
+                    break;
+
+                default:
+                    if (ruleOfflineAssignNumArray != null) {
+                        returnArrays[0] = getAnimalByAssignNumber(ruleOfflineAssignNumArray, returnArrays[0]);
+                        returnArrays[1] = getAnimalByAssignNumber(ruleOfflineAssignNumArray, returnArrays[1]);
+                        returnArrays[2] = getAnimalByAssignNumber(ruleOfflineAssignNumArray, returnArrays[2]);
+                    }
+                    break;
+            }
+        }
+        Log.d(TAG, "After update : ");
+        for (int i : returnArrays) {
+            Log.d(TAG, i+"");
+        }
+        return returnArrays;
+    }
+
     /**
      * Get result in battle
      *
@@ -309,14 +369,17 @@ public class Rule {
                             case 1:
                                 Log.d(TAG, "Rule 1 play ");
                                 returnArrays = getRule1Play();
+                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
                                 break;
                             case 2:
                                 Log.d(TAG, "Rule 2 play ");
                                 returnArrays = getRule2Play();
+                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
                                 break;
                             default:
                                 Log.d(TAG, "Rule 1 play default");
                                 returnArrays = getRule1Play();
+                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
                                 break;
 
                         }
@@ -331,6 +394,7 @@ public class Rule {
                     Log.d(TAG, "Rule offline play ");
                     if (ruleOfflinePlayQuantum == 0) {
                         returnArrays = getRuleOfflinePlay();
+                        returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_OFFLINE, true);
                     }
                 } else {
                     Log.d(TAG, "Rule offline play status off");
@@ -771,7 +835,7 @@ public class Rule {
                         ruleChildAdditionalNumber = ruleChild.getAdditionalNumber();
                         preferences.storeValue(PrefValue.RULE_CHILD_ADDITIONAL_NUMBER, ruleChildAdditionalNumber);
 
-                        int[] ruleChildAssignNumArray = ruleChild.getAssignNumberArray();
+                        ruleChildAssignNumArray = ruleChild.getAssignNumberArray();
                         ruleChildAssignNum1 = ruleChildAssignNumArray[0];
                         ruleChildAssignNum2 = ruleChildAssignNumArray[1];
                         ruleChildAssignNum3 = ruleChildAssignNumArray[2];
@@ -805,7 +869,7 @@ public class Rule {
                         ruleChildPlayAdditionalNumber = ruleChildPlay.getAdditionalNumber();
                         preferences.storeValue(PrefValue.RULE_CHILD_PLAY_ADDITIONAL_NUMBER, ruleChildPlayAdditionalNumber);
 
-                        int[] ruleChildPlayAssignNumArray = ruleChildPlay.getAssignNumberArray();
+                        ruleChildPlayAssignNumArray = ruleChildPlay.getAssignNumberArray();
                         ruleChildPlayAssignNum1 = ruleChildPlayAssignNumArray[0];
                         ruleChildPlayAssignNum2 = ruleChildPlayAssignNumArray[1];
                         ruleChildPlayAssignNum3 = ruleChildPlayAssignNumArray[2];
@@ -860,7 +924,7 @@ public class Rule {
                         ruleOfflineAdditionalNumber = ruleOffline.getAdditionalNumber();
                         preferences.storeValue(PrefValue.RULE_OFFLINE_ADDITIONAL_NUMBER, ruleOfflineAdditionalNumber);
 
-                        int[] ruleOfflineAssignNumArray = ruleOffline.getAssignNumberArray();
+                        ruleOfflineAssignNumArray = ruleOffline.getAssignNumberArray();
                         ruleOfflineAssignNum1 = ruleOfflineAssignNumArray[0];
                         ruleOfflineAssignNum2 = ruleOfflineAssignNumArray[1];
                         ruleOfflineAssignNum3 = ruleOfflineAssignNumArray[2];
@@ -889,7 +953,7 @@ public class Rule {
                         ruleOfflinePlayAdditionalNumber = ruleOfflinePlay.getAdditionalNumber();
                         preferences.storeValue(PrefValue.RULE_OFFLINE_PLAY_ADDITIONAL_NUMBER, ruleOfflinePlayAdditionalNumber);
 
-                        int[] ruleOfflinePlayAssignNumArray = ruleOfflinePlay.getAssignNumberArray();
+                        ruleOfflinePlayAssignNumArray = ruleOfflinePlay.getAssignNumberArray();
                         ruleOfflinePlayAssignNum1 = ruleOfflinePlayAssignNumArray[0];
                         ruleOfflinePlayAssignNum2 = ruleOfflinePlayAssignNumArray[1];
                         ruleOfflinePlayAssignNum3 = ruleOfflinePlayAssignNumArray[2];
@@ -1017,5 +1081,14 @@ public class Rule {
                 }
                 break;
         }
+    }
+
+    public int getAnimalByAssignNumber(int[] arrays, int additionalNumber) {
+        for (int i = 0; i < arrays.length; i++) {
+            if (arrays[i] == additionalNumber) {
+                return i;
+            }
+        }
+        return additionalNumber;
     }
 }
