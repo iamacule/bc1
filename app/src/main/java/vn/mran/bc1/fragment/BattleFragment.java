@@ -170,6 +170,7 @@ public class BattleFragment extends BaseFragment implements Rule.OnFireBaseDataB
         v.findViewById(R.id.btnMain1).setOnClickListener(this);
         v.findViewById(R.id.btnMain2).setOnClickListener(this);
         v.findViewById(R.id.btnMain3).setOnClickListener(this);
+        v.findViewById(R.id.root).setOnClickListener(this);
         imgSound.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
@@ -293,6 +294,10 @@ public class BattleFragment extends BaseFragment implements Rule.OnFireBaseDataB
             case R.id.imgSound:
                 Log.d(TAG, "btnSound clicked");
                 switchSound();
+                break;
+
+            case R.id.root:
+                Log.d(TAG, "root clicked");
                 break;
 
             case R.id.imgBack:

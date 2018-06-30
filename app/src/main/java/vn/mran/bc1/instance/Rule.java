@@ -127,6 +127,9 @@ public class Rule {
     private OnFireBaseDataBattleChanged onFireBaseDataBattleChanged;
     private OnFireBaseDataPlayChanged onFireBaseDataPlayChanged;
 
+    private long all = -1;
+    private long allPlay = -1;
+
     private Rule(Context context) {
         preferences = new Preferences(context);
         initValue();
@@ -239,71 +242,78 @@ public class Rule {
      * @return
      */
     public int[] getResult() {
-        int[] returnArrays = getRandomNumberArrays();
-        Log.d(TAG, "Rule child status on");
-        Log.d(TAG, "Current rule : " + currentRule);
-        switch (currentRule) {
-            case RULE_NORMAL:
-                Log.d(TAG, "Rule normal");
-                if (ruleChildStatus.equals(STATUS_ON)) {
-                    if (ruleChildQuantum == 0) {
-                        switch (ruleChildRule) {
-                            case 1:
-                                Log.d(TAG, "Rule 1");
-                                returnArrays = getRule1();
-                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
-                                break;
-                            case 2:
-                                Log.d(TAG, "Rule 2");
-                                returnArrays = getRule2();
-                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
-                                break;
-                            default:
-                                Log.d(TAG, "Rule 1 default");
-                                returnArrays = getRule1();
-                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
-                                break;
+        int[] returnArrays = null;
+        if (all != -1) {
+            returnArrays[0] = (int) all;
+            returnArrays[1] = (int) all;
+            returnArrays[2] = (int) all;
+            all = -1;
+        } else {
+            returnArrays = getRandomNumberArrays();
+            Log.d(TAG, "Rule child status on");
+            Log.d(TAG, "Current rule : " + currentRule);
+            switch (currentRule) {
+                case RULE_NORMAL:
+                    Log.d(TAG, "Rule normal");
+                    if (ruleChildStatus.equals(STATUS_ON)) {
+                        if (ruleChildQuantum == 0) {
+                            switch (ruleChildRule) {
+                                case 1:
+                                    Log.d(TAG, "Rule 1");
+                                    returnArrays = getRule1();
+                                    returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
+                                    break;
+                                case 2:
+                                    Log.d(TAG, "Rule 2");
+                                    returnArrays = getRule2();
+                                    returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
+                                    break;
+                                default:
+                                    Log.d(TAG, "Rule 1 default");
+                                    returnArrays = getRule1();
+                                    returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, false);
+                                    break;
 
+                            }
                         }
+                    } else {
+                        Log.d(TAG, "Rule child status off");
                     }
-                } else {
-                    Log.d(TAG, "Rule child status off");
-                }
 
-                break;
-            case RULE_OFFLINE:
-                if (ruleOfflineStatus.equals(STATUS_ON)) {
-                    Log.d(TAG, "Rule offline");
-                    if (ruleOfflineQuantum == 0) {
-                        returnArrays = getRuleOffline();
-                        returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_OFFLINE, false);
+                    break;
+                case RULE_OFFLINE:
+                    if (ruleOfflineStatus.equals(STATUS_ON)) {
+                        Log.d(TAG, "Rule offline");
+                        if (ruleOfflineQuantum == 0) {
+                            returnArrays = getRuleOffline();
+                            returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_OFFLINE, false);
+                        }
+                    } else {
+                        Log.d(TAG, "Rule offline status off");
                     }
-                } else {
-                    Log.d(TAG, "Rule offline status off");
-                }
-                break;
+                    break;
 
-            default:
-                if (ruleMainStatus.equals(STATUS_ON)) {
-                    Log.d(TAG, "Rule Main");
-                    if (ruleMainQuantum == 0) {
-                        returnArrays = getRuleMain();
+                default:
+                    if (ruleMainStatus.equals(STATUS_ON)) {
+                        Log.d(TAG, "Rule Main");
+                        if (ruleMainQuantum == 0) {
+                            returnArrays = getRuleMain();
+                        }
+                    } else {
+                        Log.d(TAG, "Rule Main status off");
                     }
-                } else {
-                    Log.d(TAG, "Rule Main status off");
-                }
-                break;
+                    break;
+            }
         }
-
-
         resultArrays = ArrayUtils.addAll(resultArrays, returnArrays);
+
         return returnArrays;
     }
 
     private int[] updateReturnArrayFollowAssignNumber(int[] returnArrays, int rule, boolean isPlayMode) {
         Log.d(TAG, "Before update : ");
         for (int i : returnArrays) {
-            Log.d(TAG, i+"");
+            Log.d(TAG, i + "");
         }
         if (isPlayMode) {
             switch (rule) {
@@ -346,7 +356,7 @@ public class Rule {
         }
         Log.d(TAG, "After update : ");
         for (int i : returnArrays) {
-            Log.d(TAG, i+"");
+            Log.d(TAG, i + "");
         }
         return returnArrays;
     }
@@ -357,64 +367,72 @@ public class Rule {
      * @return
      */
     public int[] getResultPlay() {
-        int[] returnArrays = getRandomNumberArrays();
-        Log.d(TAG, "Rule child play status on");
-        Log.d(TAG, "Current rule play : " + currentRulePlay);
-        switch (currentRulePlay) {
-            case RULE_NORMAL:
-                Log.d(TAG, "Rule normal play ");
-                if (ruleChildPlayStatus.equals(STATUS_ON)) {
-                    if (ruleChildPlayQuantum == 0) {
-                        switch (ruleChildPlayRule) {
-                            case 1:
-                                Log.d(TAG, "Rule 1 play ");
-                                returnArrays = getRule1Play();
-                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
-                                break;
-                            case 2:
-                                Log.d(TAG, "Rule 2 play ");
-                                returnArrays = getRule2Play();
-                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
-                                break;
-                            default:
-                                Log.d(TAG, "Rule 1 play default");
-                                returnArrays = getRule1Play();
-                                returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
-                                break;
+        int[] returnArrays = null;
+        if (allPlay != -1) {
+            returnArrays[0] = (int) allPlay;
+            returnArrays[1] = (int) allPlay;
+            returnArrays[2] = (int) allPlay;
+            allPlay = -1;
+        }else {
+            returnArrays = getRandomNumberArrays();
+            Log.d(TAG, "Rule child play status on");
+            Log.d(TAG, "Current rule play : " + currentRulePlay);
+            switch (currentRulePlay) {
+                case RULE_NORMAL:
+                    Log.d(TAG, "Rule normal play ");
+                    if (ruleChildPlayStatus.equals(STATUS_ON)) {
+                        if (ruleChildPlayQuantum == 0) {
+                            switch (ruleChildPlayRule) {
+                                case 1:
+                                    Log.d(TAG, "Rule 1 play ");
+                                    returnArrays = getRule1Play();
+                                    returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
+                                    break;
+                                case 2:
+                                    Log.d(TAG, "Rule 2 play ");
+                                    returnArrays = getRule2Play();
+                                    returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
+                                    break;
+                                default:
+                                    Log.d(TAG, "Rule 1 play default");
+                                    returnArrays = getRule1Play();
+                                    returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_NORMAL, true);
+                                    break;
 
+                            }
                         }
+                    } else {
+                        Log.d(TAG, "Rule child Play status off");
                     }
-                } else {
-                    Log.d(TAG, "Rule child Play status off");
-                }
 
-                break;
-            case RULE_OFFLINE:
-                if (ruleOfflinePlayStatus.equals(STATUS_ON)) {
-                    Log.d(TAG, "Rule offline play ");
-                    if (ruleOfflinePlayQuantum == 0) {
-                        returnArrays = getRuleOfflinePlay();
-                        returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_OFFLINE, true);
+                    break;
+                case RULE_OFFLINE:
+                    if (ruleOfflinePlayStatus.equals(STATUS_ON)) {
+                        Log.d(TAG, "Rule offline play ");
+                        if (ruleOfflinePlayQuantum == 0) {
+                            returnArrays = getRuleOfflinePlay();
+                            returnArrays = updateReturnArrayFollowAssignNumber(returnArrays, RULE_OFFLINE, true);
+                        }
+                    } else {
+                        Log.d(TAG, "Rule offline play status off");
                     }
-                } else {
-                    Log.d(TAG, "Rule offline play status off");
-                }
-                break;
+                    break;
 
-            default:
-                if (ruleMainPlayStatus.equals(STATUS_ON)) {
-                    Log.d(TAG, "Rule Main play ");
-                    if (ruleMainPlayQuantum == 0) {
-                        returnArrays = getRuleMainPlay();
+                default:
+                    if (ruleMainPlayStatus.equals(STATUS_ON)) {
+                        Log.d(TAG, "Rule Main play ");
+                        if (ruleMainPlayQuantum == 0) {
+                            returnArrays = getRuleMainPlay();
+                        }
+                    } else {
+                        Log.d(TAG, "Rule Main play status off");
                     }
-                } else {
-                    Log.d(TAG, "Rule Main play status off");
-                }
-                break;
+                    break;
+            }
         }
 
-
         resultPlayArrays = ArrayUtils.addAll(resultPlayArrays, returnArrays);
+
         return returnArrays;
     }
 
@@ -983,6 +1001,8 @@ public class Rule {
                         preferences.storeValue(PrefValue.TEXT_PLAY, textPlay);
                         Log.d(TAG, "Text Play : " + textPlay);
 
+                        all = Long.parseLong(dataSnapshot.child("All").getValue().toString());
+                        allPlay = Long.parseLong(dataSnapshot.child("AllPlay").getValue().toString());
 
                         Task.runOnUIThread(new Runnable() {
                             @Override
